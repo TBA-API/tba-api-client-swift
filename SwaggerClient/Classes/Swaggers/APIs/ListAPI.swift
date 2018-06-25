@@ -7,6 +7,7 @@
 
 import Alamofire
 
+extension SwaggerClientAPI {
 
 
 public class ListAPI: APIBase {
@@ -1646,4 +1647,5 @@ public class ListAPI: APIBase {
         return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true, headers: headerParameters)
     }
 
+}
 }

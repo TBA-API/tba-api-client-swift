@@ -7,6 +7,7 @@
 
 import Alamofire
 
+extension SwaggerClientAPI {
 
 
 public class MatchAPI: APIBase {
@@ -1069,4 +1070,5 @@ public class MatchAPI: APIBase {
         return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true, headers: headerParameters)
     }
 
+}
 }

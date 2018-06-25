@@ -7,6 +7,7 @@
 
 import Alamofire
 
+extension SwaggerClientAPI {
 
 
 public class EventAPI: APIBase {
@@ -2897,4 +2898,5 @@ public class EventAPI: APIBase {
         return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true, headers: headerParameters)
     }
 
+}
 }

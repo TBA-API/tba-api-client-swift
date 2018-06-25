@@ -7,6 +7,7 @@
 
 import Alamofire
 
+extension SwaggerClientAPI {
 
 
 public class TBAAPI: APIBase {
@@ -68,4 +69,5 @@ public class TBAAPI: APIBase {
         return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true, headers: headerParameters)
     }
 
+}
 }
