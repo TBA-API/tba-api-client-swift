@@ -11,4 +11,5 @@ Pod::Spec.new do |s|
   s.summary = 'Swift client library for the The Blue Alliance API'
   s.source_files = 'TBAAPIv3Kit/Classes/**/*.swift'
   s.dependency 'Alamofire', '~> 3.5.1'
+  s.swift_version = '2.0'
 end
