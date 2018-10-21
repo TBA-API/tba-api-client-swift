@@ -9,18 +9,20 @@ import Foundation
 
 
 /** Playoff status for this team, may be null if the team did not make playoffs, or playoffs have not begun. */
-public class TeamEventStatusPlayoff: JSONEncodable {
-    public enum Level: String { 
-        case Qm = "qm"
-        case Ef = "ef"
-        case Qf = "qf"
-        case Sf = "sf"
-        case F = "f"
+
+open class TeamEventStatusPlayoff: Codable {
+
+    public enum Level: String, Codable { 
+        case qm = "qm"
+        case ef = "ef"
+        case qf = "qf"
+        case sf = "sf"
+        case f = "f"
     }
-    public enum Status: String { 
-        case Won = "won"
-        case Eliminated = "eliminated"
-        case Playing = "playing"
+    public enum Status: String, Codable { 
+        case won = "won"
+        case eliminated = "eliminated"
+        case playing = "playing"
     }
     /** The highest playoff level the team reached. */
     public var level: Level?
@@ -29,19 +31,42 @@ public class TeamEventStatusPlayoff: JSONEncodable {
     /** Current competition status for the playoffs. */
     public var status: Status?
     /** The average match score during playoffs. Year specific. May be null if not relevant for a given year. */
-    public var playoffAverage: Int32?
+    public var playoffAverage: Int?
 
-    public init() {}
 
-    // MARK: JSONEncodable
-    func encodeToJSON() -> AnyObject {
-        var nillableDictionary = [String:AnyObject?]()
-        nillableDictionary["level"] = self.level?.rawValue
-        nillableDictionary["current_level_record"] = self.currentLevelRecord?.encodeToJSON()
-        nillableDictionary["record"] = self.record?.encodeToJSON()
-        nillableDictionary["status"] = self.status?.rawValue
-        nillableDictionary["playoff_average"] = self.playoffAverage?.encodeToJSON()
-        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
-        return dictionary
+    
+    public init(level: Level?, currentLevelRecord: WLTRecord?, record: WLTRecord?, status: Status?, playoffAverage: Int?) {
+        self.level = level
+        self.currentLevelRecord = currentLevelRecord
+        self.record = record
+        self.status = status
+        self.playoffAverage = playoffAverage
+    }
+    
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+
+        var container = encoder.container(keyedBy: String.self)
+
+        try container.encodeIfPresent(level, forKey: "level")
+        try container.encodeIfPresent(currentLevelRecord, forKey: "current_level_record")
+        try container.encodeIfPresent(record, forKey: "record")
+        try container.encodeIfPresent(status, forKey: "status")
+        try container.encodeIfPresent(playoffAverage, forKey: "playoff_average")
+    }
+
+    // Decodable protocol methods
+
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: String.self)
+
+        level = try container.decodeIfPresent(Level.self, forKey: "level")
+        currentLevelRecord = try container.decodeIfPresent(WLTRecord.self, forKey: "current_level_record")
+        record = try container.decodeIfPresent(WLTRecord.self, forKey: "record")
+        status = try container.decodeIfPresent(Status.self, forKey: "status")
+        playoffAverage = try container.decodeIfPresent(Int.self, forKey: "playoff_average")
     }
 }
+

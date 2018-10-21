@@ -9,7 +9,9 @@ import Foundation
 
 
 /** OPR, DPR, and CCWM for teams at the event. */
-public class EventOPRs: JSONEncodable {
+
+open class EventOPRs: Codable {
+
     /** A key-value pair with team key (eg &#x60;frc254&#x60;) as key and OPR as value. */
     public var oprs: [String:Float]?
     /** A key-value pair with team key (eg &#x60;frc254&#x60;) as key and DPR as value. */
@@ -17,15 +19,34 @@ public class EventOPRs: JSONEncodable {
     /** A key-value pair with team key (eg &#x60;frc254&#x60;) as key and CCWM as value. */
     public var ccwms: [String:Float]?
 
-    public init() {}
 
-    // MARK: JSONEncodable
-    func encodeToJSON() -> AnyObject {
-        var nillableDictionary = [String:AnyObject?]()
-        nillableDictionary["oprs"] = self.oprs?.encodeToJSON()
-        nillableDictionary["dprs"] = self.dprs?.encodeToJSON()
-        nillableDictionary["ccwms"] = self.ccwms?.encodeToJSON()
-        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
-        return dictionary
+    
+    public init(oprs: [String:Float]?, dprs: [String:Float]?, ccwms: [String:Float]?) {
+        self.oprs = oprs
+        self.dprs = dprs
+        self.ccwms = ccwms
+    }
+    
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+
+        var container = encoder.container(keyedBy: String.self)
+
+        try container.encodeIfPresent(oprs, forKey: "oprs")
+        try container.encodeIfPresent(dprs, forKey: "dprs")
+        try container.encodeIfPresent(ccwms, forKey: "ccwms")
+    }
+
+    // Decodable protocol methods
+
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: String.self)
+
+        oprs = try container.decodeIfPresent([String:Float].self, forKey: "oprs")
+        dprs = try container.decodeIfPresent([String:Float].self, forKey: "dprs")
+        ccwms = try container.decodeIfPresent([String:Float].self, forKey: "ccwms")
     }
 }
+

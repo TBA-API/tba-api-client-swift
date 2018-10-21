@@ -9,44 +9,69 @@ import Foundation
 
 
 /** The &#x60;Media&#x60; object contains a reference for most any media associated with a team or event on TBA. */
-public class Media: JSONEncodable {
-    public enum ModelType: String { 
-        case Youtube = "youtube"
-        case Cdphotothread = "cdphotothread"
-        case Imgur = "imgur"
-        case FacebookProfile = "facebook-profile"
-        case YoutubeChannel = "youtube-channel"
-        case TwitterProfile = "twitter-profile"
-        case GithubProfile = "github-profile"
-        case InstagramProfile = "instagram-profile"
-        case PeriscopeProfile = "periscope-profile"
-        case Grabcad = "grabcad"
-        case InstagramImage = "instagram-image"
-        case ExternalLink = "external-link"
-        case Avatar = "avatar"
+
+open class Media: Codable {
+
+    public enum ModelType: String, Codable { 
+        case youtube = "youtube"
+        case cdphotothread = "cdphotothread"
+        case imgur = "imgur"
+        case facebookProfile = "facebook-profile"
+        case youtubeChannel = "youtube-channel"
+        case twitterProfile = "twitter-profile"
+        case githubProfile = "github-profile"
+        case instagramProfile = "instagram-profile"
+        case periscopeProfile = "periscope-profile"
+        case grabcad = "grabcad"
+        case instagramImage = "instagram-image"
+        case externalLink = "external-link"
+        case avatar = "avatar"
     }
     /** TBA identifier for this media. */
-    public var key: String?
+    public var key: String
     /** String type of the media element. */
-    public var type: ModelType?
+    public var type: ModelType
     /** The key used to identify this media on the media site. */
     public var foreignKey: String?
     /** If required, a JSON dict of additional media information. */
-    public var details: AnyObject?
+    public var details: Any?
     /** True if the media is of high quality. */
     public var preferred: Bool?
 
-    public init() {}
 
-    // MARK: JSONEncodable
-    func encodeToJSON() -> AnyObject {
-        var nillableDictionary = [String:AnyObject?]()
-        nillableDictionary["key"] = self.key
-        nillableDictionary["type"] = self.type?.rawValue
-        nillableDictionary["foreign_key"] = self.foreignKey
-        nillableDictionary["details"] = self.details
-        nillableDictionary["preferred"] = self.preferred
-        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
-        return dictionary
+    
+    public init(key: String, type: ModelType, foreignKey: String?, details: Any?, preferred: Bool?) {
+        self.key = key
+        self.type = type
+        self.foreignKey = foreignKey
+        self.details = details
+        self.preferred = preferred
+    }
+    
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+
+        var container = encoder.container(keyedBy: String.self)
+
+        try container.encode(key, forKey: "key")
+        try container.encode(type, forKey: "type")
+        try container.encodeIfPresent(foreignKey, forKey: "foreign_key")
+        try container.encodeIfPresent(details, forKey: "details")
+        try container.encodeIfPresent(preferred, forKey: "preferred")
+    }
+
+    // Decodable protocol methods
+
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: String.self)
+
+        key = try container.decode(String.self, forKey: "key")
+        type = try container.decode(ModelType.self, forKey: "type")
+        foreignKey = try container.decodeIfPresent(String.self, forKey: "foreign_key")
+        details = try container.decodeIfPresent(Any.self, forKey: "details")
+        preferred = try container.decodeIfPresent(Bool.self, forKey: "preferred")
     }
 }
+

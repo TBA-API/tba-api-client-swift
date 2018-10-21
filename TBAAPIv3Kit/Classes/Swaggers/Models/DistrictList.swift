@@ -8,26 +8,49 @@
 import Foundation
 
 
-public class DistrictList: JSONEncodable {
+
+open class DistrictList: Codable {
+
     /** The short identifier for the district. */
-    public var abbreviation: String?
+    public var abbreviation: String
     /** The long name for the district. */
-    public var displayName: String?
+    public var displayName: String
     /** Key for this district, e.g. &#x60;2016ne&#x60;. */
-    public var key: String?
+    public var key: String
     /** Year this district participated. */
-    public var year: Int32?
+    public var year: Int
 
-    public init() {}
 
-    // MARK: JSONEncodable
-    func encodeToJSON() -> AnyObject {
-        var nillableDictionary = [String:AnyObject?]()
-        nillableDictionary["abbreviation"] = self.abbreviation
-        nillableDictionary["display_name"] = self.displayName
-        nillableDictionary["key"] = self.key
-        nillableDictionary["year"] = self.year?.encodeToJSON()
-        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
-        return dictionary
+    
+    public init(abbreviation: String, displayName: String, key: String, year: Int) {
+        self.abbreviation = abbreviation
+        self.displayName = displayName
+        self.key = key
+        self.year = year
+    }
+    
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+
+        var container = encoder.container(keyedBy: String.self)
+
+        try container.encode(abbreviation, forKey: "abbreviation")
+        try container.encode(displayName, forKey: "display_name")
+        try container.encode(key, forKey: "key")
+        try container.encode(year, forKey: "year")
+    }
+
+    // Decodable protocol methods
+
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: String.self)
+
+        abbreviation = try container.decode(String.self, forKey: "abbreviation")
+        displayName = try container.decode(String.self, forKey: "display_name")
+        key = try container.decode(String.self, forKey: "key")
+        year = try container.decode(Int.self, forKey: "year")
     }
 }
+

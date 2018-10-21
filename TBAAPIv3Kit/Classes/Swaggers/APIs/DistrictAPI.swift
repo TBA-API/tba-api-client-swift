@@ -5,27 +5,28 @@
 // https://github.com/swagger-api/swagger-codegen
 //
 
+import Foundation
 import Alamofire
 
 extension TBAAPIv3KitAPI {
 
 
-public class DistrictAPI: APIBase {
+open class DistrictAPI {
     /**
 
      - parameter districtKey: (path) TBA District Key, eg &#x60;2016fim&#x60; 
      - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func getDistrictEvents(districtKey districtKey: String, ifModifiedSince: String? = nil, completion: ((data: [Event]?, error: ErrorType?) -> Void)) {
+    open class func getDistrictEvents(districtKey: String, ifModifiedSince: String? = nil, completion: @escaping ((_ data: [Event]?,_ error: Error?) -> Void)) {
         getDistrictEventsWithRequestBuilder(districtKey: districtKey, ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
-            completion(data: response?.body, error: error);
+            completion(response?.body, error);
         }
     }
 
 
     /**
-     - GET /district/{districtKey}/events
+     - GET /district/{district_key}/events
      - Gets a list of events in the given district.
      - API Key:
        - type: apiKey X-TBA-Auth-Key 
@@ -127,24 +128,22 @@ public class DistrictAPI: APIBase {
 
      - returns: RequestBuilder<[Event]> 
      */
-    public class func getDistrictEventsWithRequestBuilder(districtKey districtKey: String, ifModifiedSince: String? = nil) -> RequestBuilder<[Event]> {
-        var path = "/district/{districtKey}/events"
-        path = path.stringByReplacingOccurrencesOfString("{district_key}", withString: "\(districtKey)", options: .LiteralSearch, range: nil)
+    open class func getDistrictEventsWithRequestBuilder(districtKey: String, ifModifiedSince: String? = nil) -> RequestBuilder<[Event]> {
+        var path = "/district/{district_key}/events"
+        path = path.replacingOccurrences(of: "{district_key}", with: "\(districtKey)", options: .literal, range: nil)
         let URLString = TBAAPIv3KitAPI.basePath + path
+        let parameters: [String:Any]? = nil
 
-        let nillableParameters: [String:AnyObject?] = [:]
- 
-        let parameters = APIHelper.rejectNil(nillableParameters)
- 
-        let convertedParameters = APIHelper.convertBoolToString(parameters)
-        let nillableHeaders: [String: AnyObject?] = [
+        let url = NSURLComponents(string: URLString)
+
+        let nillableHeaders: [String: Any?] = [
             "If-Modified-Since": ifModifiedSince
         ]
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
- 
+
         let requestBuilder: RequestBuilder<[Event]>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true, headers: headerParameters)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
 
     /**
@@ -153,15 +152,15 @@ public class DistrictAPI: APIBase {
      - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func getDistrictEventsKeys(districtKey districtKey: String, ifModifiedSince: String? = nil, completion: ((data: [String]?, error: ErrorType?) -> Void)) {
+    open class func getDistrictEventsKeys(districtKey: String, ifModifiedSince: String? = nil, completion: @escaping ((_ data: [String]?,_ error: Error?) -> Void)) {
         getDistrictEventsKeysWithRequestBuilder(districtKey: districtKey, ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
-            completion(data: response?.body, error: error);
+            completion(response?.body, error);
         }
     }
 
 
     /**
-     - GET /district/{districtKey}/events/keys
+     - GET /district/{district_key}/events/keys
      - Gets a list of event keys for events in the given district.
      - API Key:
        - type: apiKey X-TBA-Auth-Key 
@@ -175,24 +174,22 @@ public class DistrictAPI: APIBase {
 
      - returns: RequestBuilder<[String]> 
      */
-    public class func getDistrictEventsKeysWithRequestBuilder(districtKey districtKey: String, ifModifiedSince: String? = nil) -> RequestBuilder<[String]> {
-        var path = "/district/{districtKey}/events/keys"
-        path = path.stringByReplacingOccurrencesOfString("{district_key}", withString: "\(districtKey)", options: .LiteralSearch, range: nil)
+    open class func getDistrictEventsKeysWithRequestBuilder(districtKey: String, ifModifiedSince: String? = nil) -> RequestBuilder<[String]> {
+        var path = "/district/{district_key}/events/keys"
+        path = path.replacingOccurrences(of: "{district_key}", with: "\(districtKey)", options: .literal, range: nil)
         let URLString = TBAAPIv3KitAPI.basePath + path
+        let parameters: [String:Any]? = nil
 
-        let nillableParameters: [String:AnyObject?] = [:]
- 
-        let parameters = APIHelper.rejectNil(nillableParameters)
- 
-        let convertedParameters = APIHelper.convertBoolToString(parameters)
-        let nillableHeaders: [String: AnyObject?] = [
+        let url = NSURLComponents(string: URLString)
+
+        let nillableHeaders: [String: Any?] = [
             "If-Modified-Since": ifModifiedSince
         ]
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
- 
+
         let requestBuilder: RequestBuilder<[String]>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true, headers: headerParameters)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
 
     /**
@@ -201,15 +198,15 @@ public class DistrictAPI: APIBase {
      - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func getDistrictEventsSimple(districtKey districtKey: String, ifModifiedSince: String? = nil, completion: ((data: [EventSimple]?, error: ErrorType?) -> Void)) {
+    open class func getDistrictEventsSimple(districtKey: String, ifModifiedSince: String? = nil, completion: @escaping ((_ data: [EventSimple]?,_ error: Error?) -> Void)) {
         getDistrictEventsSimpleWithRequestBuilder(districtKey: districtKey, ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
-            completion(data: response?.body, error: error);
+            completion(response?.body, error);
         }
     }
 
 
     /**
-     - GET /district/{districtKey}/events/simple
+     - GET /district/{district_key}/events/simple
      - Gets a short-form list of events in the given district.
      - API Key:
        - type: apiKey X-TBA-Auth-Key 
@@ -257,24 +254,22 @@ public class DistrictAPI: APIBase {
 
      - returns: RequestBuilder<[EventSimple]> 
      */
-    public class func getDistrictEventsSimpleWithRequestBuilder(districtKey districtKey: String, ifModifiedSince: String? = nil) -> RequestBuilder<[EventSimple]> {
-        var path = "/district/{districtKey}/events/simple"
-        path = path.stringByReplacingOccurrencesOfString("{district_key}", withString: "\(districtKey)", options: .LiteralSearch, range: nil)
+    open class func getDistrictEventsSimpleWithRequestBuilder(districtKey: String, ifModifiedSince: String? = nil) -> RequestBuilder<[EventSimple]> {
+        var path = "/district/{district_key}/events/simple"
+        path = path.replacingOccurrences(of: "{district_key}", with: "\(districtKey)", options: .literal, range: nil)
         let URLString = TBAAPIv3KitAPI.basePath + path
+        let parameters: [String:Any]? = nil
 
-        let nillableParameters: [String:AnyObject?] = [:]
- 
-        let parameters = APIHelper.rejectNil(nillableParameters)
- 
-        let convertedParameters = APIHelper.convertBoolToString(parameters)
-        let nillableHeaders: [String: AnyObject?] = [
+        let url = NSURLComponents(string: URLString)
+
+        let nillableHeaders: [String: Any?] = [
             "If-Modified-Since": ifModifiedSince
         ]
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
- 
+
         let requestBuilder: RequestBuilder<[EventSimple]>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true, headers: headerParameters)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
 
     /**
@@ -283,15 +278,15 @@ public class DistrictAPI: APIBase {
      - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func getDistrictRankings(districtKey districtKey: String, ifModifiedSince: String? = nil, completion: ((data: [DistrictRanking]?, error: ErrorType?) -> Void)) {
+    open class func getDistrictRankings(districtKey: String, ifModifiedSince: String? = nil, completion: @escaping ((_ data: [DistrictRanking]?,_ error: Error?) -> Void)) {
         getDistrictRankingsWithRequestBuilder(districtKey: districtKey, ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
-            completion(data: response?.body, error: error);
+            completion(response?.body, error);
         }
     }
 
 
     /**
-     - GET /district/{districtKey}/rankings
+     - GET /district/{district_key}/rankings
      - Gets a list of team district rankings for the given district.
      - API Key:
        - type: apiKey X-TBA-Auth-Key 
@@ -349,24 +344,22 @@ public class DistrictAPI: APIBase {
 
      - returns: RequestBuilder<[DistrictRanking]> 
      */
-    public class func getDistrictRankingsWithRequestBuilder(districtKey districtKey: String, ifModifiedSince: String? = nil) -> RequestBuilder<[DistrictRanking]> {
-        var path = "/district/{districtKey}/rankings"
-        path = path.stringByReplacingOccurrencesOfString("{district_key}", withString: "\(districtKey)", options: .LiteralSearch, range: nil)
+    open class func getDistrictRankingsWithRequestBuilder(districtKey: String, ifModifiedSince: String? = nil) -> RequestBuilder<[DistrictRanking]> {
+        var path = "/district/{district_key}/rankings"
+        path = path.replacingOccurrences(of: "{district_key}", with: "\(districtKey)", options: .literal, range: nil)
         let URLString = TBAAPIv3KitAPI.basePath + path
+        let parameters: [String:Any]? = nil
 
-        let nillableParameters: [String:AnyObject?] = [:]
- 
-        let parameters = APIHelper.rejectNil(nillableParameters)
- 
-        let convertedParameters = APIHelper.convertBoolToString(parameters)
-        let nillableHeaders: [String: AnyObject?] = [
+        let url = NSURLComponents(string: URLString)
+
+        let nillableHeaders: [String: Any?] = [
             "If-Modified-Since": ifModifiedSince
         ]
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
- 
+
         let requestBuilder: RequestBuilder<[DistrictRanking]>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true, headers: headerParameters)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
 
     /**
@@ -375,15 +368,15 @@ public class DistrictAPI: APIBase {
      - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func getDistrictTeams(districtKey districtKey: String, ifModifiedSince: String? = nil, completion: ((data: [Team]?, error: ErrorType?) -> Void)) {
+    open class func getDistrictTeams(districtKey: String, ifModifiedSince: String? = nil, completion: @escaping ((_ data: [Team]?,_ error: Error?) -> Void)) {
         getDistrictTeamsWithRequestBuilder(districtKey: districtKey, ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
-            completion(data: response?.body, error: error);
+            completion(response?.body, error);
         }
     }
 
 
     /**
-     - GET /district/{districtKey}/teams
+     - GET /district/{district_key}/teams
      - Gets a list of `Team` objects that competed in events in the given district.
      - API Key:
        - type: apiKey X-TBA-Auth-Key 
@@ -435,24 +428,22 @@ public class DistrictAPI: APIBase {
 
      - returns: RequestBuilder<[Team]> 
      */
-    public class func getDistrictTeamsWithRequestBuilder(districtKey districtKey: String, ifModifiedSince: String? = nil) -> RequestBuilder<[Team]> {
-        var path = "/district/{districtKey}/teams"
-        path = path.stringByReplacingOccurrencesOfString("{district_key}", withString: "\(districtKey)", options: .LiteralSearch, range: nil)
+    open class func getDistrictTeamsWithRequestBuilder(districtKey: String, ifModifiedSince: String? = nil) -> RequestBuilder<[Team]> {
+        var path = "/district/{district_key}/teams"
+        path = path.replacingOccurrences(of: "{district_key}", with: "\(districtKey)", options: .literal, range: nil)
         let URLString = TBAAPIv3KitAPI.basePath + path
+        let parameters: [String:Any]? = nil
 
-        let nillableParameters: [String:AnyObject?] = [:]
- 
-        let parameters = APIHelper.rejectNil(nillableParameters)
- 
-        let convertedParameters = APIHelper.convertBoolToString(parameters)
-        let nillableHeaders: [String: AnyObject?] = [
+        let url = NSURLComponents(string: URLString)
+
+        let nillableHeaders: [String: Any?] = [
             "If-Modified-Since": ifModifiedSince
         ]
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
- 
+
         let requestBuilder: RequestBuilder<[Team]>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true, headers: headerParameters)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
 
     /**
@@ -461,15 +452,15 @@ public class DistrictAPI: APIBase {
      - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func getDistrictTeamsKeys(districtKey districtKey: String, ifModifiedSince: String? = nil, completion: ((data: [String]?, error: ErrorType?) -> Void)) {
+    open class func getDistrictTeamsKeys(districtKey: String, ifModifiedSince: String? = nil, completion: @escaping ((_ data: [String]?,_ error: Error?) -> Void)) {
         getDistrictTeamsKeysWithRequestBuilder(districtKey: districtKey, ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
-            completion(data: response?.body, error: error);
+            completion(response?.body, error);
         }
     }
 
 
     /**
-     - GET /district/{districtKey}/teams/keys
+     - GET /district/{district_key}/teams/keys
      - Gets a list of `Team` objects that competed in events in the given district.
      - API Key:
        - type: apiKey X-TBA-Auth-Key 
@@ -483,24 +474,22 @@ public class DistrictAPI: APIBase {
 
      - returns: RequestBuilder<[String]> 
      */
-    public class func getDistrictTeamsKeysWithRequestBuilder(districtKey districtKey: String, ifModifiedSince: String? = nil) -> RequestBuilder<[String]> {
-        var path = "/district/{districtKey}/teams/keys"
-        path = path.stringByReplacingOccurrencesOfString("{district_key}", withString: "\(districtKey)", options: .LiteralSearch, range: nil)
+    open class func getDistrictTeamsKeysWithRequestBuilder(districtKey: String, ifModifiedSince: String? = nil) -> RequestBuilder<[String]> {
+        var path = "/district/{district_key}/teams/keys"
+        path = path.replacingOccurrences(of: "{district_key}", with: "\(districtKey)", options: .literal, range: nil)
         let URLString = TBAAPIv3KitAPI.basePath + path
+        let parameters: [String:Any]? = nil
 
-        let nillableParameters: [String:AnyObject?] = [:]
- 
-        let parameters = APIHelper.rejectNil(nillableParameters)
- 
-        let convertedParameters = APIHelper.convertBoolToString(parameters)
-        let nillableHeaders: [String: AnyObject?] = [
+        let url = NSURLComponents(string: URLString)
+
+        let nillableHeaders: [String: Any?] = [
             "If-Modified-Since": ifModifiedSince
         ]
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
- 
+
         let requestBuilder: RequestBuilder<[String]>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true, headers: headerParameters)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
 
     /**
@@ -509,15 +498,15 @@ public class DistrictAPI: APIBase {
      - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func getDistrictTeamsSimple(districtKey districtKey: String, ifModifiedSince: String? = nil, completion: ((data: [TeamSimple]?, error: ErrorType?) -> Void)) {
+    open class func getDistrictTeamsSimple(districtKey: String, ifModifiedSince: String? = nil, completion: @escaping ((_ data: [TeamSimple]?,_ error: Error?) -> Void)) {
         getDistrictTeamsSimpleWithRequestBuilder(districtKey: districtKey, ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
-            completion(data: response?.body, error: error);
+            completion(response?.body, error);
         }
     }
 
 
     /**
-     - GET /district/{districtKey}/teams/simple
+     - GET /district/{district_key}/teams/simple
      - Gets a short-form list of `Team` objects that competed in events in the given district.
      - API Key:
        - type: apiKey X-TBA-Auth-Key 
@@ -547,24 +536,22 @@ public class DistrictAPI: APIBase {
 
      - returns: RequestBuilder<[TeamSimple]> 
      */
-    public class func getDistrictTeamsSimpleWithRequestBuilder(districtKey districtKey: String, ifModifiedSince: String? = nil) -> RequestBuilder<[TeamSimple]> {
-        var path = "/district/{districtKey}/teams/simple"
-        path = path.stringByReplacingOccurrencesOfString("{district_key}", withString: "\(districtKey)", options: .LiteralSearch, range: nil)
+    open class func getDistrictTeamsSimpleWithRequestBuilder(districtKey: String, ifModifiedSince: String? = nil) -> RequestBuilder<[TeamSimple]> {
+        var path = "/district/{district_key}/teams/simple"
+        path = path.replacingOccurrences(of: "{district_key}", with: "\(districtKey)", options: .literal, range: nil)
         let URLString = TBAAPIv3KitAPI.basePath + path
+        let parameters: [String:Any]? = nil
 
-        let nillableParameters: [String:AnyObject?] = [:]
- 
-        let parameters = APIHelper.rejectNil(nillableParameters)
- 
-        let convertedParameters = APIHelper.convertBoolToString(parameters)
-        let nillableHeaders: [String: AnyObject?] = [
+        let url = NSURLComponents(string: URLString)
+
+        let nillableHeaders: [String: Any?] = [
             "If-Modified-Since": ifModifiedSince
         ]
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
- 
+
         let requestBuilder: RequestBuilder<[TeamSimple]>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true, headers: headerParameters)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
 
     /**
@@ -573,9 +560,9 @@ public class DistrictAPI: APIBase {
      - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func getDistrictsByYear(year year: Int32, ifModifiedSince: String? = nil, completion: ((data: [DistrictList]?, error: ErrorType?) -> Void)) {
+    open class func getDistrictsByYear(year: Int, ifModifiedSince: String? = nil, completion: @escaping ((_ data: [DistrictList]?,_ error: Error?) -> Void)) {
         getDistrictsByYearWithRequestBuilder(year: year, ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
-            completion(data: response?.body, error: error);
+            completion(response?.body, error);
         }
     }
 
@@ -605,24 +592,22 @@ public class DistrictAPI: APIBase {
 
      - returns: RequestBuilder<[DistrictList]> 
      */
-    public class func getDistrictsByYearWithRequestBuilder(year year: Int32, ifModifiedSince: String? = nil) -> RequestBuilder<[DistrictList]> {
+    open class func getDistrictsByYearWithRequestBuilder(year: Int, ifModifiedSince: String? = nil) -> RequestBuilder<[DistrictList]> {
         var path = "/districts/{year}"
-        path = path.stringByReplacingOccurrencesOfString("{year}", withString: "\(year)", options: .LiteralSearch, range: nil)
+        path = path.replacingOccurrences(of: "{year}", with: "\(year)", options: .literal, range: nil)
         let URLString = TBAAPIv3KitAPI.basePath + path
+        let parameters: [String:Any]? = nil
 
-        let nillableParameters: [String:AnyObject?] = [:]
- 
-        let parameters = APIHelper.rejectNil(nillableParameters)
- 
-        let convertedParameters = APIHelper.convertBoolToString(parameters)
-        let nillableHeaders: [String: AnyObject?] = [
+        let url = NSURLComponents(string: URLString)
+
+        let nillableHeaders: [String: Any?] = [
             "If-Modified-Since": ifModifiedSince
         ]
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
- 
+
         let requestBuilder: RequestBuilder<[DistrictList]>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true, headers: headerParameters)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
 
     /**
@@ -631,15 +616,15 @@ public class DistrictAPI: APIBase {
      - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func getEventDistrictPoints(eventKey eventKey: String, ifModifiedSince: String? = nil, completion: ((data: EventDistrictPoints?, error: ErrorType?) -> Void)) {
+    open class func getEventDistrictPoints(eventKey: String, ifModifiedSince: String? = nil, completion: @escaping ((_ data: EventDistrictPoints?,_ error: Error?) -> Void)) {
         getEventDistrictPointsWithRequestBuilder(eventKey: eventKey, ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
-            completion(data: response?.body, error: error);
+            completion(response?.body, error);
         }
     }
 
 
     /**
-     - GET /event/{eventKey}/district_points
+     - GET /event/{event_key}/district_points
      - Gets a list of team rankings for the Event.
      - API Key:
        - type: apiKey X-TBA-Auth-Key 
@@ -669,24 +654,22 @@ public class DistrictAPI: APIBase {
 
      - returns: RequestBuilder<EventDistrictPoints> 
      */
-    public class func getEventDistrictPointsWithRequestBuilder(eventKey eventKey: String, ifModifiedSince: String? = nil) -> RequestBuilder<EventDistrictPoints> {
-        var path = "/event/{eventKey}/district_points"
-        path = path.stringByReplacingOccurrencesOfString("{event_key}", withString: "\(eventKey)", options: .LiteralSearch, range: nil)
+    open class func getEventDistrictPointsWithRequestBuilder(eventKey: String, ifModifiedSince: String? = nil) -> RequestBuilder<EventDistrictPoints> {
+        var path = "/event/{event_key}/district_points"
+        path = path.replacingOccurrences(of: "{event_key}", with: "\(eventKey)", options: .literal, range: nil)
         let URLString = TBAAPIv3KitAPI.basePath + path
+        let parameters: [String:Any]? = nil
 
-        let nillableParameters: [String:AnyObject?] = [:]
- 
-        let parameters = APIHelper.rejectNil(nillableParameters)
- 
-        let convertedParameters = APIHelper.convertBoolToString(parameters)
-        let nillableHeaders: [String: AnyObject?] = [
+        let url = NSURLComponents(string: URLString)
+
+        let nillableHeaders: [String: Any?] = [
             "If-Modified-Since": ifModifiedSince
         ]
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
- 
+
         let requestBuilder: RequestBuilder<EventDistrictPoints>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true, headers: headerParameters)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
 
     /**
@@ -695,15 +678,15 @@ public class DistrictAPI: APIBase {
      - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func getTeamDistricts(teamKey teamKey: String, ifModifiedSince: String? = nil, completion: ((data: [DistrictList]?, error: ErrorType?) -> Void)) {
+    open class func getTeamDistricts(teamKey: String, ifModifiedSince: String? = nil, completion: @escaping ((_ data: [DistrictList]?,_ error: Error?) -> Void)) {
         getTeamDistrictsWithRequestBuilder(teamKey: teamKey, ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
-            completion(data: response?.body, error: error);
+            completion(response?.body, error);
         }
     }
 
 
     /**
-     - GET /team/{teamKey}/districts
+     - GET /team/{team_key}/districts
      - Gets an array of districts representing each year the team was in a district. Will return an empty array if the team was never in a district.
      - API Key:
        - type: apiKey X-TBA-Auth-Key 
@@ -727,24 +710,22 @@ public class DistrictAPI: APIBase {
 
      - returns: RequestBuilder<[DistrictList]> 
      */
-    public class func getTeamDistrictsWithRequestBuilder(teamKey teamKey: String, ifModifiedSince: String? = nil) -> RequestBuilder<[DistrictList]> {
-        var path = "/team/{teamKey}/districts"
-        path = path.stringByReplacingOccurrencesOfString("{team_key}", withString: "\(teamKey)", options: .LiteralSearch, range: nil)
+    open class func getTeamDistrictsWithRequestBuilder(teamKey: String, ifModifiedSince: String? = nil) -> RequestBuilder<[DistrictList]> {
+        var path = "/team/{team_key}/districts"
+        path = path.replacingOccurrences(of: "{team_key}", with: "\(teamKey)", options: .literal, range: nil)
         let URLString = TBAAPIv3KitAPI.basePath + path
+        let parameters: [String:Any]? = nil
 
-        let nillableParameters: [String:AnyObject?] = [:]
- 
-        let parameters = APIHelper.rejectNil(nillableParameters)
- 
-        let convertedParameters = APIHelper.convertBoolToString(parameters)
-        let nillableHeaders: [String: AnyObject?] = [
+        let url = NSURLComponents(string: URLString)
+
+        let nillableHeaders: [String: Any?] = [
             "If-Modified-Since": ifModifiedSince
         ]
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
- 
+
         let requestBuilder: RequestBuilder<[DistrictList]>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true, headers: headerParameters)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
 
 }

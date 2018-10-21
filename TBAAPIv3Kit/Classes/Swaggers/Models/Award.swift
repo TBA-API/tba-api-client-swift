@@ -8,29 +8,54 @@
 import Foundation
 
 
-public class Award: JSONEncodable {
+
+open class Award: Codable {
+
     /** The name of the award as provided by FIRST. May vary for the same award type. */
-    public var name: String?
+    public var name: String
     /** Type of award given. See https://github.com/the-blue-alliance/the-blue-alliance/blob/master/consts/award_type.py#L6 */
-    public var awardType: Int32?
+    public var awardType: Int
     /** The event_key of the event the award was won at. */
-    public var eventKey: String?
+    public var eventKey: String
     /** A list of recipients of the award at the event. Either team_key and/or awardee for individual awards. */
-    public var recipientList: [AwardRecipient]?
+    public var recipientList: [AwardRecipient]
     /** The year this award was won. */
-    public var year: Int32?
+    public var year: Int
 
-    public init() {}
 
-    // MARK: JSONEncodable
-    func encodeToJSON() -> AnyObject {
-        var nillableDictionary = [String:AnyObject?]()
-        nillableDictionary["name"] = self.name
-        nillableDictionary["award_type"] = self.awardType?.encodeToJSON()
-        nillableDictionary["event_key"] = self.eventKey
-        nillableDictionary["recipient_list"] = self.recipientList?.encodeToJSON()
-        nillableDictionary["year"] = self.year?.encodeToJSON()
-        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
-        return dictionary
+    
+    public init(name: String, awardType: Int, eventKey: String, recipientList: [AwardRecipient], year: Int) {
+        self.name = name
+        self.awardType = awardType
+        self.eventKey = eventKey
+        self.recipientList = recipientList
+        self.year = year
+    }
+    
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+
+        var container = encoder.container(keyedBy: String.self)
+
+        try container.encode(name, forKey: "name")
+        try container.encode(awardType, forKey: "award_type")
+        try container.encode(eventKey, forKey: "event_key")
+        try container.encode(recipientList, forKey: "recipient_list")
+        try container.encode(year, forKey: "year")
+    }
+
+    // Decodable protocol methods
+
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: String.self)
+
+        name = try container.decode(String.self, forKey: "name")
+        awardType = try container.decode(Int.self, forKey: "award_type")
+        eventKey = try container.decode(String.self, forKey: "event_key")
+        recipientList = try container.decode([AwardRecipient].self, forKey: "recipient_list")
+        year = try container.decode(Int.self, forKey: "year")
     }
 }
+

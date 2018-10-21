@@ -8,62 +8,125 @@
 import Foundation
 
 
-public class MatchScoreBreakdown2015Alliance: JSONEncodable {
-    public var autoPoints: Int32?
-    public var teleopPoints: Int32?
-    public var containerPoints: Int32?
-    public var totePoints: Int32?
-    public var litterPoints: Int32?
-    public var foulPoints: Int32?
-    public var adjustPoints: Int32?
-    public var totalPoints: Int32?
-    public var foulCount: Int32?
-    public var toteCountFar: Int32?
-    public var toteCountNear: Int32?
+
+open class MatchScoreBreakdown2015Alliance: Codable {
+
+    public var autoPoints: Int?
+    public var teleopPoints: Int?
+    public var containerPoints: Int?
+    public var totePoints: Int?
+    public var litterPoints: Int?
+    public var foulPoints: Int?
+    public var adjustPoints: Int?
+    public var totalPoints: Int?
+    public var foulCount: Int?
+    public var toteCountFar: Int?
+    public var toteCountNear: Int?
     public var toteSet: Bool?
     public var toteStack: Bool?
-    public var containerCountLevel1: Int32?
-    public var containerCountLevel2: Int32?
-    public var containerCountLevel3: Int32?
-    public var containerCountLevel4: Int32?
-    public var containerCountLevel5: Int32?
-    public var containerCountLevel6: Int32?
+    public var containerCountLevel1: Int?
+    public var containerCountLevel2: Int?
+    public var containerCountLevel3: Int?
+    public var containerCountLevel4: Int?
+    public var containerCountLevel5: Int?
+    public var containerCountLevel6: Int?
     public var containerSet: Bool?
-    public var litterCountContainer: Int32?
-    public var litterCountLandfill: Int32?
-    public var litterCountUnprocessed: Int32?
+    public var litterCountContainer: Int?
+    public var litterCountLandfill: Int?
+    public var litterCountUnprocessed: Int?
     public var robotSet: Bool?
 
-    public init() {}
 
-    // MARK: JSONEncodable
-    func encodeToJSON() -> AnyObject {
-        var nillableDictionary = [String:AnyObject?]()
-        nillableDictionary["auto_points"] = self.autoPoints?.encodeToJSON()
-        nillableDictionary["teleop_points"] = self.teleopPoints?.encodeToJSON()
-        nillableDictionary["container_points"] = self.containerPoints?.encodeToJSON()
-        nillableDictionary["tote_points"] = self.totePoints?.encodeToJSON()
-        nillableDictionary["litter_points"] = self.litterPoints?.encodeToJSON()
-        nillableDictionary["foul_points"] = self.foulPoints?.encodeToJSON()
-        nillableDictionary["adjust_points"] = self.adjustPoints?.encodeToJSON()
-        nillableDictionary["total_points"] = self.totalPoints?.encodeToJSON()
-        nillableDictionary["foul_count"] = self.foulCount?.encodeToJSON()
-        nillableDictionary["tote_count_far"] = self.toteCountFar?.encodeToJSON()
-        nillableDictionary["tote_count_near"] = self.toteCountNear?.encodeToJSON()
-        nillableDictionary["tote_set"] = self.toteSet
-        nillableDictionary["tote_stack"] = self.toteStack
-        nillableDictionary["container_count_level1"] = self.containerCountLevel1?.encodeToJSON()
-        nillableDictionary["container_count_level2"] = self.containerCountLevel2?.encodeToJSON()
-        nillableDictionary["container_count_level3"] = self.containerCountLevel3?.encodeToJSON()
-        nillableDictionary["container_count_level4"] = self.containerCountLevel4?.encodeToJSON()
-        nillableDictionary["container_count_level5"] = self.containerCountLevel5?.encodeToJSON()
-        nillableDictionary["container_count_level6"] = self.containerCountLevel6?.encodeToJSON()
-        nillableDictionary["container_set"] = self.containerSet
-        nillableDictionary["litter_count_container"] = self.litterCountContainer?.encodeToJSON()
-        nillableDictionary["litter_count_landfill"] = self.litterCountLandfill?.encodeToJSON()
-        nillableDictionary["litter_count_unprocessed"] = self.litterCountUnprocessed?.encodeToJSON()
-        nillableDictionary["robot_set"] = self.robotSet
-        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
-        return dictionary
+    
+    public init(autoPoints: Int?, teleopPoints: Int?, containerPoints: Int?, totePoints: Int?, litterPoints: Int?, foulPoints: Int?, adjustPoints: Int?, totalPoints: Int?, foulCount: Int?, toteCountFar: Int?, toteCountNear: Int?, toteSet: Bool?, toteStack: Bool?, containerCountLevel1: Int?, containerCountLevel2: Int?, containerCountLevel3: Int?, containerCountLevel4: Int?, containerCountLevel5: Int?, containerCountLevel6: Int?, containerSet: Bool?, litterCountContainer: Int?, litterCountLandfill: Int?, litterCountUnprocessed: Int?, robotSet: Bool?) {
+        self.autoPoints = autoPoints
+        self.teleopPoints = teleopPoints
+        self.containerPoints = containerPoints
+        self.totePoints = totePoints
+        self.litterPoints = litterPoints
+        self.foulPoints = foulPoints
+        self.adjustPoints = adjustPoints
+        self.totalPoints = totalPoints
+        self.foulCount = foulCount
+        self.toteCountFar = toteCountFar
+        self.toteCountNear = toteCountNear
+        self.toteSet = toteSet
+        self.toteStack = toteStack
+        self.containerCountLevel1 = containerCountLevel1
+        self.containerCountLevel2 = containerCountLevel2
+        self.containerCountLevel3 = containerCountLevel3
+        self.containerCountLevel4 = containerCountLevel4
+        self.containerCountLevel5 = containerCountLevel5
+        self.containerCountLevel6 = containerCountLevel6
+        self.containerSet = containerSet
+        self.litterCountContainer = litterCountContainer
+        self.litterCountLandfill = litterCountLandfill
+        self.litterCountUnprocessed = litterCountUnprocessed
+        self.robotSet = robotSet
+    }
+    
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+
+        var container = encoder.container(keyedBy: String.self)
+
+        try container.encodeIfPresent(autoPoints, forKey: "auto_points")
+        try container.encodeIfPresent(teleopPoints, forKey: "teleop_points")
+        try container.encodeIfPresent(containerPoints, forKey: "container_points")
+        try container.encodeIfPresent(totePoints, forKey: "tote_points")
+        try container.encodeIfPresent(litterPoints, forKey: "litter_points")
+        try container.encodeIfPresent(foulPoints, forKey: "foul_points")
+        try container.encodeIfPresent(adjustPoints, forKey: "adjust_points")
+        try container.encodeIfPresent(totalPoints, forKey: "total_points")
+        try container.encodeIfPresent(foulCount, forKey: "foul_count")
+        try container.encodeIfPresent(toteCountFar, forKey: "tote_count_far")
+        try container.encodeIfPresent(toteCountNear, forKey: "tote_count_near")
+        try container.encodeIfPresent(toteSet, forKey: "tote_set")
+        try container.encodeIfPresent(toteStack, forKey: "tote_stack")
+        try container.encodeIfPresent(containerCountLevel1, forKey: "container_count_level1")
+        try container.encodeIfPresent(containerCountLevel2, forKey: "container_count_level2")
+        try container.encodeIfPresent(containerCountLevel3, forKey: "container_count_level3")
+        try container.encodeIfPresent(containerCountLevel4, forKey: "container_count_level4")
+        try container.encodeIfPresent(containerCountLevel5, forKey: "container_count_level5")
+        try container.encodeIfPresent(containerCountLevel6, forKey: "container_count_level6")
+        try container.encodeIfPresent(containerSet, forKey: "container_set")
+        try container.encodeIfPresent(litterCountContainer, forKey: "litter_count_container")
+        try container.encodeIfPresent(litterCountLandfill, forKey: "litter_count_landfill")
+        try container.encodeIfPresent(litterCountUnprocessed, forKey: "litter_count_unprocessed")
+        try container.encodeIfPresent(robotSet, forKey: "robot_set")
+    }
+
+    // Decodable protocol methods
+
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: String.self)
+
+        autoPoints = try container.decodeIfPresent(Int.self, forKey: "auto_points")
+        teleopPoints = try container.decodeIfPresent(Int.self, forKey: "teleop_points")
+        containerPoints = try container.decodeIfPresent(Int.self, forKey: "container_points")
+        totePoints = try container.decodeIfPresent(Int.self, forKey: "tote_points")
+        litterPoints = try container.decodeIfPresent(Int.self, forKey: "litter_points")
+        foulPoints = try container.decodeIfPresent(Int.self, forKey: "foul_points")
+        adjustPoints = try container.decodeIfPresent(Int.self, forKey: "adjust_points")
+        totalPoints = try container.decodeIfPresent(Int.self, forKey: "total_points")
+        foulCount = try container.decodeIfPresent(Int.self, forKey: "foul_count")
+        toteCountFar = try container.decodeIfPresent(Int.self, forKey: "tote_count_far")
+        toteCountNear = try container.decodeIfPresent(Int.self, forKey: "tote_count_near")
+        toteSet = try container.decodeIfPresent(Bool.self, forKey: "tote_set")
+        toteStack = try container.decodeIfPresent(Bool.self, forKey: "tote_stack")
+        containerCountLevel1 = try container.decodeIfPresent(Int.self, forKey: "container_count_level1")
+        containerCountLevel2 = try container.decodeIfPresent(Int.self, forKey: "container_count_level2")
+        containerCountLevel3 = try container.decodeIfPresent(Int.self, forKey: "container_count_level3")
+        containerCountLevel4 = try container.decodeIfPresent(Int.self, forKey: "container_count_level4")
+        containerCountLevel5 = try container.decodeIfPresent(Int.self, forKey: "container_count_level5")
+        containerCountLevel6 = try container.decodeIfPresent(Int.self, forKey: "container_count_level6")
+        containerSet = try container.decodeIfPresent(Bool.self, forKey: "container_set")
+        litterCountContainer = try container.decodeIfPresent(Int.self, forKey: "litter_count_container")
+        litterCountLandfill = try container.decodeIfPresent(Int.self, forKey: "litter_count_landfill")
+        litterCountUnprocessed = try container.decodeIfPresent(Int.self, forKey: "litter_count_unprocessed")
+        robotSet = try container.decodeIfPresent(Bool.self, forKey: "robot_set")
     }
 }
+

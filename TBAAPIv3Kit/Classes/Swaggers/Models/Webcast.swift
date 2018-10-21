@@ -8,32 +8,53 @@
 import Foundation
 
 
-public class Webcast: JSONEncodable {
-    public enum ModelType: String { 
-        case Youtube = "youtube"
-        case Twitch = "twitch"
-        case Ustream = "ustream"
-        case Iframe = "iframe"
-        case Html5 = "html5"
-        case Rtmp = "rtmp"
-        case Livestream = "livestream"
+
+open class Webcast: Codable {
+
+    public enum ModelType: String, Codable { 
+        case youtube = "youtube"
+        case twitch = "twitch"
+        case ustream = "ustream"
+        case iframe = "iframe"
+        case html5 = "html5"
+        case rtmp = "rtmp"
+        case livestream = "livestream"
     }
     /** Type of webcast, typically descriptive of the streaming provider. */
-    public var type: ModelType?
+    public var type: ModelType
     /** Type specific channel information. May be the YouTube stream, or Twitch channel name. In the case of iframe types, contains HTML to embed the stream in an HTML iframe. */
-    public var channel: String?
+    public var channel: String
     /** File identification as may be required for some types. May be null. */
     public var file: String?
 
-    public init() {}
 
-    // MARK: JSONEncodable
-    func encodeToJSON() -> AnyObject {
-        var nillableDictionary = [String:AnyObject?]()
-        nillableDictionary["type"] = self.type?.rawValue
-        nillableDictionary["channel"] = self.channel
-        nillableDictionary["file"] = self.file
-        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
-        return dictionary
+    
+    public init(type: ModelType, channel: String, file: String?) {
+        self.type = type
+        self.channel = channel
+        self.file = file
+    }
+    
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+
+        var container = encoder.container(keyedBy: String.self)
+
+        try container.encode(type, forKey: "type")
+        try container.encode(channel, forKey: "channel")
+        try container.encodeIfPresent(file, forKey: "file")
+    }
+
+    // Decodable protocol methods
+
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: String.self)
+
+        type = try container.decode(ModelType.self, forKey: "type")
+        channel = try container.decode(String.self, forKey: "channel")
+        file = try container.decodeIfPresent(String.self, forKey: "file")
     }
 }
+
