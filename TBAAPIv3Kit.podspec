@@ -4,7 +4,7 @@ Pod::Spec.new do |s|
   s.osx.deployment_target = '10.9'
   s.tvos.deployment_target = '9.0'
   s.version = '0.0.1'
-  s.source = https://github.com/TBA-API/tba-api-client-swift
+  s.source = 'https://github.com/TBA-API/tba-api-client-swift'
   s.authors = 'Swagger Codegen'
   s.license = 'Proprietary'
   s.homepage = 'https://github.com/swagger-api/swagger-codegen'
