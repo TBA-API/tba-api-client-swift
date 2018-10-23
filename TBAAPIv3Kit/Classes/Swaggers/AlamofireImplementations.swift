@@ -8,20 +8,59 @@ import Foundation
 import Alamofire
 
 class AlamofireRequestBuilderFactory: RequestBuilderFactory {
-    func getNonDecodableBuilder<T>() -> RequestBuilder<T>.Type {
+    func getBuilder<T>() -> RequestBuilder<T>.Type {
         return AlamofireRequestBuilder<T>.self
     }
+}
 
-    func getBuilder<T:Decodable>() -> RequestBuilder<T>.Type {
-        return AlamofireDecodableRequestBuilder<T>.self
+private struct SynchronizedDictionary<K: Hashable, V> {
+
+    private var dictionary = [K: V]()
+    private let queue = DispatchQueue(
+        label: "SynchronizedDictionary",
+        qos: DispatchQoS.userInitiated,
+        attributes: [DispatchQueue.Attributes.concurrent],
+        autoreleaseFrequency: DispatchQueue.AutoreleaseFrequency.inherit,
+        target: nil
+    )
+
+    public subscript(key: K) -> V? {
+        get {
+            var value: V?
+
+            queue.sync {
+                value = self.dictionary[key]
+            }
+
+            return value
+        }
+        set {
+            queue.sync(flags: DispatchWorkItemFlags.barrier) {
+                self.dictionary[key] = newValue
+            }
+        }
+    }
+
+}
+
+class JSONEncodingWrapper: ParameterEncoding {
+    var bodyParameters: Any?
+    var encoding: JSONEncoding = JSONEncoding()
+
+    public init(parameters: Any?) {
+        self.bodyParameters = parameters
+    }
+
+    public func encode(_ urlRequest: URLRequestConvertible, with parameters: Parameters?) throws -> URLRequest {
+        return try encoding.encode(urlRequest, withJSONObject: bodyParameters)
     }
 }
 
 // Store manager to retain its reference
-private var managerStore: [String: Alamofire.SessionManager] = [:]
+private var managerStore = SynchronizedDictionary<String, Alamofire.SessionManager>()
 
 open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
-    required public init(method: String, URLString: String, parameters: [String : Any]?, isBody: Bool, headers: [String : String] = [:]) {
+    required public init(method: String, URLString: String, parameters: Any?, isBody: Bool, headers: [String : String] = [:]) {
         super.init(method: method, URLString: URLString, parameters: parameters, isBody: isBody, headers: headers)
     }
 
@@ -51,24 +90,26 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
      configuration (e.g. to override the cache policy).
      */
     open func makeRequest(manager: SessionManager, method: HTTPMethod, encoding: ParameterEncoding, headers: [String:String]) -> DataRequest {
-        return manager.request(URLString, method: method, parameters: parameters, encoding: encoding, headers: headers)
+        return manager.request(URLString, method: method, parameters: parameters as? Parameters, encoding: encoding, headers: headers)
     }
 
-    override open func execute(_ completion: @escaping (_ response: Response<T>?, _ error: Error?) -> Void) {
+    override open func execute(_ completion: @escaping (_ response: Response<T>?, _ error: ErrorResponse?) -> Void) {
         let managerId:String = UUID().uuidString
         // Create a new manager for each request to customize its request header
         let manager = createSessionManager()
         managerStore[managerId] = manager
 
-        let encoding:ParameterEncoding = isBody ? JSONDataEncoding() : URLEncoding()
+        let encoding:ParameterEncoding = isBody ? JSONEncodingWrapper(parameters: parameters) : URLEncoding()
 
         let xMethod = Alamofire.HTTPMethod(rawValue: method)
-        let fileKeys = parameters == nil ? [] : parameters!.filter { $1 is NSURL }
+
+        let param = parameters as? Parameters
+        let fileKeys = param == nil ? [] : param!.filter { $1 is NSURL }
                                                            .map { $0.0 }
 
         if fileKeys.count > 0 {
             manager.upload(multipartFormData: { mpForm in
-                for (k, v) in self.parameters! {
+                for (k, v) in param! {
                     switch v {
                     case let fileURL as URL:
                         if let mimeType = self.contentTypeForFormPart(fileURL: fileURL) {
@@ -93,7 +134,7 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
                     }
                     self.processRequest(request: upload, managerId, completion)
                 case .failure(let encodingError):
-                    completion(nil, ErrorResponse.error(415, nil, encodingError))
+                    completion(nil, ErrorResponse.HttpError(statusCode: 415, data: nil, error: encodingError))
                 }
             })
         } else {
@@ -106,13 +147,13 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
 
     }
 
-    fileprivate func processRequest(request: DataRequest, _ managerId: String, _ completion: @escaping (_ response: Response<T>?, _ error: Error?) -> Void) {
+    private func processRequest(request: DataRequest, _ managerId: String, _ completion: @escaping (_ response: Response<T>?, _ error: ErrorResponse?) -> Void) {
         if let credential = self.credential {
             request.authenticate(usingCredential: credential)
         }
 
         let cleanupRequest = {
-            _ = managerStore.removeValue(forKey: managerId)
+            managerStore[managerId] = nil
         }
 
         let validatedRequest = request.validate()
@@ -125,7 +166,7 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
                 if stringResponse.result.isFailure {
                     completion(
                         nil,
-                        ErrorResponse.error(stringResponse.response?.statusCode ?? 500, stringResponse.data, stringResponse.result.error as Error!)
+                        ErrorResponse.HttpError(statusCode: stringResponse.response?.statusCode ?? 500, data: stringResponse.data, error: stringResponse.result.error as Error!)
                     )
                     return
                 }
@@ -134,6 +175,45 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
                     Response(
                         response: stringResponse.response!,
                         body: ((stringResponse.result.value ?? "") as! T)
+                    ),
+                    nil
+                )
+            })
+        case is Void.Type:
+            validatedRequest.responseData(completionHandler: { (voidResponse) in
+                cleanupRequest()
+
+                if voidResponse.result.isFailure {
+                    completion(
+                        nil,
+                        ErrorResponse.HttpError(statusCode: voidResponse.response?.statusCode ?? 500, data: voidResponse.data, error: voidResponse.result.error!)
+                    )
+                    return
+                }
+
+                completion(
+                    Response(
+                        response: voidResponse.response!,
+                        body: nil),
+                    nil
+                )
+            })
+        case is Data.Type:
+            validatedRequest.responseData(completionHandler: { (dataResponse) in
+                cleanupRequest()
+
+                if dataResponse.result.isFailure {
+                    completion(
+                        nil,
+                        ErrorResponse.HttpError(statusCode: dataResponse.response?.statusCode ?? 500, data: dataResponse.data, error: dataResponse.result.error!)
+                    )
+                    return
+                }
+
+                completion(
+                    Response(
+                        response: dataResponse.response!,
+                        body: (dataResponse.data as! T)
                     ),
                     nil
                 )
@@ -182,51 +262,48 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
                     )
 
                 } catch let requestParserError as DownloadException {
-                    completion(nil, ErrorResponse.error(400, dataResponse.data, requestParserError))
+                    completion(nil, ErrorResponse.HttpError(statusCode: 400, data:  dataResponse.data, error: requestParserError))
                 } catch let error {
-                    completion(nil, ErrorResponse.error(400, dataResponse.data, error))
+                    completion(nil, ErrorResponse.HttpError(statusCode: 400, data: dataResponse.data, error: error))
                 }
                 return
             })
-        case is Void.Type:
-            validatedRequest.responseData(completionHandler: { (voidResponse) in
-                cleanupRequest()
-
-                if voidResponse.result.isFailure {
-                    completion(
-                        nil,
-                        ErrorResponse.error(voidResponse.response?.statusCode ?? 500, voidResponse.data, voidResponse.result.error!)
-                    )
-                    return
-                }
-
-                completion(
-                    Response(
-                        response: voidResponse.response!,
-                        body: nil),
-                    nil
-                )
-            })
         default:
-            validatedRequest.responseData(completionHandler: { (dataResponse) in
+            validatedRequest.responseJSON(options: .allowFragments) { response in
                 cleanupRequest()
 
-                if dataResponse.result.isFailure {
-                    completion(
-                        nil,
-                        ErrorResponse.error(dataResponse.response?.statusCode ?? 500, dataResponse.data, dataResponse.result.error!)
-                    )
+                if response.result.isFailure {
+                    completion(nil, ErrorResponse.HttpError(statusCode: response.response?.statusCode ?? 500, data: response.data, error: response.result.error!))
                     return
                 }
 
-                completion(
-                    Response(
-                        response: dataResponse.response!,
-                        body: (dataResponse.data as! T)
-                    ),
-                    nil
-                )
-            })
+                // handle HTTP 204 No Content
+                // NSNull would crash decoders
+                if response.response?.statusCode == 204 && response.result.value is NSNull{
+                    completion(nil, nil)
+                    return
+                }
+
+                if () is T {
+                    completion(Response(response: response.response!, body: (() as! T)), nil)
+                    return
+                }
+                if let json: Any = response.result.value {
+                    let decoded = Decoders.decode(clazz: T.self, source: json as AnyObject, instance: nil)
+                    switch decoded {
+                    case let .success(object): completion(Response(response: response.response!, body: object), nil)
+                    case let .failure(error): completion(nil, ErrorResponse.DecodeError(response: response.data, decodeError: error))
+                    }
+                    return
+                } else if "" is T {
+                    // swagger-parser currently doesn't support void, which will be fixed in future swagger-parser release
+                    // https://github.com/swagger-api/swagger-parser/pull/34
+                    completion(Response(response: response.response!, body: ("" as! T)), nil)
+                    return
+                }
+
+                completion(nil, ErrorResponse.HttpError(statusCode: 500, data: nil, error: NSError(domain: "localhost", code: 500, userInfo: ["reason": "unreacheable code"])))
+            }
         }
     }
 
@@ -288,7 +365,6 @@ open class AlamofireRequestBuilder<T>: RequestBuilder<T> {
 
         return url
     }
-
 }
 
 fileprivate enum DownloadException : Error {
@@ -297,117 +373,4 @@ fileprivate enum DownloadException : Error {
     case requestMissing
     case requestMissingPath
     case requestMissingURL
-}
-
-public enum AlamofireDecodableRequestBuilderError: Error {
-    case emptyDataResponse
-    case nilHTTPResponse
-    case jsonDecoding(DecodingError)
-    case generalError(Error)
-}
-
-open class AlamofireDecodableRequestBuilder<T:Decodable>: AlamofireRequestBuilder<T> {
-
-    override fileprivate func processRequest(request: DataRequest, _ managerId: String, _ completion: @escaping (_ response: Response<T>?, _ error: Error?) -> Void) {
-        if let credential = self.credential {
-            request.authenticate(usingCredential: credential)
-        }
-
-        let cleanupRequest = {
-            _ = managerStore.removeValue(forKey: managerId)
-        }
-
-        let validatedRequest = request.validate()
-
-        switch T.self {
-        case is String.Type:
-            validatedRequest.responseString(completionHandler: { (stringResponse) in
-                cleanupRequest()
-
-                if stringResponse.result.isFailure {
-                    completion(
-                        nil,
-                        ErrorResponse.error(stringResponse.response?.statusCode ?? 500, stringResponse.data, stringResponse.result.error as Error!)
-                    )
-                    return
-                }
-
-                completion(
-                    Response(
-                        response: stringResponse.response!,
-                        body: ((stringResponse.result.value ?? "") as! T)
-                    ),
-                    nil
-                )
-            })
-        case is Void.Type:
-            validatedRequest.responseData(completionHandler: { (voidResponse) in
-                cleanupRequest()
-
-                if voidResponse.result.isFailure {
-                    completion(
-                        nil,
-                        ErrorResponse.error(voidResponse.response?.statusCode ?? 500, voidResponse.data, voidResponse.result.error!)
-                    )
-                    return
-                }
-
-                completion(
-                    Response(
-                        response: voidResponse.response!,
-                        body: nil),
-                    nil
-                )
-            })
-        case is Data.Type:
-            validatedRequest.responseData(completionHandler: { (dataResponse) in
-                cleanupRequest()
-
-                if dataResponse.result.isFailure {
-                    completion(
-                        nil,
-                        ErrorResponse.error(dataResponse.response?.statusCode ?? 500, dataResponse.data, dataResponse.result.error!)
-                    )
-                    return
-                }
-
-                completion(
-                    Response(
-                        response: dataResponse.response!,
-                        body: (dataResponse.data as! T)
-                    ),
-                    nil
-                )
-            })
-        default:
-            validatedRequest.responseData(completionHandler: { (dataResponse: DataResponse<Data>) in
-                cleanupRequest()
-
-                guard dataResponse.result.isSuccess else {
-                    completion(nil, ErrorResponse.error(dataResponse.response?.statusCode ?? 500, dataResponse.data, dataResponse.result.error!))
-                    return
-                }
-
-                guard let data = dataResponse.data, !data.isEmpty else {
-                    completion(nil, ErrorResponse.error(-1, nil, AlamofireDecodableRequestBuilderError.emptyDataResponse))
-                    return
-                }
-
-                guard let httpResponse = dataResponse.response else {
-                    completion(nil, ErrorResponse.error(-2, nil, AlamofireDecodableRequestBuilderError.nilHTTPResponse))
-                    return
-                }
-
-                var responseObj: Response<T>? = nil
-
-                let decodeResult: (decodableObj: T?, error: Error?) = CodableHelper.decode(T.self, from: data)
-                if decodeResult.error == nil {
-                    responseObj = Response(response: httpResponse, body: decodeResult.decodableObj)
-                }
-
-                completion(responseObj, decodeResult.error)
-            })
-        }
-    }
-
 }

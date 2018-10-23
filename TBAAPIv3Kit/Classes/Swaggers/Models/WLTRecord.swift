@@ -9,44 +9,26 @@ import Foundation
 
 
 /** A Win-Loss-Tie record for a team, or an alliance. */
-
-open class WLTRecord: Codable {
+open class WLTRecord: JSONEncodable {
 
     /** Number of losses. */
-    public var losses: Int
+    public var losses: Int32?
     /** Number of wins. */
-    public var wins: Int
+    public var wins: Int32?
     /** Number of ties. */
-    public var ties: Int
+    public var ties: Int32?
 
+    public init() {}
 
-    
-    public init(losses: Int, wins: Int, ties: Int) {
-        self.losses = losses
-        self.wins = wins
-        self.ties = ties
-    }
-    
+    // MARK: JSONEncodable
+    open func encodeToJSON() -> Any {
+        var nillableDictionary = [String:Any?]()
+        nillableDictionary["losses"] = self.losses?.encodeToJSON()
+        nillableDictionary["wins"] = self.wins?.encodeToJSON()
+        nillableDictionary["ties"] = self.ties?.encodeToJSON()
 
-    // Encodable protocol methods
-
-    public func encode(to encoder: Encoder) throws {
-
-        var container = encoder.container(keyedBy: String.self)
-
-        try container.encode(losses, forKey: "losses")
-        try container.encode(wins, forKey: "wins")
-        try container.encode(ties, forKey: "ties")
-    }
-
-    // Decodable protocol methods
-
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: String.self)
-
-        losses = try container.decode(Int.self, forKey: "losses")
-        wins = try container.decode(Int.self, forKey: "wins")
-        ties = try container.decode(Int.self, forKey: "ties")
+        let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
+        return dictionary
     }
 }
 

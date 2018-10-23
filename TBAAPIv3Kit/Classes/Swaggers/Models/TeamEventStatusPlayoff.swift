@@ -9,17 +9,16 @@ import Foundation
 
 
 /** Playoff status for this team, may be null if the team did not make playoffs, or playoffs have not begun. */
+open class TeamEventStatusPlayoff: JSONEncodable {
 
-open class TeamEventStatusPlayoff: Codable {
-
-    public enum Level: String, Codable { 
+    public enum Level: String { 
         case qm = "qm"
         case ef = "ef"
         case qf = "qf"
         case sf = "sf"
         case f = "f"
     }
-    public enum Status: String, Codable { 
+    public enum Status: String { 
         case won = "won"
         case eliminated = "eliminated"
         case playing = "playing"
@@ -31,42 +30,21 @@ open class TeamEventStatusPlayoff: Codable {
     /** Current competition status for the playoffs. */
     public var status: Status?
     /** The average match score during playoffs. Year specific. May be null if not relevant for a given year. */
-    public var playoffAverage: Int?
+    public var playoffAverage: Int32?
 
+    public init() {}
 
-    
-    public init(level: Level?, currentLevelRecord: WLTRecord?, record: WLTRecord?, status: Status?, playoffAverage: Int?) {
-        self.level = level
-        self.currentLevelRecord = currentLevelRecord
-        self.record = record
-        self.status = status
-        self.playoffAverage = playoffAverage
-    }
-    
+    // MARK: JSONEncodable
+    open func encodeToJSON() -> Any {
+        var nillableDictionary = [String:Any?]()
+        nillableDictionary["level"] = self.level?.rawValue
+        nillableDictionary["current_level_record"] = self.currentLevelRecord?.encodeToJSON()
+        nillableDictionary["record"] = self.record?.encodeToJSON()
+        nillableDictionary["status"] = self.status?.rawValue
+        nillableDictionary["playoff_average"] = self.playoffAverage?.encodeToJSON()
 
-    // Encodable protocol methods
-
-    public func encode(to encoder: Encoder) throws {
-
-        var container = encoder.container(keyedBy: String.self)
-
-        try container.encodeIfPresent(level, forKey: "level")
-        try container.encodeIfPresent(currentLevelRecord, forKey: "current_level_record")
-        try container.encodeIfPresent(record, forKey: "record")
-        try container.encodeIfPresent(status, forKey: "status")
-        try container.encodeIfPresent(playoffAverage, forKey: "playoff_average")
-    }
-
-    // Decodable protocol methods
-
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: String.self)
-
-        level = try container.decodeIfPresent(Level.self, forKey: "level")
-        currentLevelRecord = try container.decodeIfPresent(WLTRecord.self, forKey: "current_level_record")
-        record = try container.decodeIfPresent(WLTRecord.self, forKey: "record")
-        status = try container.decodeIfPresent(Status.self, forKey: "status")
-        playoffAverage = try container.decodeIfPresent(Int.self, forKey: "playoff_average")
+        let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
+        return dictionary
     }
 }
 

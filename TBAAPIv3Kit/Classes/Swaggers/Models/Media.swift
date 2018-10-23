@@ -9,10 +9,9 @@ import Foundation
 
 
 /** The &#x60;Media&#x60; object contains a reference for most any media associated with a team or event on TBA. */
+open class Media: JSONEncodable {
 
-open class Media: Codable {
-
-    public enum ModelType: String, Codable { 
+    public enum ModelType: String { 
         case youtube = "youtube"
         case cdphotothread = "cdphotothread"
         case imgur = "imgur"
@@ -28,9 +27,9 @@ open class Media: Codable {
         case avatar = "avatar"
     }
     /** TBA identifier for this media. */
-    public var key: String
+    public var key: String?
     /** String type of the media element. */
-    public var type: ModelType
+    public var type: ModelType?
     /** The key used to identify this media on the media site. */
     public var foreignKey: String?
     /** If required, a JSON dict of additional media information. */
@@ -38,40 +37,19 @@ open class Media: Codable {
     /** True if the media is of high quality. */
     public var preferred: Bool?
 
+    public init() {}
 
-    
-    public init(key: String, type: ModelType, foreignKey: String?, details: Any?, preferred: Bool?) {
-        self.key = key
-        self.type = type
-        self.foreignKey = foreignKey
-        self.details = details
-        self.preferred = preferred
-    }
-    
+    // MARK: JSONEncodable
+    open func encodeToJSON() -> Any {
+        var nillableDictionary = [String:Any?]()
+        nillableDictionary["key"] = self.key
+        nillableDictionary["type"] = self.type?.rawValue
+        nillableDictionary["foreign_key"] = self.foreignKey
+        nillableDictionary["details"] = self.details
+        nillableDictionary["preferred"] = self.preferred
 
-    // Encodable protocol methods
-
-    public func encode(to encoder: Encoder) throws {
-
-        var container = encoder.container(keyedBy: String.self)
-
-        try container.encode(key, forKey: "key")
-        try container.encode(type, forKey: "type")
-        try container.encodeIfPresent(foreignKey, forKey: "foreign_key")
-        try container.encodeIfPresent(details, forKey: "details")
-        try container.encodeIfPresent(preferred, forKey: "preferred")
-    }
-
-    // Decodable protocol methods
-
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: String.self)
-
-        key = try container.decode(String.self, forKey: "key")
-        type = try container.decode(ModelType.self, forKey: "type")
-        foreignKey = try container.decodeIfPresent(String.self, forKey: "foreign_key")
-        details = try container.decodeIfPresent(Any.self, forKey: "details")
-        preferred = try container.decodeIfPresent(Bool.self, forKey: "preferred")
+        let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
+        return dictionary
     }
 }
 

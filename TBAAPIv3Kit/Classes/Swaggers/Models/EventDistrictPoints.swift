@@ -8,39 +8,23 @@
 import Foundation
 
 
-
-open class EventDistrictPoints: Codable {
+open class EventDistrictPoints: JSONEncodable {
 
     /** Points gained for each team at the event. Stored as a key-value pair with the team key as the key, and an object describing the points as its value. */
-    public var points: [String:EventDistrictPointsPoints]
+    public var points: [String:EventDistrictPointsPoints]?
     /** Tiebreaker values for each team at the event. Stored as a key-value pair with the team key as the key, and an object describing the tiebreaker elements as its value. */
     public var tiebreakers: [String:EventDistrictPointsTiebreakers]?
 
+    public init() {}
 
-    
-    public init(points: [String:EventDistrictPointsPoints], tiebreakers: [String:EventDistrictPointsTiebreakers]?) {
-        self.points = points
-        self.tiebreakers = tiebreakers
-    }
-    
+    // MARK: JSONEncodable
+    open func encodeToJSON() -> Any {
+        var nillableDictionary = [String:Any?]()
+        nillableDictionary["points"] = self.points?.encodeToJSON()
+        nillableDictionary["tiebreakers"] = self.tiebreakers?.encodeToJSON()
 
-    // Encodable protocol methods
-
-    public func encode(to encoder: Encoder) throws {
-
-        var container = encoder.container(keyedBy: String.self)
-
-        try container.encode(points, forKey: "points")
-        try container.encodeIfPresent(tiebreakers, forKey: "tiebreakers")
-    }
-
-    // Decodable protocol methods
-
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: String.self)
-
-        points = try container.decode([String:EventDistrictPointsPoints].self, forKey: "points")
-        tiebreakers = try container.decodeIfPresent([String:EventDistrictPointsTiebreakers].self, forKey: "tiebreakers")
+        let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
+        return dictionary
     }
 }
 

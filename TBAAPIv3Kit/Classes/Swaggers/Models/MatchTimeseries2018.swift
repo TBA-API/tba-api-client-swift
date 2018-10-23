@@ -9,8 +9,7 @@ import Foundation
 
 
 /** Timeseries data for the 2018 game *FIRST* POWER UP. *WARNING:* This is *not* official data, and is subject to a significant possibility of error, or missing data. Do not rely on this data for any purpose. In fact, pretend we made it up. *WARNING:* This model is currently under active development and may change at any time, including in breaking ways. */
-
-open class MatchTimeseries2018: Codable {
+open class MatchTimeseries2018: JSONEncodable {
 
     /** TBA event key with the format yyyy[EVENT_CODE], where yyyy is the year, and EVENT_CODE is the event code of the event. */
     public var eventKey: String?
@@ -18,174 +17,101 @@ open class MatchTimeseries2018: Codable {
     public var matchId: String?
     /** Current mode of play, can be &#x60;pre_match&#x60;, &#x60;auto&#x60;, &#x60;telop&#x60;, or &#x60;post_match&#x60;. */
     public var mode: String?
-    public var play: Int?
+    public var play: Int32?
     /** Amount of time remaining in the match, only valid during &#x60;auto&#x60; and &#x60;teleop&#x60; modes. */
-    public var timeRemaining: Int?
+    public var timeRemaining: Int32?
     /** 1 if the blue alliance is credited with the AUTO QUEST, 0 if not. */
-    public var blueAutoQuest: Int?
+    public var blueAutoQuest: Int32?
     /** Number of POWER CUBES in the BOOST section of the blue alliance VAULT. */
-    public var blueBoostCount: Int?
+    public var blueBoostCount: Int32?
     /** Returns 1 if the blue alliance BOOST was played, or 0 if not played. */
-    public var blueBoostPlayed: Int?
+    public var blueBoostPlayed: Int32?
     /** Name of the current blue alliance POWER UP being played, or &#x60;null&#x60;. */
     public var blueCurrentPowerup: String?
     /** 1 if the blue alliance is credited with FACING THE BOSS, 0 if not. */
-    public var blueFaceTheBoss: Int?
+    public var blueFaceTheBoss: Int32?
     /** Number of POWER CUBES in the FORCE section of the blue alliance VAULT. */
-    public var blueForceCount: Int?
+    public var blueForceCount: Int32?
     /** Returns 1 if the blue alliance FORCE was played, or 0 if not played. */
-    public var blueForcePlayed: Int?
+    public var blueForcePlayed: Int32?
     /** Number of POWER CUBES in the LEVITATE section of the blue alliance VAULT. */
-    public var blueLevitateCount: Int?
+    public var blueLevitateCount: Int32?
     /** Returns 1 if the blue alliance LEVITATE was played, or 0 if not played. */
-    public var blueLevitatePlayed: Int?
+    public var blueLevitatePlayed: Int32?
     /** Number of seconds remaining in the blue alliance POWER UP time, or 0 if none is active. */
     public var bluePowerupTimeRemaining: String?
     /** 1 if the blue alliance owns the SCALE, 0 if not. */
-    public var blueScaleOwned: Int?
+    public var blueScaleOwned: Int32?
     /** Current score for the blue alliance. */
-    public var blueScore: Int?
+    public var blueScore: Int32?
     /** 1 if the blue alliance owns their SWITCH, 0 if not. */
-    public var blueSwitchOwned: Int?
+    public var blueSwitchOwned: Int32?
     /** 1 if the red alliance is credited with the AUTO QUEST, 0 if not. */
-    public var redAutoQuest: Int?
+    public var redAutoQuest: Int32?
     /** Number of POWER CUBES in the BOOST section of the red alliance VAULT. */
-    public var redBoostCount: Int?
+    public var redBoostCount: Int32?
     /** Returns 1 if the red alliance BOOST was played, or 0 if not played. */
-    public var redBoostPlayed: Int?
+    public var redBoostPlayed: Int32?
     /** Name of the current red alliance POWER UP being played, or &#x60;null&#x60;. */
     public var redCurrentPowerup: String?
     /** 1 if the red alliance is credited with FACING THE BOSS, 0 if not. */
-    public var redFaceTheBoss: Int?
+    public var redFaceTheBoss: Int32?
     /** Number of POWER CUBES in the FORCE section of the red alliance VAULT. */
-    public var redForceCount: Int?
+    public var redForceCount: Int32?
     /** Returns 1 if the red alliance FORCE was played, or 0 if not played. */
-    public var redForcePlayed: Int?
+    public var redForcePlayed: Int32?
     /** Number of POWER CUBES in the LEVITATE section of the red alliance VAULT. */
-    public var redLevitateCount: Int?
+    public var redLevitateCount: Int32?
     /** Returns 1 if the red alliance LEVITATE was played, or 0 if not played. */
-    public var redLevitatePlayed: Int?
+    public var redLevitatePlayed: Int32?
     /** Number of seconds remaining in the red alliance POWER UP time, or 0 if none is active. */
     public var redPowerupTimeRemaining: String?
     /** 1 if the red alliance owns the SCALE, 0 if not. */
-    public var redScaleOwned: Int?
+    public var redScaleOwned: Int32?
     /** Current score for the red alliance. */
-    public var redScore: Int?
+    public var redScore: Int32?
     /** 1 if the red alliance owns their SWITCH, 0 if not. */
-    public var redSwitchOwned: Int?
+    public var redSwitchOwned: Int32?
 
+    public init() {}
 
-    
-    public init(eventKey: String?, matchId: String?, mode: String?, play: Int?, timeRemaining: Int?, blueAutoQuest: Int?, blueBoostCount: Int?, blueBoostPlayed: Int?, blueCurrentPowerup: String?, blueFaceTheBoss: Int?, blueForceCount: Int?, blueForcePlayed: Int?, blueLevitateCount: Int?, blueLevitatePlayed: Int?, bluePowerupTimeRemaining: String?, blueScaleOwned: Int?, blueScore: Int?, blueSwitchOwned: Int?, redAutoQuest: Int?, redBoostCount: Int?, redBoostPlayed: Int?, redCurrentPowerup: String?, redFaceTheBoss: Int?, redForceCount: Int?, redForcePlayed: Int?, redLevitateCount: Int?, redLevitatePlayed: Int?, redPowerupTimeRemaining: String?, redScaleOwned: Int?, redScore: Int?, redSwitchOwned: Int?) {
-        self.eventKey = eventKey
-        self.matchId = matchId
-        self.mode = mode
-        self.play = play
-        self.timeRemaining = timeRemaining
-        self.blueAutoQuest = blueAutoQuest
-        self.blueBoostCount = blueBoostCount
-        self.blueBoostPlayed = blueBoostPlayed
-        self.blueCurrentPowerup = blueCurrentPowerup
-        self.blueFaceTheBoss = blueFaceTheBoss
-        self.blueForceCount = blueForceCount
-        self.blueForcePlayed = blueForcePlayed
-        self.blueLevitateCount = blueLevitateCount
-        self.blueLevitatePlayed = blueLevitatePlayed
-        self.bluePowerupTimeRemaining = bluePowerupTimeRemaining
-        self.blueScaleOwned = blueScaleOwned
-        self.blueScore = blueScore
-        self.blueSwitchOwned = blueSwitchOwned
-        self.redAutoQuest = redAutoQuest
-        self.redBoostCount = redBoostCount
-        self.redBoostPlayed = redBoostPlayed
-        self.redCurrentPowerup = redCurrentPowerup
-        self.redFaceTheBoss = redFaceTheBoss
-        self.redForceCount = redForceCount
-        self.redForcePlayed = redForcePlayed
-        self.redLevitateCount = redLevitateCount
-        self.redLevitatePlayed = redLevitatePlayed
-        self.redPowerupTimeRemaining = redPowerupTimeRemaining
-        self.redScaleOwned = redScaleOwned
-        self.redScore = redScore
-        self.redSwitchOwned = redSwitchOwned
-    }
-    
+    // MARK: JSONEncodable
+    open func encodeToJSON() -> Any {
+        var nillableDictionary = [String:Any?]()
+        nillableDictionary["event_key"] = self.eventKey
+        nillableDictionary["match_id"] = self.matchId
+        nillableDictionary["mode"] = self.mode
+        nillableDictionary["play"] = self.play?.encodeToJSON()
+        nillableDictionary["time_remaining"] = self.timeRemaining?.encodeToJSON()
+        nillableDictionary["blue_auto_quest"] = self.blueAutoQuest?.encodeToJSON()
+        nillableDictionary["blue_boost_count"] = self.blueBoostCount?.encodeToJSON()
+        nillableDictionary["blue_boost_played"] = self.blueBoostPlayed?.encodeToJSON()
+        nillableDictionary["blue_current_powerup"] = self.blueCurrentPowerup
+        nillableDictionary["blue_face_the_boss"] = self.blueFaceTheBoss?.encodeToJSON()
+        nillableDictionary["blue_force_count"] = self.blueForceCount?.encodeToJSON()
+        nillableDictionary["blue_force_played"] = self.blueForcePlayed?.encodeToJSON()
+        nillableDictionary["blue_levitate_count"] = self.blueLevitateCount?.encodeToJSON()
+        nillableDictionary["blue_levitate_played"] = self.blueLevitatePlayed?.encodeToJSON()
+        nillableDictionary["blue_powerup_time_remaining"] = self.bluePowerupTimeRemaining
+        nillableDictionary["blue_scale_owned"] = self.blueScaleOwned?.encodeToJSON()
+        nillableDictionary["blue_score"] = self.blueScore?.encodeToJSON()
+        nillableDictionary["blue_switch_owned"] = self.blueSwitchOwned?.encodeToJSON()
+        nillableDictionary["red_auto_quest"] = self.redAutoQuest?.encodeToJSON()
+        nillableDictionary["red_boost_count"] = self.redBoostCount?.encodeToJSON()
+        nillableDictionary["red_boost_played"] = self.redBoostPlayed?.encodeToJSON()
+        nillableDictionary["red_current_powerup"] = self.redCurrentPowerup
+        nillableDictionary["red_face_the_boss"] = self.redFaceTheBoss?.encodeToJSON()
+        nillableDictionary["red_force_count"] = self.redForceCount?.encodeToJSON()
+        nillableDictionary["red_force_played"] = self.redForcePlayed?.encodeToJSON()
+        nillableDictionary["red_levitate_count"] = self.redLevitateCount?.encodeToJSON()
+        nillableDictionary["red_levitate_played"] = self.redLevitatePlayed?.encodeToJSON()
+        nillableDictionary["red_powerup_time_remaining"] = self.redPowerupTimeRemaining
+        nillableDictionary["red_scale_owned"] = self.redScaleOwned?.encodeToJSON()
+        nillableDictionary["red_score"] = self.redScore?.encodeToJSON()
+        nillableDictionary["red_switch_owned"] = self.redSwitchOwned?.encodeToJSON()
 
-    // Encodable protocol methods
-
-    public func encode(to encoder: Encoder) throws {
-
-        var container = encoder.container(keyedBy: String.self)
-
-        try container.encodeIfPresent(eventKey, forKey: "event_key")
-        try container.encodeIfPresent(matchId, forKey: "match_id")
-        try container.encodeIfPresent(mode, forKey: "mode")
-        try container.encodeIfPresent(play, forKey: "play")
-        try container.encodeIfPresent(timeRemaining, forKey: "time_remaining")
-        try container.encodeIfPresent(blueAutoQuest, forKey: "blue_auto_quest")
-        try container.encodeIfPresent(blueBoostCount, forKey: "blue_boost_count")
-        try container.encodeIfPresent(blueBoostPlayed, forKey: "blue_boost_played")
-        try container.encodeIfPresent(blueCurrentPowerup, forKey: "blue_current_powerup")
-        try container.encodeIfPresent(blueFaceTheBoss, forKey: "blue_face_the_boss")
-        try container.encodeIfPresent(blueForceCount, forKey: "blue_force_count")
-        try container.encodeIfPresent(blueForcePlayed, forKey: "blue_force_played")
-        try container.encodeIfPresent(blueLevitateCount, forKey: "blue_levitate_count")
-        try container.encodeIfPresent(blueLevitatePlayed, forKey: "blue_levitate_played")
-        try container.encodeIfPresent(bluePowerupTimeRemaining, forKey: "blue_powerup_time_remaining")
-        try container.encodeIfPresent(blueScaleOwned, forKey: "blue_scale_owned")
-        try container.encodeIfPresent(blueScore, forKey: "blue_score")
-        try container.encodeIfPresent(blueSwitchOwned, forKey: "blue_switch_owned")
-        try container.encodeIfPresent(redAutoQuest, forKey: "red_auto_quest")
-        try container.encodeIfPresent(redBoostCount, forKey: "red_boost_count")
-        try container.encodeIfPresent(redBoostPlayed, forKey: "red_boost_played")
-        try container.encodeIfPresent(redCurrentPowerup, forKey: "red_current_powerup")
-        try container.encodeIfPresent(redFaceTheBoss, forKey: "red_face_the_boss")
-        try container.encodeIfPresent(redForceCount, forKey: "red_force_count")
-        try container.encodeIfPresent(redForcePlayed, forKey: "red_force_played")
-        try container.encodeIfPresent(redLevitateCount, forKey: "red_levitate_count")
-        try container.encodeIfPresent(redLevitatePlayed, forKey: "red_levitate_played")
-        try container.encodeIfPresent(redPowerupTimeRemaining, forKey: "red_powerup_time_remaining")
-        try container.encodeIfPresent(redScaleOwned, forKey: "red_scale_owned")
-        try container.encodeIfPresent(redScore, forKey: "red_score")
-        try container.encodeIfPresent(redSwitchOwned, forKey: "red_switch_owned")
-    }
-
-    // Decodable protocol methods
-
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: String.self)
-
-        eventKey = try container.decodeIfPresent(String.self, forKey: "event_key")
-        matchId = try container.decodeIfPresent(String.self, forKey: "match_id")
-        mode = try container.decodeIfPresent(String.self, forKey: "mode")
-        play = try container.decodeIfPresent(Int.self, forKey: "play")
-        timeRemaining = try container.decodeIfPresent(Int.self, forKey: "time_remaining")
-        blueAutoQuest = try container.decodeIfPresent(Int.self, forKey: "blue_auto_quest")
-        blueBoostCount = try container.decodeIfPresent(Int.self, forKey: "blue_boost_count")
-        blueBoostPlayed = try container.decodeIfPresent(Int.self, forKey: "blue_boost_played")
-        blueCurrentPowerup = try container.decodeIfPresent(String.self, forKey: "blue_current_powerup")
-        blueFaceTheBoss = try container.decodeIfPresent(Int.self, forKey: "blue_face_the_boss")
-        blueForceCount = try container.decodeIfPresent(Int.self, forKey: "blue_force_count")
-        blueForcePlayed = try container.decodeIfPresent(Int.self, forKey: "blue_force_played")
-        blueLevitateCount = try container.decodeIfPresent(Int.self, forKey: "blue_levitate_count")
-        blueLevitatePlayed = try container.decodeIfPresent(Int.self, forKey: "blue_levitate_played")
-        bluePowerupTimeRemaining = try container.decodeIfPresent(String.self, forKey: "blue_powerup_time_remaining")
-        blueScaleOwned = try container.decodeIfPresent(Int.self, forKey: "blue_scale_owned")
-        blueScore = try container.decodeIfPresent(Int.self, forKey: "blue_score")
-        blueSwitchOwned = try container.decodeIfPresent(Int.self, forKey: "blue_switch_owned")
-        redAutoQuest = try container.decodeIfPresent(Int.self, forKey: "red_auto_quest")
-        redBoostCount = try container.decodeIfPresent(Int.self, forKey: "red_boost_count")
-        redBoostPlayed = try container.decodeIfPresent(Int.self, forKey: "red_boost_played")
-        redCurrentPowerup = try container.decodeIfPresent(String.self, forKey: "red_current_powerup")
-        redFaceTheBoss = try container.decodeIfPresent(Int.self, forKey: "red_face_the_boss")
-        redForceCount = try container.decodeIfPresent(Int.self, forKey: "red_force_count")
-        redForcePlayed = try container.decodeIfPresent(Int.self, forKey: "red_force_played")
-        redLevitateCount = try container.decodeIfPresent(Int.self, forKey: "red_levitate_count")
-        redLevitatePlayed = try container.decodeIfPresent(Int.self, forKey: "red_levitate_played")
-        redPowerupTimeRemaining = try container.decodeIfPresent(String.self, forKey: "red_powerup_time_remaining")
-        redScaleOwned = try container.decodeIfPresent(Int.self, forKey: "red_scale_owned")
-        redScore = try container.decodeIfPresent(Int.self, forKey: "red_score")
-        redSwitchOwned = try container.decodeIfPresent(Int.self, forKey: "red_switch_owned")
+        let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
+        return dictionary
     }
 }
 

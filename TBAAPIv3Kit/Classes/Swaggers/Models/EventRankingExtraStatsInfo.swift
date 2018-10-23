@@ -8,39 +8,23 @@
 import Foundation
 
 
-
-open class EventRankingExtraStatsInfo: Codable {
+open class EventRankingExtraStatsInfo: JSONEncodable {
 
     /** Name of the field used in the &#x60;extra_stats&#x60; array. */
-    public var name: String
+    public var name: String?
     /** Integer expressing the number of digits of precision in the number provided in &#x60;sort_orders&#x60;. */
-    public var precision: Double
+    public var precision: Double?
 
+    public init() {}
 
-    
-    public init(name: String, precision: Double) {
-        self.name = name
-        self.precision = precision
-    }
-    
+    // MARK: JSONEncodable
+    open func encodeToJSON() -> Any {
+        var nillableDictionary = [String:Any?]()
+        nillableDictionary["name"] = self.name
+        nillableDictionary["precision"] = self.precision
 
-    // Encodable protocol methods
-
-    public func encode(to encoder: Encoder) throws {
-
-        var container = encoder.container(keyedBy: String.self)
-
-        try container.encode(name, forKey: "name")
-        try container.encode(precision, forKey: "precision")
-    }
-
-    // Decodable protocol methods
-
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: String.self)
-
-        name = try container.decode(String.self, forKey: "name")
-        precision = try container.decode(Double.self, forKey: "precision")
+        let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
+        return dictionary
     }
 }
 

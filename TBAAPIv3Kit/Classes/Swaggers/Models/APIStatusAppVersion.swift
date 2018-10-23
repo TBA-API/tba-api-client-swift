@@ -8,39 +8,23 @@
 import Foundation
 
 
-
-open class APIStatusAppVersion: Codable {
+open class APIStatusAppVersion: JSONEncodable {
 
     /** Internal use - Minimum application version required to correctly connect and process data. */
-    public var minAppVersion: Int
+    public var minAppVersion: Int32?
     /** Internal use - Latest application version available. */
-    public var latestAppVersion: Int
+    public var latestAppVersion: Int32?
 
+    public init() {}
 
-    
-    public init(minAppVersion: Int, latestAppVersion: Int) {
-        self.minAppVersion = minAppVersion
-        self.latestAppVersion = latestAppVersion
-    }
-    
+    // MARK: JSONEncodable
+    open func encodeToJSON() -> Any {
+        var nillableDictionary = [String:Any?]()
+        nillableDictionary["min_app_version"] = self.minAppVersion?.encodeToJSON()
+        nillableDictionary["latest_app_version"] = self.latestAppVersion?.encodeToJSON()
 
-    // Encodable protocol methods
-
-    public func encode(to encoder: Encoder) throws {
-
-        var container = encoder.container(keyedBy: String.self)
-
-        try container.encode(minAppVersion, forKey: "min_app_version")
-        try container.encode(latestAppVersion, forKey: "latest_app_version")
-    }
-
-    // Decodable protocol methods
-
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: String.self)
-
-        minAppVersion = try container.decode(Int.self, forKey: "min_app_version")
-        latestAppVersion = try container.decode(Int.self, forKey: "latest_app_version")
+        let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
+        return dictionary
     }
 }
 

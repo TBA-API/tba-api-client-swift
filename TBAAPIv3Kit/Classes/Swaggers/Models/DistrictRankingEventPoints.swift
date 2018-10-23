@@ -8,64 +8,38 @@
 import Foundation
 
 
-
-open class DistrictRankingEventPoints: Codable {
+open class DistrictRankingEventPoints: JSONEncodable {
 
     /** TBA Event key for this event. */
-    public var eventKey: String
+    public var eventKey: String?
     /** &#x60;true&#x60; if this event is a District Championship event. */
-    public var districtCmp: Bool
+    public var districtCmp: Bool?
     /** Points awarded for alliance selection. */
-    public var alliancePoints: Int
+    public var alliancePoints: Int32?
     /** Points awarded for event awards. */
-    public var awardPoints: Int
+    public var awardPoints: Int32?
     /** Points awarded for qualification match performance. */
-    public var qualPoints: Int
+    public var qualPoints: Int32?
     /** Points awarded for elimination match performance. */
-    public var elimPoints: Int
+    public var elimPoints: Int32?
     /** Total points awarded at this event. */
-    public var total: Int
+    public var total: Int32?
 
+    public init() {}
 
-    
-    public init(eventKey: String, districtCmp: Bool, alliancePoints: Int, awardPoints: Int, qualPoints: Int, elimPoints: Int, total: Int) {
-        self.eventKey = eventKey
-        self.districtCmp = districtCmp
-        self.alliancePoints = alliancePoints
-        self.awardPoints = awardPoints
-        self.qualPoints = qualPoints
-        self.elimPoints = elimPoints
-        self.total = total
-    }
-    
+    // MARK: JSONEncodable
+    open func encodeToJSON() -> Any {
+        var nillableDictionary = [String:Any?]()
+        nillableDictionary["event_key"] = self.eventKey
+        nillableDictionary["district_cmp"] = self.districtCmp
+        nillableDictionary["alliance_points"] = self.alliancePoints?.encodeToJSON()
+        nillableDictionary["award_points"] = self.awardPoints?.encodeToJSON()
+        nillableDictionary["qual_points"] = self.qualPoints?.encodeToJSON()
+        nillableDictionary["elim_points"] = self.elimPoints?.encodeToJSON()
+        nillableDictionary["total"] = self.total?.encodeToJSON()
 
-    // Encodable protocol methods
-
-    public func encode(to encoder: Encoder) throws {
-
-        var container = encoder.container(keyedBy: String.self)
-
-        try container.encode(eventKey, forKey: "event_key")
-        try container.encode(districtCmp, forKey: "district_cmp")
-        try container.encode(alliancePoints, forKey: "alliance_points")
-        try container.encode(awardPoints, forKey: "award_points")
-        try container.encode(qualPoints, forKey: "qual_points")
-        try container.encode(elimPoints, forKey: "elim_points")
-        try container.encode(total, forKey: "total")
-    }
-
-    // Decodable protocol methods
-
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: String.self)
-
-        eventKey = try container.decode(String.self, forKey: "event_key")
-        districtCmp = try container.decode(Bool.self, forKey: "district_cmp")
-        alliancePoints = try container.decode(Int.self, forKey: "alliance_points")
-        awardPoints = try container.decode(Int.self, forKey: "award_points")
-        qualPoints = try container.decode(Int.self, forKey: "qual_points")
-        elimPoints = try container.decode(Int.self, forKey: "elim_points")
-        total = try container.decode(Int.self, forKey: "total")
+        let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
+        return dictionary
     }
 }
 

@@ -8,39 +8,23 @@
 import Foundation
 
 
-
-open class TeamEventStatusRankSortOrderInfo: Codable {
+open class TeamEventStatusRankSortOrderInfo: JSONEncodable {
 
     /** The descriptive name of the value used to sort the ranking. */
     public var name: String?
     /** The number of digits of precision used for this value, eg &#x60;2&#x60; would correspond to a value of &#x60;101.11&#x60; while &#x60;0&#x60; would correspond to &#x60;101&#x60;. */
-    public var precision: Int?
+    public var precision: Int32?
 
+    public init() {}
 
-    
-    public init(name: String?, precision: Int?) {
-        self.name = name
-        self.precision = precision
-    }
-    
+    // MARK: JSONEncodable
+    open func encodeToJSON() -> Any {
+        var nillableDictionary = [String:Any?]()
+        nillableDictionary["name"] = self.name
+        nillableDictionary["precision"] = self.precision?.encodeToJSON()
 
-    // Encodable protocol methods
-
-    public func encode(to encoder: Encoder) throws {
-
-        var container = encoder.container(keyedBy: String.self)
-
-        try container.encodeIfPresent(name, forKey: "name")
-        try container.encodeIfPresent(precision, forKey: "precision")
-    }
-
-    // Decodable protocol methods
-
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: String.self)
-
-        name = try container.decodeIfPresent(String.self, forKey: "name")
-        precision = try container.decodeIfPresent(Int.self, forKey: "precision")
+        let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
+        return dictionary
     }
 }
 

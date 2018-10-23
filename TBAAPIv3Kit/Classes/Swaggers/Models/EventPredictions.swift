@@ -9,26 +9,17 @@ import Foundation
 
 
 /** JSON Object containing prediction information for the event. Contains year-specific information and is subject to change. */
-
-open class EventPredictions: Codable {
-
+open class EventPredictions: JSONEncodable {
 
 
-    
+    public init() {}
 
-    // Encodable protocol methods
+    // MARK: JSONEncodable
+    open func encodeToJSON() -> Any {
+        var nillableDictionary = [String:Any?]()
 
-    public func encode(to encoder: Encoder) throws {
-
-        var container = encoder.container(keyedBy: String.self)
-
-    }
-
-    // Decodable protocol methods
-
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: String.self)
-
+        let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
+        return dictionary
     }
 }
 

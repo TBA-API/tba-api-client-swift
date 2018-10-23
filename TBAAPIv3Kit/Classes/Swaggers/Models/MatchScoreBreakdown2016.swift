@@ -9,37 +9,21 @@ import Foundation
 
 
 /** See the 2016 FMS API documentation for a description of each value. */
-
-open class MatchScoreBreakdown2016: Codable {
+open class MatchScoreBreakdown2016: JSONEncodable {
 
     public var blue: MatchScoreBreakdown2016Alliance?
     public var red: MatchScoreBreakdown2016Alliance?
 
+    public init() {}
 
-    
-    public init(blue: MatchScoreBreakdown2016Alliance?, red: MatchScoreBreakdown2016Alliance?) {
-        self.blue = blue
-        self.red = red
-    }
-    
+    // MARK: JSONEncodable
+    open func encodeToJSON() -> Any {
+        var nillableDictionary = [String:Any?]()
+        nillableDictionary["blue"] = self.blue?.encodeToJSON()
+        nillableDictionary["red"] = self.red?.encodeToJSON()
 
-    // Encodable protocol methods
-
-    public func encode(to encoder: Encoder) throws {
-
-        var container = encoder.container(keyedBy: String.self)
-
-        try container.encodeIfPresent(blue, forKey: "blue")
-        try container.encodeIfPresent(red, forKey: "red")
-    }
-
-    // Decodable protocol methods
-
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: String.self)
-
-        blue = try container.decodeIfPresent(MatchScoreBreakdown2016Alliance.self, forKey: "blue")
-        red = try container.decodeIfPresent(MatchScoreBreakdown2016Alliance.self, forKey: "red")
+        let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
+        return dictionary
     }
 }
 

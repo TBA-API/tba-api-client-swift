@@ -8,49 +8,29 @@
 import Foundation
 
 
-
-open class TeamRobot: Codable {
+open class TeamRobot: JSONEncodable {
 
     /** Year this robot competed in. */
-    public var year: Int
+    public var year: Int32?
     /** Name of the robot as provided by the team. */
-    public var robotName: String
+    public var robotName: String?
     /** Internal TBA identifier for this robot. */
-    public var key: String
+    public var key: String?
     /** TBA team key for this robot. */
-    public var teamKey: String
+    public var teamKey: String?
 
+    public init() {}
 
-    
-    public init(year: Int, robotName: String, key: String, teamKey: String) {
-        self.year = year
-        self.robotName = robotName
-        self.key = key
-        self.teamKey = teamKey
-    }
-    
+    // MARK: JSONEncodable
+    open func encodeToJSON() -> Any {
+        var nillableDictionary = [String:Any?]()
+        nillableDictionary["year"] = self.year?.encodeToJSON()
+        nillableDictionary["robot_name"] = self.robotName
+        nillableDictionary["key"] = self.key
+        nillableDictionary["team_key"] = self.teamKey
 
-    // Encodable protocol methods
-
-    public func encode(to encoder: Encoder) throws {
-
-        var container = encoder.container(keyedBy: String.self)
-
-        try container.encode(year, forKey: "year")
-        try container.encode(robotName, forKey: "robot_name")
-        try container.encode(key, forKey: "key")
-        try container.encode(teamKey, forKey: "team_key")
-    }
-
-    // Decodable protocol methods
-
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: String.self)
-
-        year = try container.decode(Int.self, forKey: "year")
-        robotName = try container.decode(String.self, forKey: "robot_name")
-        key = try container.decode(String.self, forKey: "key")
-        teamKey = try container.decode(String.self, forKey: "team_key")
+        let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
+        return dictionary
     }
 }
 
