@@ -8,33 +8,57 @@
 import Foundation
 
 
-open class APIStatus: JSONEncodable {
+
+open class APIStatus: Codable {
 
     /** Year of the current FRC season. */
-    public var currentSeason: Int32?
+    public var currentSeason: Int
     /** Maximum FRC season year for valid queries. */
-    public var maxSeason: Int32?
+    public var maxSeason: Int
     /** True if the entire FMS API provided by FIRST is down. */
-    public var isDatafeedDown: Bool?
+    public var isDatafeedDown: Bool
     /** An array of strings containing event keys of any active events that are no longer updating. */
-    public var downEvents: [String]?
-    public var ios: APIStatusAppVersion?
-    public var android: APIStatusAppVersion?
+    public var downEvents: [String]
+    public var ios: APIStatusAppVersion
+    public var android: APIStatusAppVersion
 
-    public init() {}
 
-    // MARK: JSONEncodable
-    open func encodeToJSON() -> Any {
-        var nillableDictionary = [String:Any?]()
-        nillableDictionary["current_season"] = self.currentSeason?.encodeToJSON()
-        nillableDictionary["max_season"] = self.maxSeason?.encodeToJSON()
-        nillableDictionary["is_datafeed_down"] = self.isDatafeedDown
-        nillableDictionary["down_events"] = self.downEvents?.encodeToJSON()
-        nillableDictionary["ios"] = self.ios?.encodeToJSON()
-        nillableDictionary["android"] = self.android?.encodeToJSON()
+    
+    public init(currentSeason: Int, maxSeason: Int, isDatafeedDown: Bool, downEvents: [String], ios: APIStatusAppVersion, android: APIStatusAppVersion) {
+        self.currentSeason = currentSeason
+        self.maxSeason = maxSeason
+        self.isDatafeedDown = isDatafeedDown
+        self.downEvents = downEvents
+        self.ios = ios
+        self.android = android
+    }
+    
 
-        let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
-        return dictionary
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+
+        var container = encoder.container(keyedBy: String.self)
+
+        try container.encode(currentSeason, forKey: "current_season")
+        try container.encode(maxSeason, forKey: "max_season")
+        try container.encode(isDatafeedDown, forKey: "is_datafeed_down")
+        try container.encode(downEvents, forKey: "down_events")
+        try container.encode(ios, forKey: "ios")
+        try container.encode(android, forKey: "android")
+    }
+
+    // Decodable protocol methods
+
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: String.self)
+
+        currentSeason = try container.decode(Int.self, forKey: "current_season")
+        maxSeason = try container.decode(Int.self, forKey: "max_season")
+        isDatafeedDown = try container.decode(Bool.self, forKey: "is_datafeed_down")
+        downEvents = try container.decode([String].self, forKey: "down_events")
+        ios = try container.decode(APIStatusAppVersion.self, forKey: "ios")
+        android = try container.decode(APIStatusAppVersion.self, forKey: "android")
     }
 }
 

@@ -8,98 +8,176 @@
 import Foundation
 
 
-open class MatchScoreBreakdown2017Alliance: JSONEncodable {
 
-    public enum Robot1Auto: String { 
+open class MatchScoreBreakdown2017Alliance: Codable {
+
+    public enum Robot1Auto: String, Codable { 
         case unknown = "Unknown"
         case mobility = "Mobility"
         case _none = "None"
     }
-    public enum Robot2Auto: String { 
+    public enum Robot2Auto: String, Codable { 
         case unknown = "Unknown"
         case mobility = "Mobility"
         case _none = "None"
     }
-    public enum Robot3Auto: String { 
+    public enum Robot3Auto: String, Codable { 
         case unknown = "Unknown"
         case mobility = "Mobility"
         case _none = "None"
     }
-    public var autoPoints: Int32?
-    public var teleopPoints: Int32?
-    public var foulPoints: Int32?
-    public var adjustPoints: Int32?
-    public var totalPoints: Int32?
+    public var autoPoints: Int?
+    public var teleopPoints: Int?
+    public var foulPoints: Int?
+    public var adjustPoints: Int?
+    public var totalPoints: Int?
     public var robot1Auto: Robot1Auto?
     public var robot2Auto: Robot2Auto?
     public var robot3Auto: Robot3Auto?
     public var rotor1Auto: Bool?
     public var rotor2Auto: Bool?
-    public var autoFuelLow: Int32?
-    public var autoFuelHigh: Int32?
-    public var autoMobilityPoints: Int32?
-    public var autoRotorPoints: Int32?
-    public var autoFuelPoints: Int32?
-    public var teleopFuelPoints: Int32?
-    public var teleopFuelLow: Int32?
-    public var teleopFuelHigh: Int32?
-    public var teleopRotorPoints: Int32?
+    public var autoFuelLow: Int?
+    public var autoFuelHigh: Int?
+    public var autoMobilityPoints: Int?
+    public var autoRotorPoints: Int?
+    public var autoFuelPoints: Int?
+    public var teleopFuelPoints: Int?
+    public var teleopFuelLow: Int?
+    public var teleopFuelHigh: Int?
+    public var teleopRotorPoints: Int?
     public var kPaRankingPointAchieved: Bool?
-    public var teleopTakeoffPoints: Int32?
-    public var kPaBonusPoints: Int32?
-    public var rotorBonusPoints: Int32?
+    public var teleopTakeoffPoints: Int?
+    public var kPaBonusPoints: Int?
+    public var rotorBonusPoints: Int?
     public var rotor1Engaged: Bool?
     public var rotor2Engaged: Bool?
     public var rotor3Engaged: Bool?
     public var rotor4Engaged: Bool?
     public var rotorRankingPointAchieved: Bool?
-    public var techFoulCount: Int32?
-    public var foulCount: Int32?
+    public var techFoulCount: Int?
+    public var foulCount: Int?
     public var touchpadNear: String?
     public var touchpadMiddle: String?
     public var touchpadFar: String?
 
-    public init() {}
 
-    // MARK: JSONEncodable
-    open func encodeToJSON() -> Any {
-        var nillableDictionary = [String:Any?]()
-        nillableDictionary["autoPoints"] = self.autoPoints?.encodeToJSON()
-        nillableDictionary["teleopPoints"] = self.teleopPoints?.encodeToJSON()
-        nillableDictionary["foulPoints"] = self.foulPoints?.encodeToJSON()
-        nillableDictionary["adjustPoints"] = self.adjustPoints?.encodeToJSON()
-        nillableDictionary["totalPoints"] = self.totalPoints?.encodeToJSON()
-        nillableDictionary["robot1Auto"] = self.robot1Auto?.rawValue
-        nillableDictionary["robot2Auto"] = self.robot2Auto?.rawValue
-        nillableDictionary["robot3Auto"] = self.robot3Auto?.rawValue
-        nillableDictionary["rotor1Auto"] = self.rotor1Auto
-        nillableDictionary["rotor2Auto"] = self.rotor2Auto
-        nillableDictionary["autoFuelLow"] = self.autoFuelLow?.encodeToJSON()
-        nillableDictionary["autoFuelHigh"] = self.autoFuelHigh?.encodeToJSON()
-        nillableDictionary["autoMobilityPoints"] = self.autoMobilityPoints?.encodeToJSON()
-        nillableDictionary["autoRotorPoints"] = self.autoRotorPoints?.encodeToJSON()
-        nillableDictionary["autoFuelPoints"] = self.autoFuelPoints?.encodeToJSON()
-        nillableDictionary["teleopFuelPoints"] = self.teleopFuelPoints?.encodeToJSON()
-        nillableDictionary["teleopFuelLow"] = self.teleopFuelLow?.encodeToJSON()
-        nillableDictionary["teleopFuelHigh"] = self.teleopFuelHigh?.encodeToJSON()
-        nillableDictionary["teleopRotorPoints"] = self.teleopRotorPoints?.encodeToJSON()
-        nillableDictionary["kPaRankingPointAchieved"] = self.kPaRankingPointAchieved
-        nillableDictionary["teleopTakeoffPoints"] = self.teleopTakeoffPoints?.encodeToJSON()
-        nillableDictionary["kPaBonusPoints"] = self.kPaBonusPoints?.encodeToJSON()
-        nillableDictionary["rotorBonusPoints"] = self.rotorBonusPoints?.encodeToJSON()
-        nillableDictionary["rotor1Engaged"] = self.rotor1Engaged
-        nillableDictionary["rotor2Engaged"] = self.rotor2Engaged
-        nillableDictionary["rotor3Engaged"] = self.rotor3Engaged
-        nillableDictionary["rotor4Engaged"] = self.rotor4Engaged
-        nillableDictionary["rotorRankingPointAchieved"] = self.rotorRankingPointAchieved
-        nillableDictionary["techFoulCount"] = self.techFoulCount?.encodeToJSON()
-        nillableDictionary["foulCount"] = self.foulCount?.encodeToJSON()
-        nillableDictionary["touchpadNear"] = self.touchpadNear
-        nillableDictionary["touchpadMiddle"] = self.touchpadMiddle
-        nillableDictionary["touchpadFar"] = self.touchpadFar
+    
+    public init(autoPoints: Int?, teleopPoints: Int?, foulPoints: Int?, adjustPoints: Int?, totalPoints: Int?, robot1Auto: Robot1Auto?, robot2Auto: Robot2Auto?, robot3Auto: Robot3Auto?, rotor1Auto: Bool?, rotor2Auto: Bool?, autoFuelLow: Int?, autoFuelHigh: Int?, autoMobilityPoints: Int?, autoRotorPoints: Int?, autoFuelPoints: Int?, teleopFuelPoints: Int?, teleopFuelLow: Int?, teleopFuelHigh: Int?, teleopRotorPoints: Int?, kPaRankingPointAchieved: Bool?, teleopTakeoffPoints: Int?, kPaBonusPoints: Int?, rotorBonusPoints: Int?, rotor1Engaged: Bool?, rotor2Engaged: Bool?, rotor3Engaged: Bool?, rotor4Engaged: Bool?, rotorRankingPointAchieved: Bool?, techFoulCount: Int?, foulCount: Int?, touchpadNear: String?, touchpadMiddle: String?, touchpadFar: String?) {
+        self.autoPoints = autoPoints
+        self.teleopPoints = teleopPoints
+        self.foulPoints = foulPoints
+        self.adjustPoints = adjustPoints
+        self.totalPoints = totalPoints
+        self.robot1Auto = robot1Auto
+        self.robot2Auto = robot2Auto
+        self.robot3Auto = robot3Auto
+        self.rotor1Auto = rotor1Auto
+        self.rotor2Auto = rotor2Auto
+        self.autoFuelLow = autoFuelLow
+        self.autoFuelHigh = autoFuelHigh
+        self.autoMobilityPoints = autoMobilityPoints
+        self.autoRotorPoints = autoRotorPoints
+        self.autoFuelPoints = autoFuelPoints
+        self.teleopFuelPoints = teleopFuelPoints
+        self.teleopFuelLow = teleopFuelLow
+        self.teleopFuelHigh = teleopFuelHigh
+        self.teleopRotorPoints = teleopRotorPoints
+        self.kPaRankingPointAchieved = kPaRankingPointAchieved
+        self.teleopTakeoffPoints = teleopTakeoffPoints
+        self.kPaBonusPoints = kPaBonusPoints
+        self.rotorBonusPoints = rotorBonusPoints
+        self.rotor1Engaged = rotor1Engaged
+        self.rotor2Engaged = rotor2Engaged
+        self.rotor3Engaged = rotor3Engaged
+        self.rotor4Engaged = rotor4Engaged
+        self.rotorRankingPointAchieved = rotorRankingPointAchieved
+        self.techFoulCount = techFoulCount
+        self.foulCount = foulCount
+        self.touchpadNear = touchpadNear
+        self.touchpadMiddle = touchpadMiddle
+        self.touchpadFar = touchpadFar
+    }
+    
 
-        let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
-        return dictionary
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+
+        var container = encoder.container(keyedBy: String.self)
+
+        try container.encodeIfPresent(autoPoints, forKey: "autoPoints")
+        try container.encodeIfPresent(teleopPoints, forKey: "teleopPoints")
+        try container.encodeIfPresent(foulPoints, forKey: "foulPoints")
+        try container.encodeIfPresent(adjustPoints, forKey: "adjustPoints")
+        try container.encodeIfPresent(totalPoints, forKey: "totalPoints")
+        try container.encodeIfPresent(robot1Auto, forKey: "robot1Auto")
+        try container.encodeIfPresent(robot2Auto, forKey: "robot2Auto")
+        try container.encodeIfPresent(robot3Auto, forKey: "robot3Auto")
+        try container.encodeIfPresent(rotor1Auto, forKey: "rotor1Auto")
+        try container.encodeIfPresent(rotor2Auto, forKey: "rotor2Auto")
+        try container.encodeIfPresent(autoFuelLow, forKey: "autoFuelLow")
+        try container.encodeIfPresent(autoFuelHigh, forKey: "autoFuelHigh")
+        try container.encodeIfPresent(autoMobilityPoints, forKey: "autoMobilityPoints")
+        try container.encodeIfPresent(autoRotorPoints, forKey: "autoRotorPoints")
+        try container.encodeIfPresent(autoFuelPoints, forKey: "autoFuelPoints")
+        try container.encodeIfPresent(teleopFuelPoints, forKey: "teleopFuelPoints")
+        try container.encodeIfPresent(teleopFuelLow, forKey: "teleopFuelLow")
+        try container.encodeIfPresent(teleopFuelHigh, forKey: "teleopFuelHigh")
+        try container.encodeIfPresent(teleopRotorPoints, forKey: "teleopRotorPoints")
+        try container.encodeIfPresent(kPaRankingPointAchieved, forKey: "kPaRankingPointAchieved")
+        try container.encodeIfPresent(teleopTakeoffPoints, forKey: "teleopTakeoffPoints")
+        try container.encodeIfPresent(kPaBonusPoints, forKey: "kPaBonusPoints")
+        try container.encodeIfPresent(rotorBonusPoints, forKey: "rotorBonusPoints")
+        try container.encodeIfPresent(rotor1Engaged, forKey: "rotor1Engaged")
+        try container.encodeIfPresent(rotor2Engaged, forKey: "rotor2Engaged")
+        try container.encodeIfPresent(rotor3Engaged, forKey: "rotor3Engaged")
+        try container.encodeIfPresent(rotor4Engaged, forKey: "rotor4Engaged")
+        try container.encodeIfPresent(rotorRankingPointAchieved, forKey: "rotorRankingPointAchieved")
+        try container.encodeIfPresent(techFoulCount, forKey: "techFoulCount")
+        try container.encodeIfPresent(foulCount, forKey: "foulCount")
+        try container.encodeIfPresent(touchpadNear, forKey: "touchpadNear")
+        try container.encodeIfPresent(touchpadMiddle, forKey: "touchpadMiddle")
+        try container.encodeIfPresent(touchpadFar, forKey: "touchpadFar")
+    }
+
+    // Decodable protocol methods
+
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: String.self)
+
+        autoPoints = try container.decodeIfPresent(Int.self, forKey: "autoPoints")
+        teleopPoints = try container.decodeIfPresent(Int.self, forKey: "teleopPoints")
+        foulPoints = try container.decodeIfPresent(Int.self, forKey: "foulPoints")
+        adjustPoints = try container.decodeIfPresent(Int.self, forKey: "adjustPoints")
+        totalPoints = try container.decodeIfPresent(Int.self, forKey: "totalPoints")
+        robot1Auto = try container.decodeIfPresent(Robot1Auto.self, forKey: "robot1Auto")
+        robot2Auto = try container.decodeIfPresent(Robot2Auto.self, forKey: "robot2Auto")
+        robot3Auto = try container.decodeIfPresent(Robot3Auto.self, forKey: "robot3Auto")
+        rotor1Auto = try container.decodeIfPresent(Bool.self, forKey: "rotor1Auto")
+        rotor2Auto = try container.decodeIfPresent(Bool.self, forKey: "rotor2Auto")
+        autoFuelLow = try container.decodeIfPresent(Int.self, forKey: "autoFuelLow")
+        autoFuelHigh = try container.decodeIfPresent(Int.self, forKey: "autoFuelHigh")
+        autoMobilityPoints = try container.decodeIfPresent(Int.self, forKey: "autoMobilityPoints")
+        autoRotorPoints = try container.decodeIfPresent(Int.self, forKey: "autoRotorPoints")
+        autoFuelPoints = try container.decodeIfPresent(Int.self, forKey: "autoFuelPoints")
+        teleopFuelPoints = try container.decodeIfPresent(Int.self, forKey: "teleopFuelPoints")
+        teleopFuelLow = try container.decodeIfPresent(Int.self, forKey: "teleopFuelLow")
+        teleopFuelHigh = try container.decodeIfPresent(Int.self, forKey: "teleopFuelHigh")
+        teleopRotorPoints = try container.decodeIfPresent(Int.self, forKey: "teleopRotorPoints")
+        kPaRankingPointAchieved = try container.decodeIfPresent(Bool.self, forKey: "kPaRankingPointAchieved")
+        teleopTakeoffPoints = try container.decodeIfPresent(Int.self, forKey: "teleopTakeoffPoints")
+        kPaBonusPoints = try container.decodeIfPresent(Int.self, forKey: "kPaBonusPoints")
+        rotorBonusPoints = try container.decodeIfPresent(Int.self, forKey: "rotorBonusPoints")
+        rotor1Engaged = try container.decodeIfPresent(Bool.self, forKey: "rotor1Engaged")
+        rotor2Engaged = try container.decodeIfPresent(Bool.self, forKey: "rotor2Engaged")
+        rotor3Engaged = try container.decodeIfPresent(Bool.self, forKey: "rotor3Engaged")
+        rotor4Engaged = try container.decodeIfPresent(Bool.self, forKey: "rotor4Engaged")
+        rotorRankingPointAchieved = try container.decodeIfPresent(Bool.self, forKey: "rotorRankingPointAchieved")
+        techFoulCount = try container.decodeIfPresent(Int.self, forKey: "techFoulCount")
+        foulCount = try container.decodeIfPresent(Int.self, forKey: "foulCount")
+        touchpadNear = try container.decodeIfPresent(String.self, forKey: "touchpadNear")
+        touchpadMiddle = try container.decodeIfPresent(String.self, forKey: "touchpadMiddle")
+        touchpadFar = try container.decodeIfPresent(String.self, forKey: "touchpadFar")
     }
 }
 

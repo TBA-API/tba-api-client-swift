@@ -8,26 +8,44 @@
 import Foundation
 
 
-open class EventRanking: JSONEncodable {
+
+open class EventRanking: Codable {
 
     /** List of rankings at the event. */
-    public var rankings: [EventRankingRankings]?
+    public var rankings: [EventRankingRankings]
     /** List of special TBA-generated values provided in the &#x60;extra_stats&#x60; array for each item. */
     public var extraStatsInfo: [EventRankingExtraStatsInfo]?
     /** List of year-specific values provided in the &#x60;sort_orders&#x60; array for each team. */
-    public var sortOrderInfo: [EventRankingSortOrderInfo]?
+    public var sortOrderInfo: [EventRankingSortOrderInfo]
 
-    public init() {}
 
-    // MARK: JSONEncodable
-    open func encodeToJSON() -> Any {
-        var nillableDictionary = [String:Any?]()
-        nillableDictionary["rankings"] = self.rankings?.encodeToJSON()
-        nillableDictionary["extra_stats_info"] = self.extraStatsInfo?.encodeToJSON()
-        nillableDictionary["sort_order_info"] = self.sortOrderInfo?.encodeToJSON()
+    
+    public init(rankings: [EventRankingRankings], extraStatsInfo: [EventRankingExtraStatsInfo]?, sortOrderInfo: [EventRankingSortOrderInfo]) {
+        self.rankings = rankings
+        self.extraStatsInfo = extraStatsInfo
+        self.sortOrderInfo = sortOrderInfo
+    }
+    
 
-        let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
-        return dictionary
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+
+        var container = encoder.container(keyedBy: String.self)
+
+        try container.encode(rankings, forKey: "rankings")
+        try container.encodeIfPresent(extraStatsInfo, forKey: "extra_stats_info")
+        try container.encode(sortOrderInfo, forKey: "sort_order_info")
+    }
+
+    // Decodable protocol methods
+
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: String.self)
+
+        rankings = try container.decode([EventRankingRankings].self, forKey: "rankings")
+        extraStatsInfo = try container.decodeIfPresent([EventRankingExtraStatsInfo].self, forKey: "extra_stats_info")
+        sortOrderInfo = try container.decode([EventRankingSortOrderInfo].self, forKey: "sort_order_info")
     }
 }
 

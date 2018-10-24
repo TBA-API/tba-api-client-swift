@@ -10,14 +10,16 @@ import Alamofire
 
 extension TBAAPIv3KitAPI {
 
-open class TBAAPI: APIBase {
+
+open class TBAAPI {
     /**
+
      - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getStatus(ifModifiedSince: String? = nil, completion: @escaping ((_ data: APIStatus?, _ error: ErrorResponse?) -> Void)) {
+    open class func getStatus(ifModifiedSince: String? = nil, completion: @escaping ((_ data: APIStatus?,_ error: Error?) -> Void)) {
         getStatusWithRequestBuilder(ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
-            completion(response?.body, error)
+            completion(response?.body, error);
         }
     }
 
@@ -44,7 +46,9 @@ open class TBAAPI: APIBase {
     "latest_app_version" : 5
   }
 }}]
+     
      - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
+
      - returns: RequestBuilder<APIStatus> 
      */
     open class func getStatusWithRequestBuilder(ifModifiedSince: String? = nil) -> RequestBuilder<APIStatus> {
@@ -53,6 +57,7 @@ open class TBAAPI: APIBase {
         let parameters: [String:Any]? = nil
 
         let url = NSURLComponents(string: URLString)
+
         let nillableHeaders: [String: Any?] = [
             "If-Modified-Since": ifModifiedSince
         ]
