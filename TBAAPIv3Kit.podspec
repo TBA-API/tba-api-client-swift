@@ -7,8 +7,9 @@ Pod::Spec.new do |s|
   s.authors = 'Swagger Codegen'
   s.license = 'Proprietary'
   s.homepage = 'https://github.com/TBA-API'
-  s.source = { :git => 'https://github.com/TBA-API/tba-api-client-swift.git', :tag => s.version.to_s }
+  s.source = { :git => 'https://github.com/TBA-API/tba-api-client-swift.git', :tag => 'master' }
   s.summary = 'Swift client library for the The Blue Alliance API'
   s.source_files = 'TBAAPIv3Kit/Classes/**/*.swift'
   s.dependency 'Alamofire', '~> 4.7.3'
+  s.swift_version = '4.2'
 end
