@@ -8,21 +8,37 @@
 import Foundation
 
 
-open class EventDistrictPointsTiebreakers: JSONEncodable {
 
-    public var highestQualScores: [Int32]?
-    public var qualWins: Int32?
+open class EventDistrictPointsTiebreakers: Codable {
 
-    public init() {}
+    public var highestQualScores: [Int]?
+    public var qualWins: Int?
 
-    // MARK: JSONEncodable
-    open func encodeToJSON() -> Any {
-        var nillableDictionary = [String:Any?]()
-        nillableDictionary["highest_qual_scores"] = self.highestQualScores?.encodeToJSON()
-        nillableDictionary["qual_wins"] = self.qualWins?.encodeToJSON()
 
-        let dictionary: [String:Any] = APIHelper.rejectNil(nillableDictionary) ?? [:]
-        return dictionary
+    
+    public init(highestQualScores: [Int]?, qualWins: Int?) {
+        self.highestQualScores = highestQualScores
+        self.qualWins = qualWins
+    }
+    
+
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+
+        var container = encoder.container(keyedBy: String.self)
+
+        try container.encodeIfPresent(highestQualScores, forKey: "highest_qual_scores")
+        try container.encodeIfPresent(qualWins, forKey: "qual_wins")
+    }
+
+    // Decodable protocol methods
+
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: String.self)
+
+        highestQualScores = try container.decodeIfPresent([Int].self, forKey: "highest_qual_scores")
+        qualWins = try container.decodeIfPresent(Int.self, forKey: "qual_wins")
     }
 }
 
