@@ -8,48 +8,30 @@
 import Foundation
 
 
-
-open class TeamEventStatusAlliance: Codable {
-
+public class TeamEventStatusAlliance: JSONEncodable {
     /** Alliance name, may be null. */
     public var name: String?
     /** Alliance number. */
-    public var number: Int
+    public var number: Int32
     public var backup: TeamEventStatusAllianceBackup?
     /** Order the team was picked in the alliance from 0-2, with 0 being alliance captain. */
-    public var pick: Int
+    public var pick: Int32
 
-
-    
-    public init(name: String?, number: Int, backup: TeamEventStatusAllianceBackup?, pick: Int) {
+    public init(name: String?=nil, number: Int32, backup: TeamEventStatusAllianceBackup?=nil, pick: Int32) {
         self.name = name
         self.number = number
         self.backup = backup
         self.pick = pick
     }
-    
 
-    // Encodable protocol methods
-
-    public func encode(to encoder: Encoder) throws {
-
-        var container = encoder.container(keyedBy: String.self)
-
-        try container.encodeIfPresent(name, forKey: "name")
-        try container.encode(number, forKey: "number")
-        try container.encodeIfPresent(backup, forKey: "backup")
-        try container.encode(pick, forKey: "pick")
-    }
-
-    // Decodable protocol methods
-
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: String.self)
-
-        name = try container.decodeIfPresent(String.self, forKey: "name")
-        number = try container.decode(Int.self, forKey: "number")
-        backup = try container.decodeIfPresent(TeamEventStatusAllianceBackup.self, forKey: "backup")
-        pick = try container.decode(Int.self, forKey: "pick")
+    // MARK: JSONEncodable
+    func encodeToJSON() -> AnyObject {
+        var nillableDictionary = [String:AnyObject?]()
+        nillableDictionary["name"] = self.name
+        nillableDictionary["number"] = self.number.encodeToJSON()
+        nillableDictionary["backup"] = self.backup?.encodeToJSON()
+        nillableDictionary["pick"] = self.pick.encodeToJSON()
+        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
+        return dictionary
     }
 }
-

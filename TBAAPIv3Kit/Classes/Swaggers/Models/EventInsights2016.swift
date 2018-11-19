@@ -9,9 +9,7 @@ import Foundation
 
 
 /** Insights for FIRST Stronghold qualification and elimination matches. */
-
-open class EventInsights2016: Codable {
-
+public class EventInsights2016: JSONEncodable {
     /** For the Low Bar - An array with three values, number of times damaged, number of opportunities to damage, and percentage. */
     public var lowBar: [Float]
     /** For the Cheval De Frise - An array with three values, number of times damaged, number of opportunities to damage, and percentage. */
@@ -61,8 +59,6 @@ open class EventInsights2016: Codable {
     /** An array with three values, high score, match key from the match with the high score, and the name of the match. */
     public var highScore: [String]
 
-
-    
     public init(lowBar: [Float], aChevalDeFrise: [Float], aPortcullis: [Float], bRamparts: [Float], bMoat: [Float], cSallyPort: [Float], cDrawbridge: [Float], dRoughTerrain: [Float], dRockWall: [Float], averageHighGoals: Float, averageLowGoals: Float, breaches: [Float], scales: [Float], challenges: [Float], captures: [Float], averageWinScore: Float, averageWinMargin: Float, averageScore: Float, averageAutoScore: Float, averageCrossingScore: Float, averageBoulderScore: Float, averageTowerScore: Float, averageFoulScore: Float, highScore: [String]) {
         self.lowBar = lowBar
         self.aChevalDeFrise = aChevalDeFrise
@@ -89,69 +85,35 @@ open class EventInsights2016: Codable {
         self.averageFoulScore = averageFoulScore
         self.highScore = highScore
     }
-    
 
-    // Encodable protocol methods
-
-    public func encode(to encoder: Encoder) throws {
-
-        var container = encoder.container(keyedBy: String.self)
-
-        try container.encode(lowBar, forKey: "LowBar")
-        try container.encode(aChevalDeFrise, forKey: "A_ChevalDeFrise")
-        try container.encode(aPortcullis, forKey: "A_Portcullis")
-        try container.encode(bRamparts, forKey: "B_Ramparts")
-        try container.encode(bMoat, forKey: "B_Moat")
-        try container.encode(cSallyPort, forKey: "C_SallyPort")
-        try container.encode(cDrawbridge, forKey: "C_Drawbridge")
-        try container.encode(dRoughTerrain, forKey: "D_RoughTerrain")
-        try container.encode(dRockWall, forKey: "D_RockWall")
-        try container.encode(averageHighGoals, forKey: "average_high_goals")
-        try container.encode(averageLowGoals, forKey: "average_low_goals")
-        try container.encode(breaches, forKey: "breaches")
-        try container.encode(scales, forKey: "scales")
-        try container.encode(challenges, forKey: "challenges")
-        try container.encode(captures, forKey: "captures")
-        try container.encode(averageWinScore, forKey: "average_win_score")
-        try container.encode(averageWinMargin, forKey: "average_win_margin")
-        try container.encode(averageScore, forKey: "average_score")
-        try container.encode(averageAutoScore, forKey: "average_auto_score")
-        try container.encode(averageCrossingScore, forKey: "average_crossing_score")
-        try container.encode(averageBoulderScore, forKey: "average_boulder_score")
-        try container.encode(averageTowerScore, forKey: "average_tower_score")
-        try container.encode(averageFoulScore, forKey: "average_foul_score")
-        try container.encode(highScore, forKey: "high_score")
-    }
-
-    // Decodable protocol methods
-
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: String.self)
-
-        lowBar = try container.decode([Float].self, forKey: "LowBar")
-        aChevalDeFrise = try container.decode([Float].self, forKey: "A_ChevalDeFrise")
-        aPortcullis = try container.decode([Float].self, forKey: "A_Portcullis")
-        bRamparts = try container.decode([Float].self, forKey: "B_Ramparts")
-        bMoat = try container.decode([Float].self, forKey: "B_Moat")
-        cSallyPort = try container.decode([Float].self, forKey: "C_SallyPort")
-        cDrawbridge = try container.decode([Float].self, forKey: "C_Drawbridge")
-        dRoughTerrain = try container.decode([Float].self, forKey: "D_RoughTerrain")
-        dRockWall = try container.decode([Float].self, forKey: "D_RockWall")
-        averageHighGoals = try container.decode(Float.self, forKey: "average_high_goals")
-        averageLowGoals = try container.decode(Float.self, forKey: "average_low_goals")
-        breaches = try container.decode([Float].self, forKey: "breaches")
-        scales = try container.decode([Float].self, forKey: "scales")
-        challenges = try container.decode([Float].self, forKey: "challenges")
-        captures = try container.decode([Float].self, forKey: "captures")
-        averageWinScore = try container.decode(Float.self, forKey: "average_win_score")
-        averageWinMargin = try container.decode(Float.self, forKey: "average_win_margin")
-        averageScore = try container.decode(Float.self, forKey: "average_score")
-        averageAutoScore = try container.decode(Float.self, forKey: "average_auto_score")
-        averageCrossingScore = try container.decode(Float.self, forKey: "average_crossing_score")
-        averageBoulderScore = try container.decode(Float.self, forKey: "average_boulder_score")
-        averageTowerScore = try container.decode(Float.self, forKey: "average_tower_score")
-        averageFoulScore = try container.decode(Float.self, forKey: "average_foul_score")
-        highScore = try container.decode([String].self, forKey: "high_score")
+    // MARK: JSONEncodable
+    func encodeToJSON() -> AnyObject {
+        var nillableDictionary = [String:AnyObject?]()
+        nillableDictionary["LowBar"] = self.lowBar.encodeToJSON()
+        nillableDictionary["A_ChevalDeFrise"] = self.aChevalDeFrise.encodeToJSON()
+        nillableDictionary["A_Portcullis"] = self.aPortcullis.encodeToJSON()
+        nillableDictionary["B_Ramparts"] = self.bRamparts.encodeToJSON()
+        nillableDictionary["B_Moat"] = self.bMoat.encodeToJSON()
+        nillableDictionary["C_SallyPort"] = self.cSallyPort.encodeToJSON()
+        nillableDictionary["C_Drawbridge"] = self.cDrawbridge.encodeToJSON()
+        nillableDictionary["D_RoughTerrain"] = self.dRoughTerrain.encodeToJSON()
+        nillableDictionary["D_RockWall"] = self.dRockWall.encodeToJSON()
+        nillableDictionary["average_high_goals"] = self.averageHighGoals
+        nillableDictionary["average_low_goals"] = self.averageLowGoals
+        nillableDictionary["breaches"] = self.breaches.encodeToJSON()
+        nillableDictionary["scales"] = self.scales.encodeToJSON()
+        nillableDictionary["challenges"] = self.challenges.encodeToJSON()
+        nillableDictionary["captures"] = self.captures.encodeToJSON()
+        nillableDictionary["average_win_score"] = self.averageWinScore
+        nillableDictionary["average_win_margin"] = self.averageWinMargin
+        nillableDictionary["average_score"] = self.averageScore
+        nillableDictionary["average_auto_score"] = self.averageAutoScore
+        nillableDictionary["average_crossing_score"] = self.averageCrossingScore
+        nillableDictionary["average_boulder_score"] = self.averageBoulderScore
+        nillableDictionary["average_tower_score"] = self.averageTowerScore
+        nillableDictionary["average_foul_score"] = self.averageFoulScore
+        nillableDictionary["high_score"] = self.highScore.encodeToJSON()
+        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
+        return dictionary
     }
 }
-

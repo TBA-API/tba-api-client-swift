@@ -9,9 +9,7 @@ import Foundation
 
 
 /** Insights for FIRST STEAMWORKS qualification and elimination matches. */
-
-open class EventInsights2017: Codable {
-
+public class EventInsights2017: JSONEncodable {
     /** Average foul score. */
     public var averageFoulScore: Float
     /** Average fuel points scored. */
@@ -77,8 +75,6 @@ open class EventInsights2017: Codable {
     /** An array with three values, number of times a unicorn match (Win + kPa &amp; Rotor Bonuses) occured, number of opportunities to have a unicorn match, and percentage. */
     public var unicornMatches: [Float]
 
-
-    
     public init(averageFoulScore: Float, averageFuelPoints: Float, averageFuelPointsAuto: Float, averageFuelPointsTeleop: Float, averageHighGoals: Float, averageHighGoalsAuto: Float, averageHighGoalsTeleop: Float, averageLowGoals: Float, averageLowGoalsAuto: Float, averageLowGoalsTeleop: Float, averageMobilityPointsAuto: Float, averagePointsAuto: Float, averagePointsTeleop: Float, averageRotorPoints: Float, averageRotorPointsAuto: Float, averageRotorPointsTeleop: Float, averageScore: Float, averageTakeoffPointsTeleop: Float, averageWinMargin: Float, averageWinScore: Float, highKpa: [String], highScore: [String], kpaAchieved: [Float], mobilityCounts: [Float], rotor1Engaged: [Float], rotor1EngagedAuto: [Float], rotor2Engaged: [Float], rotor2EngagedAuto: [Float], rotor3Engaged: [Float], rotor4Engaged: [Float], takeoffCounts: [Float], unicornMatches: [Float]) {
         self.averageFoulScore = averageFoulScore
         self.averageFuelPoints = averageFuelPoints
@@ -113,85 +109,43 @@ open class EventInsights2017: Codable {
         self.takeoffCounts = takeoffCounts
         self.unicornMatches = unicornMatches
     }
-    
 
-    // Encodable protocol methods
-
-    public func encode(to encoder: Encoder) throws {
-
-        var container = encoder.container(keyedBy: String.self)
-
-        try container.encode(averageFoulScore, forKey: "average_foul_score")
-        try container.encode(averageFuelPoints, forKey: "average_fuel_points")
-        try container.encode(averageFuelPointsAuto, forKey: "average_fuel_points_auto")
-        try container.encode(averageFuelPointsTeleop, forKey: "average_fuel_points_teleop")
-        try container.encode(averageHighGoals, forKey: "average_high_goals")
-        try container.encode(averageHighGoalsAuto, forKey: "average_high_goals_auto")
-        try container.encode(averageHighGoalsTeleop, forKey: "average_high_goals_teleop")
-        try container.encode(averageLowGoals, forKey: "average_low_goals")
-        try container.encode(averageLowGoalsAuto, forKey: "average_low_goals_auto")
-        try container.encode(averageLowGoalsTeleop, forKey: "average_low_goals_teleop")
-        try container.encode(averageMobilityPointsAuto, forKey: "average_mobility_points_auto")
-        try container.encode(averagePointsAuto, forKey: "average_points_auto")
-        try container.encode(averagePointsTeleop, forKey: "average_points_teleop")
-        try container.encode(averageRotorPoints, forKey: "average_rotor_points")
-        try container.encode(averageRotorPointsAuto, forKey: "average_rotor_points_auto")
-        try container.encode(averageRotorPointsTeleop, forKey: "average_rotor_points_teleop")
-        try container.encode(averageScore, forKey: "average_score")
-        try container.encode(averageTakeoffPointsTeleop, forKey: "average_takeoff_points_teleop")
-        try container.encode(averageWinMargin, forKey: "average_win_margin")
-        try container.encode(averageWinScore, forKey: "average_win_score")
-        try container.encode(highKpa, forKey: "high_kpa")
-        try container.encode(highScore, forKey: "high_score")
-        try container.encode(kpaAchieved, forKey: "kpa_achieved")
-        try container.encode(mobilityCounts, forKey: "mobility_counts")
-        try container.encode(rotor1Engaged, forKey: "rotor_1_engaged")
-        try container.encode(rotor1EngagedAuto, forKey: "rotor_1_engaged_auto")
-        try container.encode(rotor2Engaged, forKey: "rotor_2_engaged")
-        try container.encode(rotor2EngagedAuto, forKey: "rotor_2_engaged_auto")
-        try container.encode(rotor3Engaged, forKey: "rotor_3_engaged")
-        try container.encode(rotor4Engaged, forKey: "rotor_4_engaged")
-        try container.encode(takeoffCounts, forKey: "takeoff_counts")
-        try container.encode(unicornMatches, forKey: "unicorn_matches")
-    }
-
-    // Decodable protocol methods
-
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: String.self)
-
-        averageFoulScore = try container.decode(Float.self, forKey: "average_foul_score")
-        averageFuelPoints = try container.decode(Float.self, forKey: "average_fuel_points")
-        averageFuelPointsAuto = try container.decode(Float.self, forKey: "average_fuel_points_auto")
-        averageFuelPointsTeleop = try container.decode(Float.self, forKey: "average_fuel_points_teleop")
-        averageHighGoals = try container.decode(Float.self, forKey: "average_high_goals")
-        averageHighGoalsAuto = try container.decode(Float.self, forKey: "average_high_goals_auto")
-        averageHighGoalsTeleop = try container.decode(Float.self, forKey: "average_high_goals_teleop")
-        averageLowGoals = try container.decode(Float.self, forKey: "average_low_goals")
-        averageLowGoalsAuto = try container.decode(Float.self, forKey: "average_low_goals_auto")
-        averageLowGoalsTeleop = try container.decode(Float.self, forKey: "average_low_goals_teleop")
-        averageMobilityPointsAuto = try container.decode(Float.self, forKey: "average_mobility_points_auto")
-        averagePointsAuto = try container.decode(Float.self, forKey: "average_points_auto")
-        averagePointsTeleop = try container.decode(Float.self, forKey: "average_points_teleop")
-        averageRotorPoints = try container.decode(Float.self, forKey: "average_rotor_points")
-        averageRotorPointsAuto = try container.decode(Float.self, forKey: "average_rotor_points_auto")
-        averageRotorPointsTeleop = try container.decode(Float.self, forKey: "average_rotor_points_teleop")
-        averageScore = try container.decode(Float.self, forKey: "average_score")
-        averageTakeoffPointsTeleop = try container.decode(Float.self, forKey: "average_takeoff_points_teleop")
-        averageWinMargin = try container.decode(Float.self, forKey: "average_win_margin")
-        averageWinScore = try container.decode(Float.self, forKey: "average_win_score")
-        highKpa = try container.decode([String].self, forKey: "high_kpa")
-        highScore = try container.decode([String].self, forKey: "high_score")
-        kpaAchieved = try container.decode([Float].self, forKey: "kpa_achieved")
-        mobilityCounts = try container.decode([Float].self, forKey: "mobility_counts")
-        rotor1Engaged = try container.decode([Float].self, forKey: "rotor_1_engaged")
-        rotor1EngagedAuto = try container.decode([Float].self, forKey: "rotor_1_engaged_auto")
-        rotor2Engaged = try container.decode([Float].self, forKey: "rotor_2_engaged")
-        rotor2EngagedAuto = try container.decode([Float].self, forKey: "rotor_2_engaged_auto")
-        rotor3Engaged = try container.decode([Float].self, forKey: "rotor_3_engaged")
-        rotor4Engaged = try container.decode([Float].self, forKey: "rotor_4_engaged")
-        takeoffCounts = try container.decode([Float].self, forKey: "takeoff_counts")
-        unicornMatches = try container.decode([Float].self, forKey: "unicorn_matches")
+    // MARK: JSONEncodable
+    func encodeToJSON() -> AnyObject {
+        var nillableDictionary = [String:AnyObject?]()
+        nillableDictionary["average_foul_score"] = self.averageFoulScore
+        nillableDictionary["average_fuel_points"] = self.averageFuelPoints
+        nillableDictionary["average_fuel_points_auto"] = self.averageFuelPointsAuto
+        nillableDictionary["average_fuel_points_teleop"] = self.averageFuelPointsTeleop
+        nillableDictionary["average_high_goals"] = self.averageHighGoals
+        nillableDictionary["average_high_goals_auto"] = self.averageHighGoalsAuto
+        nillableDictionary["average_high_goals_teleop"] = self.averageHighGoalsTeleop
+        nillableDictionary["average_low_goals"] = self.averageLowGoals
+        nillableDictionary["average_low_goals_auto"] = self.averageLowGoalsAuto
+        nillableDictionary["average_low_goals_teleop"] = self.averageLowGoalsTeleop
+        nillableDictionary["average_mobility_points_auto"] = self.averageMobilityPointsAuto
+        nillableDictionary["average_points_auto"] = self.averagePointsAuto
+        nillableDictionary["average_points_teleop"] = self.averagePointsTeleop
+        nillableDictionary["average_rotor_points"] = self.averageRotorPoints
+        nillableDictionary["average_rotor_points_auto"] = self.averageRotorPointsAuto
+        nillableDictionary["average_rotor_points_teleop"] = self.averageRotorPointsTeleop
+        nillableDictionary["average_score"] = self.averageScore
+        nillableDictionary["average_takeoff_points_teleop"] = self.averageTakeoffPointsTeleop
+        nillableDictionary["average_win_margin"] = self.averageWinMargin
+        nillableDictionary["average_win_score"] = self.averageWinScore
+        nillableDictionary["high_kpa"] = self.highKpa.encodeToJSON()
+        nillableDictionary["high_score"] = self.highScore.encodeToJSON()
+        nillableDictionary["kpa_achieved"] = self.kpaAchieved.encodeToJSON()
+        nillableDictionary["mobility_counts"] = self.mobilityCounts.encodeToJSON()
+        nillableDictionary["rotor_1_engaged"] = self.rotor1Engaged.encodeToJSON()
+        nillableDictionary["rotor_1_engaged_auto"] = self.rotor1EngagedAuto.encodeToJSON()
+        nillableDictionary["rotor_2_engaged"] = self.rotor2Engaged.encodeToJSON()
+        nillableDictionary["rotor_2_engaged_auto"] = self.rotor2EngagedAuto.encodeToJSON()
+        nillableDictionary["rotor_3_engaged"] = self.rotor3Engaged.encodeToJSON()
+        nillableDictionary["rotor_4_engaged"] = self.rotor4Engaged.encodeToJSON()
+        nillableDictionary["takeoff_counts"] = self.takeoffCounts.encodeToJSON()
+        nillableDictionary["unicorn_matches"] = self.unicornMatches.encodeToJSON()
+        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
+        return dictionary
     }
 }
-

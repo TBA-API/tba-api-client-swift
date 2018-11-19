@@ -8,39 +8,23 @@
 import Foundation
 
 
-
-open class MatchVideos: Codable {
-
+public class MatchVideos: JSONEncodable {
     /** Unique key representing this video */
     public var key: String?
     /** Can be one of &#39;youtube&#39; or &#39;tba&#39; */
     public var type: String?
 
-
-    
-    public init(key: String?, type: String?) {
+    public init(key: String?=nil, type: String?=nil) {
         self.key = key
         self.type = type
     }
-    
 
-    // Encodable protocol methods
-
-    public func encode(to encoder: Encoder) throws {
-
-        var container = encoder.container(keyedBy: String.self)
-
-        try container.encodeIfPresent(key, forKey: "key")
-        try container.encodeIfPresent(type, forKey: "type")
-    }
-
-    // Decodable protocol methods
-
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: String.self)
-
-        key = try container.decodeIfPresent(String.self, forKey: "key")
-        type = try container.decodeIfPresent(String.self, forKey: "type")
+    // MARK: JSONEncodable
+    func encodeToJSON() -> AnyObject {
+        var nillableDictionary = [String:AnyObject?]()
+        nillableDictionary["key"] = self.key
+        nillableDictionary["type"] = self.type
+        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
+        return dictionary
     }
 }
-

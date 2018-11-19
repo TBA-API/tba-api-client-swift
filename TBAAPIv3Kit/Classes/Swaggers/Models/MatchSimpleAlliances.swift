@@ -9,37 +9,21 @@ import Foundation
 
 
 /** A list of alliances, the teams on the alliances, and their score. */
-
-open class MatchSimpleAlliances: Codable {
-
+public class MatchSimpleAlliances: JSONEncodable {
     public var blue: MatchAlliance?
     public var red: MatchAlliance?
 
-
-    
-    public init(blue: MatchAlliance?, red: MatchAlliance?) {
+    public init(blue: MatchAlliance?=nil, red: MatchAlliance?=nil) {
         self.blue = blue
         self.red = red
     }
-    
 
-    // Encodable protocol methods
-
-    public func encode(to encoder: Encoder) throws {
-
-        var container = encoder.container(keyedBy: String.self)
-
-        try container.encodeIfPresent(blue, forKey: "blue")
-        try container.encodeIfPresent(red, forKey: "red")
-    }
-
-    // Decodable protocol methods
-
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: String.self)
-
-        blue = try container.decodeIfPresent(MatchAlliance.self, forKey: "blue")
-        red = try container.decodeIfPresent(MatchAlliance.self, forKey: "red")
+    // MARK: JSONEncodable
+    func encodeToJSON() -> AnyObject {
+        var nillableDictionary = [String:AnyObject?]()
+        nillableDictionary["blue"] = self.blue?.encodeToJSON()
+        nillableDictionary["red"] = self.red?.encodeToJSON()
+        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
+        return dictionary
     }
 }
-

@@ -8,17 +8,15 @@
 import Foundation
 
 
-
-open class EventRankingRankings: Codable {
-
+public class EventRankingRankings: JSONEncodable {
     /** Number of times disqualified. */
-    public var dq: Int
+    public var dq: Int32
     /** Number of matches played by this team. */
-    public var matchesPlayed: Int
+    public var matchesPlayed: Int32
     /** The average match score during qualifications. Year specific. May be null if not relevant for a given year. */
-    public var qualAverage: Int?
+    public var qualAverage: Int32?
     /** The team&#39;s rank at the event as provided by FIRST. */
-    public var rank: Int
+    public var rank: Int32
     public var record: WLTRecord
     /** Additional special data on the team&#39;s performance calculated by TBA. */
     public var extraStats: [Double]?
@@ -27,9 +25,7 @@ open class EventRankingRankings: Codable {
     /** The team with this rank. */
     public var teamKey: String
 
-
-    
-    public init(dq: Int, matchesPlayed: Int, qualAverage: Int?, rank: Int, record: WLTRecord, extraStats: [Double]?, sortOrders: [Double]?, teamKey: String) {
+    public init(dq: Int32, matchesPlayed: Int32, qualAverage: Int32?=nil, rank: Int32, record: WLTRecord, extraStats: [Double]?=nil, sortOrders: [Double]?=nil, teamKey: String) {
         self.dq = dq
         self.matchesPlayed = matchesPlayed
         self.qualAverage = qualAverage
@@ -39,37 +35,19 @@ open class EventRankingRankings: Codable {
         self.sortOrders = sortOrders
         self.teamKey = teamKey
     }
-    
 
-    // Encodable protocol methods
-
-    public func encode(to encoder: Encoder) throws {
-
-        var container = encoder.container(keyedBy: String.self)
-
-        try container.encode(dq, forKey: "dq")
-        try container.encode(matchesPlayed, forKey: "matches_played")
-        try container.encodeIfPresent(qualAverage, forKey: "qual_average")
-        try container.encode(rank, forKey: "rank")
-        try container.encode(record, forKey: "record")
-        try container.encodeIfPresent(extraStats, forKey: "extra_stats")
-        try container.encodeIfPresent(sortOrders, forKey: "sort_orders")
-        try container.encode(teamKey, forKey: "team_key")
-    }
-
-    // Decodable protocol methods
-
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: String.self)
-
-        dq = try container.decode(Int.self, forKey: "dq")
-        matchesPlayed = try container.decode(Int.self, forKey: "matches_played")
-        qualAverage = try container.decodeIfPresent(Int.self, forKey: "qual_average")
-        rank = try container.decode(Int.self, forKey: "rank")
-        record = try container.decode(WLTRecord.self, forKey: "record")
-        extraStats = try container.decodeIfPresent([Double].self, forKey: "extra_stats")
-        sortOrders = try container.decodeIfPresent([Double].self, forKey: "sort_orders")
-        teamKey = try container.decode(String.self, forKey: "team_key")
+    // MARK: JSONEncodable
+    func encodeToJSON() -> AnyObject {
+        var nillableDictionary = [String:AnyObject?]()
+        nillableDictionary["dq"] = self.dq.encodeToJSON()
+        nillableDictionary["matches_played"] = self.matchesPlayed.encodeToJSON()
+        nillableDictionary["qual_average"] = self.qualAverage?.encodeToJSON()
+        nillableDictionary["rank"] = self.rank.encodeToJSON()
+        nillableDictionary["record"] = self.record.encodeToJSON()
+        nillableDictionary["extra_stats"] = self.extraStats?.encodeToJSON()
+        nillableDictionary["sort_orders"] = self.sortOrders?.encodeToJSON()
+        nillableDictionary["team_key"] = self.teamKey
+        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
+        return dictionary
     }
 }
-

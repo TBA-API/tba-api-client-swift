@@ -8,9 +8,7 @@
 import Foundation
 
 
-
-open class EventRanking: Codable {
-
+public class EventRanking: JSONEncodable {
     /** List of rankings at the event. */
     public var rankings: [EventRankingRankings]
     /** List of special TBA-generated values provided in the &#x60;extra_stats&#x60; array for each item. */
@@ -18,34 +16,19 @@ open class EventRanking: Codable {
     /** List of year-specific values provided in the &#x60;sort_orders&#x60; array for each team. */
     public var sortOrderInfo: [EventRankingSortOrderInfo]
 
-
-    
-    public init(rankings: [EventRankingRankings], extraStatsInfo: [EventRankingExtraStatsInfo]?, sortOrderInfo: [EventRankingSortOrderInfo]) {
+    public init(rankings: [EventRankingRankings], extraStatsInfo: [EventRankingExtraStatsInfo]?=nil, sortOrderInfo: [EventRankingSortOrderInfo]) {
         self.rankings = rankings
         self.extraStatsInfo = extraStatsInfo
         self.sortOrderInfo = sortOrderInfo
     }
-    
 
-    // Encodable protocol methods
-
-    public func encode(to encoder: Encoder) throws {
-
-        var container = encoder.container(keyedBy: String.self)
-
-        try container.encode(rankings, forKey: "rankings")
-        try container.encodeIfPresent(extraStatsInfo, forKey: "extra_stats_info")
-        try container.encode(sortOrderInfo, forKey: "sort_order_info")
-    }
-
-    // Decodable protocol methods
-
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: String.self)
-
-        rankings = try container.decode([EventRankingRankings].self, forKey: "rankings")
-        extraStatsInfo = try container.decodeIfPresent([EventRankingExtraStatsInfo].self, forKey: "extra_stats_info")
-        sortOrderInfo = try container.decode([EventRankingSortOrderInfo].self, forKey: "sort_order_info")
+    // MARK: JSONEncodable
+    func encodeToJSON() -> AnyObject {
+        var nillableDictionary = [String:AnyObject?]()
+        nillableDictionary["rankings"] = self.rankings.encodeToJSON()
+        nillableDictionary["extra_stats_info"] = self.extraStatsInfo?.encodeToJSON()
+        nillableDictionary["sort_order_info"] = self.sortOrderInfo.encodeToJSON()
+        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
+        return dictionary
     }
 }
-

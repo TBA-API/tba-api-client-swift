@@ -5,21 +5,20 @@
 // https://github.com/swagger-api/swagger-codegen
 //
 
-import Foundation
 import Alamofire
 
 extension TBAAPIv3KitAPI {
 
 
-open class TBAAPI {
+public class TBAAPI: APIBase {
     /**
 
      - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getStatus(ifModifiedSince: String? = nil, completion: @escaping ((_ data: APIStatus?,_ error: Error?) -> Void)) {
+    public class func getStatus(ifModifiedSince ifModifiedSince: String? = nil, completion: ((data: APIStatus?, error: ErrorType?) -> Void)) {
         getStatusWithRequestBuilder(ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
-            completion(response?.body, error);
+            completion(data: response?.body, error: error);
         }
     }
 
@@ -51,21 +50,23 @@ open class TBAAPI {
 
      - returns: RequestBuilder<APIStatus> 
      */
-    open class func getStatusWithRequestBuilder(ifModifiedSince: String? = nil) -> RequestBuilder<APIStatus> {
+    public class func getStatusWithRequestBuilder(ifModifiedSince ifModifiedSince: String? = nil) -> RequestBuilder<APIStatus> {
         let path = "/status"
         let URLString = TBAAPIv3KitAPI.basePath + path
-        let parameters: [String:Any]? = nil
 
-        let url = NSURLComponents(string: URLString)
-
-        let nillableHeaders: [String: Any?] = [
+        let nillableParameters: [String:AnyObject?] = [:]
+ 
+        let parameters = APIHelper.rejectNil(nillableParameters)
+ 
+        let convertedParameters = APIHelper.convertBoolToString(parameters)
+        let nillableHeaders: [String: AnyObject?] = [
             "If-Modified-Since": ifModifiedSince
         ]
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
-
+ 
         let requestBuilder: RequestBuilder<APIStatus>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
+        return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true, headers: headerParameters)
     }
 
 }

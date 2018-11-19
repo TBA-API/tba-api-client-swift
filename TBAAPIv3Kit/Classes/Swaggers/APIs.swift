@@ -6,56 +6,72 @@
 
 import Foundation
 
-open class TBAAPIv3KitAPI {
-    open static var basePath = "https://www.thebluealliance.com/api/v3"
-    open static var credential: URLCredential?
-    open static var customHeaders: [String:String] = [:]
-    open static var requestBuilderFactory: RequestBuilderFactory = AlamofireRequestBuilderFactory()
+public class TBAAPIv3KitAPI {
+    public static var basePath = "https://www.thebluealliance.com/api/v3"
+    public static var credential: NSURLCredential?
+    public static var customHeaders: [String:String] = [:]  
+    static var requestBuilderFactory: RequestBuilderFactory = AlamofireRequestBuilderFactory()
 }
 
-open class RequestBuilder<T> {
-    var credential: URLCredential?
+public class APIBase {
+    func toParameters(encodable: JSONEncodable?) -> [String: AnyObject]? {
+        let encoded: AnyObject? = encodable?.encodeToJSON()
+
+        if encoded! is [AnyObject] {
+            var dictionary = [String:AnyObject]()
+            for (index, item) in (encoded as! [AnyObject]).enumerate() {
+                dictionary["\(index)"] = item
+            }
+            return dictionary
+        } else {
+            return encoded as? [String:AnyObject]
+        }
+    }
+}
+
+public class RequestBuilder<T> {
+    var credential: NSURLCredential?
     var headers: [String:String]
-    let parameters: [String:Any]?
+    let parameters: [String:AnyObject]?
     let isBody: Bool
     let method: String
     let URLString: String
-
+    
     /// Optional block to obtain a reference to the request's progress instance when available.
-    public var onProgressReady: ((Progress) -> ())?
+    public var onProgressReady: ((NSProgress) -> ())?
 
-    required public init(method: String, URLString: String, parameters: [String:Any]?, isBody: Bool, headers: [String:String] = [:]) {
+    required public init(method: String, URLString: String, parameters: [String:AnyObject]?, isBody: Bool, headers: [String:String] = [:]) {
         self.method = method
         self.URLString = URLString
         self.parameters = parameters
         self.isBody = isBody
         self.headers = headers
-
+        
         addHeaders(TBAAPIv3KitAPI.customHeaders)
     }
-
-    open func addHeaders(_ aHeaders:[String:String]) {
+    
+    public func addHeaders(aHeaders:[String:String]) {
         for (header, value) in aHeaders {
             headers[header] = value
         }
     }
+    
+    public func execute(completion: (response: Response<T>?, error: ErrorType?) -> Void) { }
 
-    open func execute(_ completion: @escaping (_ response: Response<T>?, _ error: Error?) -> Void) { }
-
-    public func addHeader(name: String, value: String) -> Self {
+    public func addHeader(name name: String, value: String) -> Self {
         if !value.isEmpty {
             headers[name] = value
         }
         return self
     }
-
-    open func addCredential() -> Self {
+    
+    public func addCredential() -> Self {
         self.credential = TBAAPIv3KitAPI.credential
         return self
     }
 }
 
-public protocol RequestBuilderFactory {
-    func getNonDecodableBuilder<T>() -> RequestBuilder<T>.Type
-    func getBuilder<T:Decodable>() -> RequestBuilder<T>.Type
+protocol RequestBuilderFactory {
+    func getBuilder<T>() -> RequestBuilder<T>.Type
 }
+

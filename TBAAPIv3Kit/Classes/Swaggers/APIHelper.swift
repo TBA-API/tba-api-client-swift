@@ -4,13 +4,11 @@
 // https://github.com/swagger-api/swagger-codegen
 //
 
-import Foundation
-
 class APIHelper {
-    static func rejectNil(_ source: [String:Any?]) -> [String:Any]? {
-        var destination = [String:Any]()
+    static func rejectNil(source: [String:AnyObject?]) -> [String:AnyObject]? {
+        var destination = [String:AnyObject]()
         for (key, nillableValue) in source {
-            if let value: Any = nillableValue {
+            if let value: AnyObject = nillableValue {
                 destination[key] = value
             }
         }
@@ -21,45 +19,32 @@ class APIHelper {
         return destination
     }
 
-    static func rejectNilHeaders(_ source: [String:Any?]) -> [String:String] {
+    static func rejectNilHeaders(source: [String:AnyObject?]) -> [String:String] {
         var destination = [String:String]()
         for (key, nillableValue) in source {
-            if let value: Any = nillableValue {
+            if let value: AnyObject = nillableValue {
                 destination[key] = "\(value)"
             }
         }
         return destination
     }
 
-    static func convertBoolToString(_ source: [String: Any]?) -> [String:Any]? {
+    static func convertBoolToString(source: [String: AnyObject]?) -> [String:AnyObject]? {
         guard let source = source else {
             return nil
         }
-        var destination = [String:Any]()
-        let theTrue = NSNumber(value: true as Bool)
-        let theFalse = NSNumber(value: false as Bool)
+        var destination = [String:AnyObject]()
+        let theTrue = NSNumber(bool: true)
+        let theFalse = NSNumber(bool: false)
         for (key, value) in source {
             switch value {
-            case let x where x as? NSNumber === theTrue || x as? NSNumber === theFalse:
-                destination[key] = "\(value as! Bool)" as Any?
+            case let x where x === theTrue || x === theFalse:
+                destination[key] = "\(value as! Bool)"
             default:
                 destination[key] = value
             }
         }
         return destination
-    }
-
-
-    static func mapValuesToQueryItems(values: [String:Any?]) -> [URLQueryItem]? {
-        let returnValues = values
-            .filter { $0.1 != nil }
-            .map { (item: (_key: String, _value: Any?)) -> URLQueryItem in
-                URLQueryItem(name: item._key, value:"\(item._value!)")
-            }
-        if returnValues.count == 0 {
-            return nil
-        }
-        return returnValues
     }
 
 }

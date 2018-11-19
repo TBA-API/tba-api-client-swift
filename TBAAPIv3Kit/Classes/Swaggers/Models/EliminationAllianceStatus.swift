@@ -8,49 +8,30 @@
 import Foundation
 
 
-
-open class EliminationAllianceStatus: Codable {
-
+public class EliminationAllianceStatus: JSONEncodable {
     public var currentLevelRecord: WLTRecord?
     public var level: String?
     public var playoffAverage: Double?
     public var record: WLTRecord?
     public var status: String?
 
-
-    
-    public init(currentLevelRecord: WLTRecord?, level: String?, playoffAverage: Double?, record: WLTRecord?, status: String?) {
+    public init(currentLevelRecord: WLTRecord?=nil, level: String?=nil, playoffAverage: Double?=nil, record: WLTRecord?=nil, status: String?=nil) {
         self.currentLevelRecord = currentLevelRecord
         self.level = level
         self.playoffAverage = playoffAverage
         self.record = record
         self.status = status
     }
-    
 
-    // Encodable protocol methods
-
-    public func encode(to encoder: Encoder) throws {
-
-        var container = encoder.container(keyedBy: String.self)
-
-        try container.encodeIfPresent(currentLevelRecord, forKey: "current_level_record")
-        try container.encodeIfPresent(level, forKey: "level")
-        try container.encodeIfPresent(playoffAverage, forKey: "playoff_average")
-        try container.encodeIfPresent(record, forKey: "record")
-        try container.encodeIfPresent(status, forKey: "status")
-    }
-
-    // Decodable protocol methods
-
-    public required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: String.self)
-
-        currentLevelRecord = try container.decodeIfPresent(WLTRecord.self, forKey: "current_level_record")
-        level = try container.decodeIfPresent(String.self, forKey: "level")
-        playoffAverage = try container.decodeIfPresent(Double.self, forKey: "playoff_average")
-        record = try container.decodeIfPresent(WLTRecord.self, forKey: "record")
-        status = try container.decodeIfPresent(String.self, forKey: "status")
+    // MARK: JSONEncodable
+    func encodeToJSON() -> AnyObject {
+        var nillableDictionary = [String:AnyObject?]()
+        nillableDictionary["current_level_record"] = self.currentLevelRecord?.encodeToJSON()
+        nillableDictionary["level"] = self.level
+        nillableDictionary["playoff_average"] = self.playoffAverage
+        nillableDictionary["record"] = self.record?.encodeToJSON()
+        nillableDictionary["status"] = self.status
+        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
+        return dictionary
     }
 }
-
