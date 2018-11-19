@@ -9,7 +9,9 @@ import Foundation
 
 
 /** Insights for FIRST Power Up qualification and elimination matches. */
-public class EventInsights2018: JSONEncodable {
+
+open class EventInsights2018: Codable {
+
     /** An array with three values, number of times auto quest was completed, number of opportunities to complete the auto quest, and percentage. */
     public var autoQuestAchieved: [Float]
     /** Average number of boost power up scored (out of 3). */
@@ -85,6 +87,8 @@ public class EventInsights2018: JSONEncodable {
     /** Average scale ownership percentage for the winning alliance during teleop. */
     public var winningScaleOwnershipPercentageTeleop: Float
 
+
+    
     public init(autoQuestAchieved: [Float], averageBoostPlayed: Float, averageEndgamePoints: Float, averageForcePlayed: Float, averageFoulScore: Float, averagePointsAuto: Float, averagePointsTeleop: Float, averageRunPointsAuto: Float, averageScaleOwnershipPoints: Float, averageScaleOwnershipPointsAuto: Float, averageScaleOwnershipPointsTeleop: Float, averageScore: Float, averageSwitchOwnershipPoints: Float, averageSwitchOwnershipPointsAuto: Float, averageSwitchOwnershipPointsTeleop: Float, averageVaultPoints: Float, averageWinMargin: Float, averageWinScore: Float, boostPlayedCounts: [Float], climbCounts: [Float], faceTheBossAchieved: [Float], forcePlayedCounts: [Float], highScore: [String], levitatePlayedCounts: [Float], runCountsAuto: [Float], scaleNeutralPercentage: Float, scaleNeutralPercentageAuto: Float, scaleNeutralPercentageTeleop: Float, switchOwnedCountsAuto: [Float], unicornMatches: [Float], winningOppSwitchDenialPercentageTeleop: Float, winningOwnSwitchOwnershipPercentage: Float, winningOwnSwitchOwnershipPercentageAuto: Float, winningOwnSwitchOwnershipPercentageTeleop: Float, winningScaleOwnershipPercentage: Float, winningScaleOwnershipPercentageAuto: Float, winningScaleOwnershipPercentageTeleop: Float) {
         self.autoQuestAchieved = autoQuestAchieved
         self.averageBoostPlayed = averageBoostPlayed
@@ -124,48 +128,95 @@ public class EventInsights2018: JSONEncodable {
         self.winningScaleOwnershipPercentageAuto = winningScaleOwnershipPercentageAuto
         self.winningScaleOwnershipPercentageTeleop = winningScaleOwnershipPercentageTeleop
     }
+    
 
-    // MARK: JSONEncodable
-    func encodeToJSON() -> AnyObject {
-        var nillableDictionary = [String:AnyObject?]()
-        nillableDictionary["auto_quest_achieved"] = self.autoQuestAchieved.encodeToJSON()
-        nillableDictionary["average_boost_played"] = self.averageBoostPlayed
-        nillableDictionary["average_endgame_points"] = self.averageEndgamePoints
-        nillableDictionary["average_force_played"] = self.averageForcePlayed
-        nillableDictionary["average_foul_score"] = self.averageFoulScore
-        nillableDictionary["average_points_auto"] = self.averagePointsAuto
-        nillableDictionary["average_points_teleop"] = self.averagePointsTeleop
-        nillableDictionary["average_run_points_auto"] = self.averageRunPointsAuto
-        nillableDictionary["average_scale_ownership_points"] = self.averageScaleOwnershipPoints
-        nillableDictionary["average_scale_ownership_points_auto"] = self.averageScaleOwnershipPointsAuto
-        nillableDictionary["average_scale_ownership_points_teleop"] = self.averageScaleOwnershipPointsTeleop
-        nillableDictionary["average_score"] = self.averageScore
-        nillableDictionary["average_switch_ownership_points"] = self.averageSwitchOwnershipPoints
-        nillableDictionary["average_switch_ownership_points_auto"] = self.averageSwitchOwnershipPointsAuto
-        nillableDictionary["average_switch_ownership_points_teleop"] = self.averageSwitchOwnershipPointsTeleop
-        nillableDictionary["average_vault_points"] = self.averageVaultPoints
-        nillableDictionary["average_win_margin"] = self.averageWinMargin
-        nillableDictionary["average_win_score"] = self.averageWinScore
-        nillableDictionary["boost_played_counts"] = self.boostPlayedCounts.encodeToJSON()
-        nillableDictionary["climb_counts"] = self.climbCounts.encodeToJSON()
-        nillableDictionary["face_the_boss_achieved"] = self.faceTheBossAchieved.encodeToJSON()
-        nillableDictionary["force_played_counts"] = self.forcePlayedCounts.encodeToJSON()
-        nillableDictionary["high_score"] = self.highScore.encodeToJSON()
-        nillableDictionary["levitate_played_counts"] = self.levitatePlayedCounts.encodeToJSON()
-        nillableDictionary["run_counts_auto"] = self.runCountsAuto.encodeToJSON()
-        nillableDictionary["scale_neutral_percentage"] = self.scaleNeutralPercentage
-        nillableDictionary["scale_neutral_percentage_auto"] = self.scaleNeutralPercentageAuto
-        nillableDictionary["scale_neutral_percentage_teleop"] = self.scaleNeutralPercentageTeleop
-        nillableDictionary["switch_owned_counts_auto"] = self.switchOwnedCountsAuto.encodeToJSON()
-        nillableDictionary["unicorn_matches"] = self.unicornMatches.encodeToJSON()
-        nillableDictionary["winning_opp_switch_denial_percentage_teleop"] = self.winningOppSwitchDenialPercentageTeleop
-        nillableDictionary["winning_own_switch_ownership_percentage"] = self.winningOwnSwitchOwnershipPercentage
-        nillableDictionary["winning_own_switch_ownership_percentage_auto"] = self.winningOwnSwitchOwnershipPercentageAuto
-        nillableDictionary["winning_own_switch_ownership_percentage_teleop"] = self.winningOwnSwitchOwnershipPercentageTeleop
-        nillableDictionary["winning_scale_ownership_percentage"] = self.winningScaleOwnershipPercentage
-        nillableDictionary["winning_scale_ownership_percentage_auto"] = self.winningScaleOwnershipPercentageAuto
-        nillableDictionary["winning_scale_ownership_percentage_teleop"] = self.winningScaleOwnershipPercentageTeleop
-        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
-        return dictionary
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+
+        var container = encoder.container(keyedBy: String.self)
+
+        try container.encode(autoQuestAchieved, forKey: "auto_quest_achieved")
+        try container.encode(averageBoostPlayed, forKey: "average_boost_played")
+        try container.encode(averageEndgamePoints, forKey: "average_endgame_points")
+        try container.encode(averageForcePlayed, forKey: "average_force_played")
+        try container.encode(averageFoulScore, forKey: "average_foul_score")
+        try container.encode(averagePointsAuto, forKey: "average_points_auto")
+        try container.encode(averagePointsTeleop, forKey: "average_points_teleop")
+        try container.encode(averageRunPointsAuto, forKey: "average_run_points_auto")
+        try container.encode(averageScaleOwnershipPoints, forKey: "average_scale_ownership_points")
+        try container.encode(averageScaleOwnershipPointsAuto, forKey: "average_scale_ownership_points_auto")
+        try container.encode(averageScaleOwnershipPointsTeleop, forKey: "average_scale_ownership_points_teleop")
+        try container.encode(averageScore, forKey: "average_score")
+        try container.encode(averageSwitchOwnershipPoints, forKey: "average_switch_ownership_points")
+        try container.encode(averageSwitchOwnershipPointsAuto, forKey: "average_switch_ownership_points_auto")
+        try container.encode(averageSwitchOwnershipPointsTeleop, forKey: "average_switch_ownership_points_teleop")
+        try container.encode(averageVaultPoints, forKey: "average_vault_points")
+        try container.encode(averageWinMargin, forKey: "average_win_margin")
+        try container.encode(averageWinScore, forKey: "average_win_score")
+        try container.encode(boostPlayedCounts, forKey: "boost_played_counts")
+        try container.encode(climbCounts, forKey: "climb_counts")
+        try container.encode(faceTheBossAchieved, forKey: "face_the_boss_achieved")
+        try container.encode(forcePlayedCounts, forKey: "force_played_counts")
+        try container.encode(highScore, forKey: "high_score")
+        try container.encode(levitatePlayedCounts, forKey: "levitate_played_counts")
+        try container.encode(runCountsAuto, forKey: "run_counts_auto")
+        try container.encode(scaleNeutralPercentage, forKey: "scale_neutral_percentage")
+        try container.encode(scaleNeutralPercentageAuto, forKey: "scale_neutral_percentage_auto")
+        try container.encode(scaleNeutralPercentageTeleop, forKey: "scale_neutral_percentage_teleop")
+        try container.encode(switchOwnedCountsAuto, forKey: "switch_owned_counts_auto")
+        try container.encode(unicornMatches, forKey: "unicorn_matches")
+        try container.encode(winningOppSwitchDenialPercentageTeleop, forKey: "winning_opp_switch_denial_percentage_teleop")
+        try container.encode(winningOwnSwitchOwnershipPercentage, forKey: "winning_own_switch_ownership_percentage")
+        try container.encode(winningOwnSwitchOwnershipPercentageAuto, forKey: "winning_own_switch_ownership_percentage_auto")
+        try container.encode(winningOwnSwitchOwnershipPercentageTeleop, forKey: "winning_own_switch_ownership_percentage_teleop")
+        try container.encode(winningScaleOwnershipPercentage, forKey: "winning_scale_ownership_percentage")
+        try container.encode(winningScaleOwnershipPercentageAuto, forKey: "winning_scale_ownership_percentage_auto")
+        try container.encode(winningScaleOwnershipPercentageTeleop, forKey: "winning_scale_ownership_percentage_teleop")
+    }
+
+    // Decodable protocol methods
+
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: String.self)
+
+        autoQuestAchieved = try container.decode([Float].self, forKey: "auto_quest_achieved")
+        averageBoostPlayed = try container.decode(Float.self, forKey: "average_boost_played")
+        averageEndgamePoints = try container.decode(Float.self, forKey: "average_endgame_points")
+        averageForcePlayed = try container.decode(Float.self, forKey: "average_force_played")
+        averageFoulScore = try container.decode(Float.self, forKey: "average_foul_score")
+        averagePointsAuto = try container.decode(Float.self, forKey: "average_points_auto")
+        averagePointsTeleop = try container.decode(Float.self, forKey: "average_points_teleop")
+        averageRunPointsAuto = try container.decode(Float.self, forKey: "average_run_points_auto")
+        averageScaleOwnershipPoints = try container.decode(Float.self, forKey: "average_scale_ownership_points")
+        averageScaleOwnershipPointsAuto = try container.decode(Float.self, forKey: "average_scale_ownership_points_auto")
+        averageScaleOwnershipPointsTeleop = try container.decode(Float.self, forKey: "average_scale_ownership_points_teleop")
+        averageScore = try container.decode(Float.self, forKey: "average_score")
+        averageSwitchOwnershipPoints = try container.decode(Float.self, forKey: "average_switch_ownership_points")
+        averageSwitchOwnershipPointsAuto = try container.decode(Float.self, forKey: "average_switch_ownership_points_auto")
+        averageSwitchOwnershipPointsTeleop = try container.decode(Float.self, forKey: "average_switch_ownership_points_teleop")
+        averageVaultPoints = try container.decode(Float.self, forKey: "average_vault_points")
+        averageWinMargin = try container.decode(Float.self, forKey: "average_win_margin")
+        averageWinScore = try container.decode(Float.self, forKey: "average_win_score")
+        boostPlayedCounts = try container.decode([Float].self, forKey: "boost_played_counts")
+        climbCounts = try container.decode([Float].self, forKey: "climb_counts")
+        faceTheBossAchieved = try container.decode([Float].self, forKey: "face_the_boss_achieved")
+        forcePlayedCounts = try container.decode([Float].self, forKey: "force_played_counts")
+        highScore = try container.decode([String].self, forKey: "high_score")
+        levitatePlayedCounts = try container.decode([Float].self, forKey: "levitate_played_counts")
+        runCountsAuto = try container.decode([Float].self, forKey: "run_counts_auto")
+        scaleNeutralPercentage = try container.decode(Float.self, forKey: "scale_neutral_percentage")
+        scaleNeutralPercentageAuto = try container.decode(Float.self, forKey: "scale_neutral_percentage_auto")
+        scaleNeutralPercentageTeleop = try container.decode(Float.self, forKey: "scale_neutral_percentage_teleop")
+        switchOwnedCountsAuto = try container.decode([Float].self, forKey: "switch_owned_counts_auto")
+        unicornMatches = try container.decode([Float].self, forKey: "unicorn_matches")
+        winningOppSwitchDenialPercentageTeleop = try container.decode(Float.self, forKey: "winning_opp_switch_denial_percentage_teleop")
+        winningOwnSwitchOwnershipPercentage = try container.decode(Float.self, forKey: "winning_own_switch_ownership_percentage")
+        winningOwnSwitchOwnershipPercentageAuto = try container.decode(Float.self, forKey: "winning_own_switch_ownership_percentage_auto")
+        winningOwnSwitchOwnershipPercentageTeleop = try container.decode(Float.self, forKey: "winning_own_switch_ownership_percentage_teleop")
+        winningScaleOwnershipPercentage = try container.decode(Float.self, forKey: "winning_scale_ownership_percentage")
+        winningScaleOwnershipPercentageAuto = try container.decode(Float.self, forKey: "winning_scale_ownership_percentage_auto")
+        winningScaleOwnershipPercentageTeleop = try container.decode(Float.self, forKey: "winning_scale_ownership_percentage_teleop")
     }
 }
+

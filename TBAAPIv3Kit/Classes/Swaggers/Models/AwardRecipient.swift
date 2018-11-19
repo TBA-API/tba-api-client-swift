@@ -9,23 +9,39 @@ import Foundation
 
 
 /** An &#x60;Award_Recipient&#x60; object represents the team and/or person who received an award at an event. */
-public class AwardRecipient: JSONEncodable {
+
+open class AwardRecipient: Codable {
+
     /** The TBA team key for the team that was given the award. May be null. */
     public var teamKey: String?
     /** The name of the individual given the award. May be null. */
     public var awardee: String?
 
-    public init(teamKey: String?=nil, awardee: String?=nil) {
+
+    
+    public init(teamKey: String?, awardee: String?) {
         self.teamKey = teamKey
         self.awardee = awardee
     }
+    
 
-    // MARK: JSONEncodable
-    func encodeToJSON() -> AnyObject {
-        var nillableDictionary = [String:AnyObject?]()
-        nillableDictionary["team_key"] = self.teamKey
-        nillableDictionary["awardee"] = self.awardee
-        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
-        return dictionary
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+
+        var container = encoder.container(keyedBy: String.self)
+
+        try container.encodeIfPresent(teamKey, forKey: "team_key")
+        try container.encodeIfPresent(awardee, forKey: "awardee")
+    }
+
+    // Decodable protocol methods
+
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: String.self)
+
+        teamKey = try container.decodeIfPresent(String.self, forKey: "team_key")
+        awardee = try container.decodeIfPresent(String.self, forKey: "awardee")
     }
 }
+

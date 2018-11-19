@@ -8,22 +8,26 @@
 import Foundation
 
 
-public class TeamEventStatusRankRanking: JSONEncodable {
+
+open class TeamEventStatusRankRanking: Codable {
+
     /** Number of matches the team was disqualified for. */
-    public var dq: Int32?
+    public var dq: Int?
     /** Number of matches played. */
-    public var matchesPlayed: Int32?
+    public var matchesPlayed: Int?
     /** For some years, average qualification score. Can be null. */
     public var qualAverage: Double?
     /** Relative rank of this team. */
-    public var rank: Int32?
+    public var rank: Int?
     public var record: WLTRecord?
     /** Ordered list of values used to determine the rank. See the &#x60;sort_order_info&#x60; property for the name of each value. */
     public var sortOrders: [Double]?
     /** TBA team key for this rank. */
     public var teamKey: String?
 
-    public init(dq: Int32?=nil, matchesPlayed: Int32?=nil, qualAverage: Double?=nil, rank: Int32?=nil, record: WLTRecord?=nil, sortOrders: [Double]?=nil, teamKey: String?=nil) {
+
+    
+    public init(dq: Int?, matchesPlayed: Int?, qualAverage: Double?, rank: Int?, record: WLTRecord?, sortOrders: [Double]?, teamKey: String?) {
         self.dq = dq
         self.matchesPlayed = matchesPlayed
         self.qualAverage = qualAverage
@@ -32,18 +36,35 @@ public class TeamEventStatusRankRanking: JSONEncodable {
         self.sortOrders = sortOrders
         self.teamKey = teamKey
     }
+    
 
-    // MARK: JSONEncodable
-    func encodeToJSON() -> AnyObject {
-        var nillableDictionary = [String:AnyObject?]()
-        nillableDictionary["dq"] = self.dq?.encodeToJSON()
-        nillableDictionary["matches_played"] = self.matchesPlayed?.encodeToJSON()
-        nillableDictionary["qual_average"] = self.qualAverage
-        nillableDictionary["rank"] = self.rank?.encodeToJSON()
-        nillableDictionary["record"] = self.record?.encodeToJSON()
-        nillableDictionary["sort_orders"] = self.sortOrders?.encodeToJSON()
-        nillableDictionary["team_key"] = self.teamKey
-        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
-        return dictionary
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+
+        var container = encoder.container(keyedBy: String.self)
+
+        try container.encodeIfPresent(dq, forKey: "dq")
+        try container.encodeIfPresent(matchesPlayed, forKey: "matches_played")
+        try container.encodeIfPresent(qualAverage, forKey: "qual_average")
+        try container.encodeIfPresent(rank, forKey: "rank")
+        try container.encodeIfPresent(record, forKey: "record")
+        try container.encodeIfPresent(sortOrders, forKey: "sort_orders")
+        try container.encodeIfPresent(teamKey, forKey: "team_key")
+    }
+
+    // Decodable protocol methods
+
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: String.self)
+
+        dq = try container.decodeIfPresent(Int.self, forKey: "dq")
+        matchesPlayed = try container.decodeIfPresent(Int.self, forKey: "matches_played")
+        qualAverage = try container.decodeIfPresent(Double.self, forKey: "qual_average")
+        rank = try container.decodeIfPresent(Int.self, forKey: "rank")
+        record = try container.decodeIfPresent(WLTRecord.self, forKey: "record")
+        sortOrders = try container.decodeIfPresent([Double].self, forKey: "sort_orders")
+        teamKey = try container.decodeIfPresent(String.self, forKey: "team_key")
     }
 }
+

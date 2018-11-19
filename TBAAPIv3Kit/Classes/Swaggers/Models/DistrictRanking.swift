@@ -9,35 +9,54 @@ import Foundation
 
 
 /** Rank of a team in a district. */
-public class DistrictRanking: JSONEncodable {
+
+open class DistrictRanking: Codable {
+
     /** TBA team key for the team. */
     public var teamKey: String
     /** Numerical rank of the team, 1 being top rank. */
-    public var rank: Int32
+    public var rank: Int
     /** Any points added to a team as a result of the rookie bonus. */
-    public var rookieBonus: Int32?
+    public var rookieBonus: Int?
     /** Total district points for the team. */
-    public var pointTotal: Int32
+    public var pointTotal: Int
     /** List of events that contributed to the point total for the team. */
     public var eventPoints: [DistrictRankingEventPoints]?
 
-    public init(teamKey: String, rank: Int32, rookieBonus: Int32?=nil, pointTotal: Int32, eventPoints: [DistrictRankingEventPoints]?=nil) {
+
+    
+    public init(teamKey: String, rank: Int, rookieBonus: Int?, pointTotal: Int, eventPoints: [DistrictRankingEventPoints]?) {
         self.teamKey = teamKey
         self.rank = rank
         self.rookieBonus = rookieBonus
         self.pointTotal = pointTotal
         self.eventPoints = eventPoints
     }
+    
 
-    // MARK: JSONEncodable
-    func encodeToJSON() -> AnyObject {
-        var nillableDictionary = [String:AnyObject?]()
-        nillableDictionary["team_key"] = self.teamKey
-        nillableDictionary["rank"] = self.rank.encodeToJSON()
-        nillableDictionary["rookie_bonus"] = self.rookieBonus?.encodeToJSON()
-        nillableDictionary["point_total"] = self.pointTotal.encodeToJSON()
-        nillableDictionary["event_points"] = self.eventPoints?.encodeToJSON()
-        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
-        return dictionary
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+
+        var container = encoder.container(keyedBy: String.self)
+
+        try container.encode(teamKey, forKey: "team_key")
+        try container.encode(rank, forKey: "rank")
+        try container.encodeIfPresent(rookieBonus, forKey: "rookie_bonus")
+        try container.encode(pointTotal, forKey: "point_total")
+        try container.encodeIfPresent(eventPoints, forKey: "event_points")
+    }
+
+    // Decodable protocol methods
+
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: String.self)
+
+        teamKey = try container.decode(String.self, forKey: "team_key")
+        rank = try container.decode(Int.self, forKey: "rank")
+        rookieBonus = try container.decodeIfPresent(Int.self, forKey: "rookie_bonus")
+        pointTotal = try container.decode(Int.self, forKey: "point_total")
+        eventPoints = try container.decodeIfPresent([DistrictRankingEventPoints].self, forKey: "event_points")
     }
 }
+

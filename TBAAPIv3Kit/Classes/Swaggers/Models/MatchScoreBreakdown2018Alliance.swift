@@ -8,47 +8,51 @@
 import Foundation
 
 
-public class MatchScoreBreakdown2018Alliance: JSONEncodable {
-    public var adjustPoints: Int32?
-    public var autoOwnershipPoints: Int32?
-    public var autoPoints: Int32?
+
+open class MatchScoreBreakdown2018Alliance: Codable {
+
+    public var adjustPoints: Int?
+    public var autoOwnershipPoints: Int?
+    public var autoPoints: Int?
     public var autoQuestRankingPoint: Bool?
     public var autoRobot1: String?
     public var autoRobot2: String?
     public var autoRobot3: String?
-    public var autoRunPoints: Int32?
-    public var autoScaleOwnershipSec: Int32?
+    public var autoRunPoints: Int?
+    public var autoScaleOwnershipSec: Int?
     public var autoSwitchAtZero: Bool?
-    public var autoSwitchOwnershipSec: Int32?
-    public var endgamePoints: Int32?
+    public var autoSwitchOwnershipSec: Int?
+    public var endgamePoints: Int?
     public var endgameRobot1: String?
     public var endgameRobot2: String?
     public var endgameRobot3: String?
     public var faceTheBossRankingPoint: Bool?
-    public var foulCount: Int32?
-    public var foulPoints: Int32?
-    public var rp: Int32?
-    public var techFoulCount: Int32?
-    public var teleopOwnershipPoints: Int32?
-    public var teleopPoints: Int32?
-    public var teleopScaleBoostSec: Int32?
-    public var teleopScaleForceSec: Int32?
-    public var teleopScaleOwnershipSec: Int32?
-    public var teleopSwitchBoostSec: Int32?
-    public var teleopSwitchForceSec: Int32?
-    public var teleopSwitchOwnershipSec: Int32?
-    public var totalPoints: Int32?
-    public var vaultBoostPlayed: Int32?
-    public var vaultBoostTotal: Int32?
-    public var vaultForcePlayed: Int32?
-    public var vaultForceTotal: Int32?
-    public var vaultLevitatePlayed: Int32?
-    public var vaultLevitateTotal: Int32?
-    public var vaultPoints: Int32?
+    public var foulCount: Int?
+    public var foulPoints: Int?
+    public var rp: Int?
+    public var techFoulCount: Int?
+    public var teleopOwnershipPoints: Int?
+    public var teleopPoints: Int?
+    public var teleopScaleBoostSec: Int?
+    public var teleopScaleForceSec: Int?
+    public var teleopScaleOwnershipSec: Int?
+    public var teleopSwitchBoostSec: Int?
+    public var teleopSwitchForceSec: Int?
+    public var teleopSwitchOwnershipSec: Int?
+    public var totalPoints: Int?
+    public var vaultBoostPlayed: Int?
+    public var vaultBoostTotal: Int?
+    public var vaultForcePlayed: Int?
+    public var vaultForceTotal: Int?
+    public var vaultLevitatePlayed: Int?
+    public var vaultLevitateTotal: Int?
+    public var vaultPoints: Int?
     /** Unofficial TBA-computed value of the FMS provided GameData given to the alliance teams at the start of the match. 3 Character String containing &#x60;L&#x60; and &#x60;R&#x60; only. The first character represents the near switch, the 2nd the scale, and the 3rd the far, opposing, switch from the alliance&#39;s perspective. An &#x60;L&#x60; in a position indicates the platform on the left will be lit for the alliance while an &#x60;R&#x60; will indicate the right platform will be lit for the alliance. See also [WPI Screen Steps](https://wpilib.screenstepslive.com/s/currentCS/m/getting_started/l/826278-2018-game-data-details). */
     public var tbaGameData: String?
 
-    public init(adjustPoints: Int32?=nil, autoOwnershipPoints: Int32?=nil, autoPoints: Int32?=nil, autoQuestRankingPoint: Bool?=nil, autoRobot1: String?=nil, autoRobot2: String?=nil, autoRobot3: String?=nil, autoRunPoints: Int32?=nil, autoScaleOwnershipSec: Int32?=nil, autoSwitchAtZero: Bool?=nil, autoSwitchOwnershipSec: Int32?=nil, endgamePoints: Int32?=nil, endgameRobot1: String?=nil, endgameRobot2: String?=nil, endgameRobot3: String?=nil, faceTheBossRankingPoint: Bool?=nil, foulCount: Int32?=nil, foulPoints: Int32?=nil, rp: Int32?=nil, techFoulCount: Int32?=nil, teleopOwnershipPoints: Int32?=nil, teleopPoints: Int32?=nil, teleopScaleBoostSec: Int32?=nil, teleopScaleForceSec: Int32?=nil, teleopScaleOwnershipSec: Int32?=nil, teleopSwitchBoostSec: Int32?=nil, teleopSwitchForceSec: Int32?=nil, teleopSwitchOwnershipSec: Int32?=nil, totalPoints: Int32?=nil, vaultBoostPlayed: Int32?=nil, vaultBoostTotal: Int32?=nil, vaultForcePlayed: Int32?=nil, vaultForceTotal: Int32?=nil, vaultLevitatePlayed: Int32?=nil, vaultLevitateTotal: Int32?=nil, vaultPoints: Int32?=nil, tbaGameData: String?=nil) {
+
+    
+    public init(adjustPoints: Int?, autoOwnershipPoints: Int?, autoPoints: Int?, autoQuestRankingPoint: Bool?, autoRobot1: String?, autoRobot2: String?, autoRobot3: String?, autoRunPoints: Int?, autoScaleOwnershipSec: Int?, autoSwitchAtZero: Bool?, autoSwitchOwnershipSec: Int?, endgamePoints: Int?, endgameRobot1: String?, endgameRobot2: String?, endgameRobot3: String?, faceTheBossRankingPoint: Bool?, foulCount: Int?, foulPoints: Int?, rp: Int?, techFoulCount: Int?, teleopOwnershipPoints: Int?, teleopPoints: Int?, teleopScaleBoostSec: Int?, teleopScaleForceSec: Int?, teleopScaleOwnershipSec: Int?, teleopSwitchBoostSec: Int?, teleopSwitchForceSec: Int?, teleopSwitchOwnershipSec: Int?, totalPoints: Int?, vaultBoostPlayed: Int?, vaultBoostTotal: Int?, vaultForcePlayed: Int?, vaultForceTotal: Int?, vaultLevitatePlayed: Int?, vaultLevitateTotal: Int?, vaultPoints: Int?, tbaGameData: String?) {
         self.adjustPoints = adjustPoints
         self.autoOwnershipPoints = autoOwnershipPoints
         self.autoPoints = autoPoints
@@ -87,48 +91,95 @@ public class MatchScoreBreakdown2018Alliance: JSONEncodable {
         self.vaultPoints = vaultPoints
         self.tbaGameData = tbaGameData
     }
+    
 
-    // MARK: JSONEncodable
-    func encodeToJSON() -> AnyObject {
-        var nillableDictionary = [String:AnyObject?]()
-        nillableDictionary["adjustPoints"] = self.adjustPoints?.encodeToJSON()
-        nillableDictionary["autoOwnershipPoints"] = self.autoOwnershipPoints?.encodeToJSON()
-        nillableDictionary["autoPoints"] = self.autoPoints?.encodeToJSON()
-        nillableDictionary["autoQuestRankingPoint"] = self.autoQuestRankingPoint
-        nillableDictionary["autoRobot1"] = self.autoRobot1
-        nillableDictionary["autoRobot2"] = self.autoRobot2
-        nillableDictionary["autoRobot3"] = self.autoRobot3
-        nillableDictionary["autoRunPoints"] = self.autoRunPoints?.encodeToJSON()
-        nillableDictionary["autoScaleOwnershipSec"] = self.autoScaleOwnershipSec?.encodeToJSON()
-        nillableDictionary["autoSwitchAtZero"] = self.autoSwitchAtZero
-        nillableDictionary["autoSwitchOwnershipSec"] = self.autoSwitchOwnershipSec?.encodeToJSON()
-        nillableDictionary["endgamePoints"] = self.endgamePoints?.encodeToJSON()
-        nillableDictionary["endgameRobot1"] = self.endgameRobot1
-        nillableDictionary["endgameRobot2"] = self.endgameRobot2
-        nillableDictionary["endgameRobot3"] = self.endgameRobot3
-        nillableDictionary["faceTheBossRankingPoint"] = self.faceTheBossRankingPoint
-        nillableDictionary["foulCount"] = self.foulCount?.encodeToJSON()
-        nillableDictionary["foulPoints"] = self.foulPoints?.encodeToJSON()
-        nillableDictionary["rp"] = self.rp?.encodeToJSON()
-        nillableDictionary["techFoulCount"] = self.techFoulCount?.encodeToJSON()
-        nillableDictionary["teleopOwnershipPoints"] = self.teleopOwnershipPoints?.encodeToJSON()
-        nillableDictionary["teleopPoints"] = self.teleopPoints?.encodeToJSON()
-        nillableDictionary["teleopScaleBoostSec"] = self.teleopScaleBoostSec?.encodeToJSON()
-        nillableDictionary["teleopScaleForceSec"] = self.teleopScaleForceSec?.encodeToJSON()
-        nillableDictionary["teleopScaleOwnershipSec"] = self.teleopScaleOwnershipSec?.encodeToJSON()
-        nillableDictionary["teleopSwitchBoostSec"] = self.teleopSwitchBoostSec?.encodeToJSON()
-        nillableDictionary["teleopSwitchForceSec"] = self.teleopSwitchForceSec?.encodeToJSON()
-        nillableDictionary["teleopSwitchOwnershipSec"] = self.teleopSwitchOwnershipSec?.encodeToJSON()
-        nillableDictionary["totalPoints"] = self.totalPoints?.encodeToJSON()
-        nillableDictionary["vaultBoostPlayed"] = self.vaultBoostPlayed?.encodeToJSON()
-        nillableDictionary["vaultBoostTotal"] = self.vaultBoostTotal?.encodeToJSON()
-        nillableDictionary["vaultForcePlayed"] = self.vaultForcePlayed?.encodeToJSON()
-        nillableDictionary["vaultForceTotal"] = self.vaultForceTotal?.encodeToJSON()
-        nillableDictionary["vaultLevitatePlayed"] = self.vaultLevitatePlayed?.encodeToJSON()
-        nillableDictionary["vaultLevitateTotal"] = self.vaultLevitateTotal?.encodeToJSON()
-        nillableDictionary["vaultPoints"] = self.vaultPoints?.encodeToJSON()
-        nillableDictionary["tba_gameData"] = self.tbaGameData
-        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
-        return dictionary
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+
+        var container = encoder.container(keyedBy: String.self)
+
+        try container.encodeIfPresent(adjustPoints, forKey: "adjustPoints")
+        try container.encodeIfPresent(autoOwnershipPoints, forKey: "autoOwnershipPoints")
+        try container.encodeIfPresent(autoPoints, forKey: "autoPoints")
+        try container.encodeIfPresent(autoQuestRankingPoint, forKey: "autoQuestRankingPoint")
+        try container.encodeIfPresent(autoRobot1, forKey: "autoRobot1")
+        try container.encodeIfPresent(autoRobot2, forKey: "autoRobot2")
+        try container.encodeIfPresent(autoRobot3, forKey: "autoRobot3")
+        try container.encodeIfPresent(autoRunPoints, forKey: "autoRunPoints")
+        try container.encodeIfPresent(autoScaleOwnershipSec, forKey: "autoScaleOwnershipSec")
+        try container.encodeIfPresent(autoSwitchAtZero, forKey: "autoSwitchAtZero")
+        try container.encodeIfPresent(autoSwitchOwnershipSec, forKey: "autoSwitchOwnershipSec")
+        try container.encodeIfPresent(endgamePoints, forKey: "endgamePoints")
+        try container.encodeIfPresent(endgameRobot1, forKey: "endgameRobot1")
+        try container.encodeIfPresent(endgameRobot2, forKey: "endgameRobot2")
+        try container.encodeIfPresent(endgameRobot3, forKey: "endgameRobot3")
+        try container.encodeIfPresent(faceTheBossRankingPoint, forKey: "faceTheBossRankingPoint")
+        try container.encodeIfPresent(foulCount, forKey: "foulCount")
+        try container.encodeIfPresent(foulPoints, forKey: "foulPoints")
+        try container.encodeIfPresent(rp, forKey: "rp")
+        try container.encodeIfPresent(techFoulCount, forKey: "techFoulCount")
+        try container.encodeIfPresent(teleopOwnershipPoints, forKey: "teleopOwnershipPoints")
+        try container.encodeIfPresent(teleopPoints, forKey: "teleopPoints")
+        try container.encodeIfPresent(teleopScaleBoostSec, forKey: "teleopScaleBoostSec")
+        try container.encodeIfPresent(teleopScaleForceSec, forKey: "teleopScaleForceSec")
+        try container.encodeIfPresent(teleopScaleOwnershipSec, forKey: "teleopScaleOwnershipSec")
+        try container.encodeIfPresent(teleopSwitchBoostSec, forKey: "teleopSwitchBoostSec")
+        try container.encodeIfPresent(teleopSwitchForceSec, forKey: "teleopSwitchForceSec")
+        try container.encodeIfPresent(teleopSwitchOwnershipSec, forKey: "teleopSwitchOwnershipSec")
+        try container.encodeIfPresent(totalPoints, forKey: "totalPoints")
+        try container.encodeIfPresent(vaultBoostPlayed, forKey: "vaultBoostPlayed")
+        try container.encodeIfPresent(vaultBoostTotal, forKey: "vaultBoostTotal")
+        try container.encodeIfPresent(vaultForcePlayed, forKey: "vaultForcePlayed")
+        try container.encodeIfPresent(vaultForceTotal, forKey: "vaultForceTotal")
+        try container.encodeIfPresent(vaultLevitatePlayed, forKey: "vaultLevitatePlayed")
+        try container.encodeIfPresent(vaultLevitateTotal, forKey: "vaultLevitateTotal")
+        try container.encodeIfPresent(vaultPoints, forKey: "vaultPoints")
+        try container.encodeIfPresent(tbaGameData, forKey: "tba_gameData")
+    }
+
+    // Decodable protocol methods
+
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: String.self)
+
+        adjustPoints = try container.decodeIfPresent(Int.self, forKey: "adjustPoints")
+        autoOwnershipPoints = try container.decodeIfPresent(Int.self, forKey: "autoOwnershipPoints")
+        autoPoints = try container.decodeIfPresent(Int.self, forKey: "autoPoints")
+        autoQuestRankingPoint = try container.decodeIfPresent(Bool.self, forKey: "autoQuestRankingPoint")
+        autoRobot1 = try container.decodeIfPresent(String.self, forKey: "autoRobot1")
+        autoRobot2 = try container.decodeIfPresent(String.self, forKey: "autoRobot2")
+        autoRobot3 = try container.decodeIfPresent(String.self, forKey: "autoRobot3")
+        autoRunPoints = try container.decodeIfPresent(Int.self, forKey: "autoRunPoints")
+        autoScaleOwnershipSec = try container.decodeIfPresent(Int.self, forKey: "autoScaleOwnershipSec")
+        autoSwitchAtZero = try container.decodeIfPresent(Bool.self, forKey: "autoSwitchAtZero")
+        autoSwitchOwnershipSec = try container.decodeIfPresent(Int.self, forKey: "autoSwitchOwnershipSec")
+        endgamePoints = try container.decodeIfPresent(Int.self, forKey: "endgamePoints")
+        endgameRobot1 = try container.decodeIfPresent(String.self, forKey: "endgameRobot1")
+        endgameRobot2 = try container.decodeIfPresent(String.self, forKey: "endgameRobot2")
+        endgameRobot3 = try container.decodeIfPresent(String.self, forKey: "endgameRobot3")
+        faceTheBossRankingPoint = try container.decodeIfPresent(Bool.self, forKey: "faceTheBossRankingPoint")
+        foulCount = try container.decodeIfPresent(Int.self, forKey: "foulCount")
+        foulPoints = try container.decodeIfPresent(Int.self, forKey: "foulPoints")
+        rp = try container.decodeIfPresent(Int.self, forKey: "rp")
+        techFoulCount = try container.decodeIfPresent(Int.self, forKey: "techFoulCount")
+        teleopOwnershipPoints = try container.decodeIfPresent(Int.self, forKey: "teleopOwnershipPoints")
+        teleopPoints = try container.decodeIfPresent(Int.self, forKey: "teleopPoints")
+        teleopScaleBoostSec = try container.decodeIfPresent(Int.self, forKey: "teleopScaleBoostSec")
+        teleopScaleForceSec = try container.decodeIfPresent(Int.self, forKey: "teleopScaleForceSec")
+        teleopScaleOwnershipSec = try container.decodeIfPresent(Int.self, forKey: "teleopScaleOwnershipSec")
+        teleopSwitchBoostSec = try container.decodeIfPresent(Int.self, forKey: "teleopSwitchBoostSec")
+        teleopSwitchForceSec = try container.decodeIfPresent(Int.self, forKey: "teleopSwitchForceSec")
+        teleopSwitchOwnershipSec = try container.decodeIfPresent(Int.self, forKey: "teleopSwitchOwnershipSec")
+        totalPoints = try container.decodeIfPresent(Int.self, forKey: "totalPoints")
+        vaultBoostPlayed = try container.decodeIfPresent(Int.self, forKey: "vaultBoostPlayed")
+        vaultBoostTotal = try container.decodeIfPresent(Int.self, forKey: "vaultBoostTotal")
+        vaultForcePlayed = try container.decodeIfPresent(Int.self, forKey: "vaultForcePlayed")
+        vaultForceTotal = try container.decodeIfPresent(Int.self, forKey: "vaultForceTotal")
+        vaultLevitatePlayed = try container.decodeIfPresent(Int.self, forKey: "vaultLevitatePlayed")
+        vaultLevitateTotal = try container.decodeIfPresent(Int.self, forKey: "vaultLevitateTotal")
+        vaultPoints = try container.decodeIfPresent(Int.self, forKey: "vaultPoints")
+        tbaGameData = try container.decodeIfPresent(String.self, forKey: "tba_gameData")
     }
 }
+

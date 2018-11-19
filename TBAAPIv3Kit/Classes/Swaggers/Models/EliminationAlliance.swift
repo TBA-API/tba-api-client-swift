@@ -8,7 +8,9 @@
 import Foundation
 
 
-public class EliminationAlliance: JSONEncodable {
+
+open class EliminationAlliance: Codable {
+
     /** Alliance name, may be null. */
     public var name: String?
     public var backup: EliminationAllianceBackup?
@@ -18,23 +20,40 @@ public class EliminationAlliance: JSONEncodable {
     public var picks: [String]
     public var status: EliminationAllianceStatus?
 
-    public init(name: String?=nil, backup: EliminationAllianceBackup?=nil, declines: [String]?=nil, picks: [String], status: EliminationAllianceStatus?=nil) {
+
+    
+    public init(name: String?, backup: EliminationAllianceBackup?, declines: [String]?, picks: [String], status: EliminationAllianceStatus?) {
         self.name = name
         self.backup = backup
         self.declines = declines
         self.picks = picks
         self.status = status
     }
+    
 
-    // MARK: JSONEncodable
-    func encodeToJSON() -> AnyObject {
-        var nillableDictionary = [String:AnyObject?]()
-        nillableDictionary["name"] = self.name
-        nillableDictionary["backup"] = self.backup?.encodeToJSON()
-        nillableDictionary["declines"] = self.declines?.encodeToJSON()
-        nillableDictionary["picks"] = self.picks.encodeToJSON()
-        nillableDictionary["status"] = self.status?.encodeToJSON()
-        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
-        return dictionary
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+
+        var container = encoder.container(keyedBy: String.self)
+
+        try container.encodeIfPresent(name, forKey: "name")
+        try container.encodeIfPresent(backup, forKey: "backup")
+        try container.encodeIfPresent(declines, forKey: "declines")
+        try container.encode(picks, forKey: "picks")
+        try container.encodeIfPresent(status, forKey: "status")
+    }
+
+    // Decodable protocol methods
+
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: String.self)
+
+        name = try container.decodeIfPresent(String.self, forKey: "name")
+        backup = try container.decodeIfPresent(EliminationAllianceBackup.self, forKey: "backup")
+        declines = try container.decodeIfPresent([String].self, forKey: "declines")
+        picks = try container.decode([String].self, forKey: "picks")
+        status = try container.decodeIfPresent(EliminationAllianceStatus.self, forKey: "status")
     }
 }
+

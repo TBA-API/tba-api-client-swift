@@ -8,23 +8,39 @@
 import Foundation
 
 
-public class TeamEventStatusRankSortOrderInfo: JSONEncodable {
+
+open class TeamEventStatusRankSortOrderInfo: Codable {
+
     /** The descriptive name of the value used to sort the ranking. */
     public var name: String?
     /** The number of digits of precision used for this value, eg &#x60;2&#x60; would correspond to a value of &#x60;101.11&#x60; while &#x60;0&#x60; would correspond to &#x60;101&#x60;. */
-    public var precision: Int32?
+    public var precision: Int?
 
-    public init(name: String?=nil, precision: Int32?=nil) {
+
+    
+    public init(name: String?, precision: Int?) {
         self.name = name
         self.precision = precision
     }
+    
 
-    // MARK: JSONEncodable
-    func encodeToJSON() -> AnyObject {
-        var nillableDictionary = [String:AnyObject?]()
-        nillableDictionary["name"] = self.name
-        nillableDictionary["precision"] = self.precision?.encodeToJSON()
-        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
-        return dictionary
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+
+        var container = encoder.container(keyedBy: String.self)
+
+        try container.encodeIfPresent(name, forKey: "name")
+        try container.encodeIfPresent(precision, forKey: "precision")
+    }
+
+    // Decodable protocol methods
+
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: String.self)
+
+        name = try container.decodeIfPresent(String.self, forKey: "name")
+        precision = try container.decodeIfPresent(Int.self, forKey: "precision")
     }
 }
+

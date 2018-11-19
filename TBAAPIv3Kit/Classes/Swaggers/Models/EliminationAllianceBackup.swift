@@ -9,23 +9,39 @@ import Foundation
 
 
 /** Backup team called in, may be null. */
-public class EliminationAllianceBackup: JSONEncodable {
+
+open class EliminationAllianceBackup: Codable {
+
     /** Team key that was replaced by the backup team. */
     public var out: String?
     /** Team key that was called in as the backup. */
     public var _in: String?
 
-    public init(out: String?=nil, _in: String?=nil) {
+
+    
+    public init(out: String?, _in: String?) {
         self.out = out
         self._in = _in
     }
+    
 
-    // MARK: JSONEncodable
-    func encodeToJSON() -> AnyObject {
-        var nillableDictionary = [String:AnyObject?]()
-        nillableDictionary["out"] = self.out
-        nillableDictionary["in"] = self._in
-        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
-        return dictionary
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+
+        var container = encoder.container(keyedBy: String.self)
+
+        try container.encodeIfPresent(out, forKey: "out")
+        try container.encodeIfPresent(_in, forKey: "in")
+    }
+
+    // Decodable protocol methods
+
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: String.self)
+
+        out = try container.decodeIfPresent(String.self, forKey: "out")
+        _in = try container.decodeIfPresent(String.self, forKey: "in")
     }
 }
+

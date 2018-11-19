@@ -8,7 +8,9 @@
 import Foundation
 
 
-public class TeamEventStatus: JSONEncodable {
+
+open class TeamEventStatus: Codable {
+
     public var qual: TeamEventStatusRank?
     public var alliance: TeamEventStatusAlliance?
     public var playoff: TeamEventStatusPlayoff?
@@ -23,7 +25,9 @@ public class TeamEventStatus: JSONEncodable {
     /** TBA match key for the last match the team played in at this event, or null. */
     public var lastMatchKey: String?
 
-    public init(qual: TeamEventStatusRank?=nil, alliance: TeamEventStatusAlliance?=nil, playoff: TeamEventStatusPlayoff?=nil, allianceStatusStr: String?=nil, playoffStatusStr: String?=nil, overallStatusStr: String?=nil, nextMatchKey: String?=nil, lastMatchKey: String?=nil) {
+
+    
+    public init(qual: TeamEventStatusRank?, alliance: TeamEventStatusAlliance?, playoff: TeamEventStatusPlayoff?, allianceStatusStr: String?, playoffStatusStr: String?, overallStatusStr: String?, nextMatchKey: String?, lastMatchKey: String?) {
         self.qual = qual
         self.alliance = alliance
         self.playoff = playoff
@@ -33,19 +37,37 @@ public class TeamEventStatus: JSONEncodable {
         self.nextMatchKey = nextMatchKey
         self.lastMatchKey = lastMatchKey
     }
+    
 
-    // MARK: JSONEncodable
-    func encodeToJSON() -> AnyObject {
-        var nillableDictionary = [String:AnyObject?]()
-        nillableDictionary["qual"] = self.qual?.encodeToJSON()
-        nillableDictionary["alliance"] = self.alliance?.encodeToJSON()
-        nillableDictionary["playoff"] = self.playoff?.encodeToJSON()
-        nillableDictionary["alliance_status_str"] = self.allianceStatusStr
-        nillableDictionary["playoff_status_str"] = self.playoffStatusStr
-        nillableDictionary["overall_status_str"] = self.overallStatusStr
-        nillableDictionary["next_match_key"] = self.nextMatchKey
-        nillableDictionary["last_match_key"] = self.lastMatchKey
-        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
-        return dictionary
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+
+        var container = encoder.container(keyedBy: String.self)
+
+        try container.encodeIfPresent(qual, forKey: "qual")
+        try container.encodeIfPresent(alliance, forKey: "alliance")
+        try container.encodeIfPresent(playoff, forKey: "playoff")
+        try container.encodeIfPresent(allianceStatusStr, forKey: "alliance_status_str")
+        try container.encodeIfPresent(playoffStatusStr, forKey: "playoff_status_str")
+        try container.encodeIfPresent(overallStatusStr, forKey: "overall_status_str")
+        try container.encodeIfPresent(nextMatchKey, forKey: "next_match_key")
+        try container.encodeIfPresent(lastMatchKey, forKey: "last_match_key")
+    }
+
+    // Decodable protocol methods
+
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: String.self)
+
+        qual = try container.decodeIfPresent(TeamEventStatusRank.self, forKey: "qual")
+        alliance = try container.decodeIfPresent(TeamEventStatusAlliance.self, forKey: "alliance")
+        playoff = try container.decodeIfPresent(TeamEventStatusPlayoff.self, forKey: "playoff")
+        allianceStatusStr = try container.decodeIfPresent(String.self, forKey: "alliance_status_str")
+        playoffStatusStr = try container.decodeIfPresent(String.self, forKey: "playoff_status_str")
+        overallStatusStr = try container.decodeIfPresent(String.self, forKey: "overall_status_str")
+        nextMatchKey = try container.decodeIfPresent(String.self, forKey: "next_match_key")
+        lastMatchKey = try container.decodeIfPresent(String.self, forKey: "last_match_key")
     }
 }
+

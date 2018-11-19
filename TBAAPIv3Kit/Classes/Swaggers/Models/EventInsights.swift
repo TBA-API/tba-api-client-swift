@@ -9,23 +9,39 @@ import Foundation
 
 
 /** A year-specific event insight object expressed as a JSON string, separated in to &#x60;qual&#x60; and &#x60;playoff&#x60; fields. See also Event_Insights_2016, Event_Insights_2017, etc. */
-public class EventInsights: JSONEncodable {
-    /** Inights for the qualification round of an event */
-    public var qual: AnyObject?
-    /** Insights for the playoff round of an event */
-    public var playoff: AnyObject?
 
-    public init(qual: AnyObject?=nil, playoff: AnyObject?=nil) {
+open class EventInsights: Codable {
+
+    /** Inights for the qualification round of an event */
+    public var qual: Any?
+    /** Insights for the playoff round of an event */
+    public var playoff: Any?
+
+
+    
+    public init(qual: Any?, playoff: Any?) {
         self.qual = qual
         self.playoff = playoff
     }
+    
 
-    // MARK: JSONEncodable
-    func encodeToJSON() -> AnyObject {
-        var nillableDictionary = [String:AnyObject?]()
-        nillableDictionary["qual"] = self.qual
-        nillableDictionary["playoff"] = self.playoff
-        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
-        return dictionary
+    // Encodable protocol methods
+
+    public func encode(to encoder: Encoder) throws {
+
+        var container = encoder.container(keyedBy: String.self)
+
+        try container.encodeIfPresent(qual, forKey: "qual")
+        try container.encodeIfPresent(playoff, forKey: "playoff")
+    }
+
+    // Decodable protocol methods
+
+    public required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: String.self)
+
+        qual = try container.decodeIfPresent(Any.self, forKey: "qual")
+        playoff = try container.decodeIfPresent(Any.self, forKey: "playoff")
     }
 }
+
