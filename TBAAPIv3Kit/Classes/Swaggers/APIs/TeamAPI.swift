@@ -2225,13 +2225,17 @@ open class TeamAPI {
      - responseHeaders: [Last-Modified(String), Cache-Control(String)]
      - responseHeaders: [Last-Modified(String), Cache-Control(String)]
      - examples: [{contentType=application/json, example=[ {
+  "direct_url" : "direct_url",
   "foreign_key" : "foreign_key",
+  "view_url" : "view_url",
   "details" : "{}",
   "type" : "youtube",
   "key" : "key",
   "preferred" : true
 }, {
+  "direct_url" : "direct_url",
   "foreign_key" : "foreign_key",
+  "view_url" : "view_url",
   "details" : "{}",
   "type" : "youtube",
   "key" : "key",
@@ -2287,13 +2291,17 @@ open class TeamAPI {
      - responseHeaders: [Last-Modified(String), Cache-Control(String)]
      - responseHeaders: [Last-Modified(String), Cache-Control(String)]
      - examples: [{contentType=application/json, example=[ {
+  "direct_url" : "direct_url",
   "foreign_key" : "foreign_key",
+  "view_url" : "view_url",
   "details" : "{}",
   "type" : "youtube",
   "key" : "key",
   "preferred" : true
 }, {
+  "direct_url" : "direct_url",
   "foreign_key" : "foreign_key",
+  "view_url" : "view_url",
   "details" : "{}",
   "type" : "youtube",
   "key" : "key",
@@ -2350,13 +2358,17 @@ open class TeamAPI {
      - responseHeaders: [Last-Modified(String), Cache-Control(String)]
      - responseHeaders: [Last-Modified(String), Cache-Control(String)]
      - examples: [{contentType=application/json, example=[ {
+  "direct_url" : "direct_url",
   "foreign_key" : "foreign_key",
+  "view_url" : "view_url",
   "details" : "{}",
   "type" : "youtube",
   "key" : "key",
   "preferred" : true
 }, {
+  "direct_url" : "direct_url",
   "foreign_key" : "foreign_key",
+  "view_url" : "view_url",
   "details" : "{}",
   "type" : "youtube",
   "key" : "key",
@@ -2520,13 +2532,17 @@ open class TeamAPI {
      - responseHeaders: [Last-Modified(String), Cache-Control(String)]
      - responseHeaders: [Last-Modified(String), Cache-Control(String)]
      - examples: [{contentType=application/json, example=[ {
+  "direct_url" : "direct_url",
   "foreign_key" : "foreign_key",
+  "view_url" : "view_url",
   "details" : "{}",
   "type" : "youtube",
   "key" : "key",
   "preferred" : true
 }, {
+  "direct_url" : "direct_url",
   "foreign_key" : "foreign_key",
+  "view_url" : "view_url",
   "details" : "{}",
   "type" : "youtube",
   "key" : "key",

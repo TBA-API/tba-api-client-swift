@@ -37,15 +37,21 @@ open class Media: Codable {
     public var details: Any?
     /** True if the media is of high quality. */
     public var preferred: Bool?
+    /** Direct URL to the media. */
+    public var directUrl: String?
+    /** The URL that leads to the full web page for the media, if one exists. */
+    public var viewUrl: String?
 
 
     
-    public init(key: String, type: ModelType, foreignKey: String?, details: Any?, preferred: Bool?) {
+    public init(key: String, type: ModelType, foreignKey: String?, details: Any?, preferred: Bool?, directUrl: String?, viewUrl: String?) {
         self.key = key
         self.type = type
         self.foreignKey = foreignKey
         self.details = details
         self.preferred = preferred
+        self.directUrl = directUrl
+        self.viewUrl = viewUrl
     }
     
 
@@ -60,6 +66,8 @@ open class Media: Codable {
         try container.encodeIfPresent(foreignKey, forKey: "foreign_key")
         try container.encodeIfPresent(details, forKey: "details")
         try container.encodeIfPresent(preferred, forKey: "preferred")
+        try container.encodeIfPresent(directUrl, forKey: "direct_url")
+        try container.encodeIfPresent(viewUrl, forKey: "view_url")
     }
 
     // Decodable protocol methods
@@ -72,6 +80,8 @@ open class Media: Codable {
         foreignKey = try container.decodeIfPresent(String.self, forKey: "foreign_key")
         details = try container.decodeIfPresent(Any.self, forKey: "details")
         preferred = try container.decodeIfPresent(Bool.self, forKey: "preferred")
+        directUrl = try container.decodeIfPresent(String.self, forKey: "direct_url")
+        viewUrl = try container.decodeIfPresent(String.self, forKey: "view_url")
     }
 }
 
