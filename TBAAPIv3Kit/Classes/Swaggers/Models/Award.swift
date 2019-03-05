@@ -17,7 +17,7 @@ open class Award: Codable {
     public var awardType: Int
     /** The event_key of the event the award was won at. */
     public var eventKey: String
-    /** A list of recipients of the award at the event. Either team_key and/or awardee for individual awards. */
+    /** A list of recipients of the award at the event. May have either a team_key or an awardee, both, or neither (in the case the award wasn&#39;t awarded at the event). */
     public var recipientList: [AwardRecipient]
     /** The year this award was won. */
     public var year: Int
