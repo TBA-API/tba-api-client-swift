@@ -8,29 +8,27 @@
 import Foundation
 
 
-
-public struct Match: Codable {
-
-    public enum CompLevel: String, Codable {
-        case qm = "qm"
-        case ef = "ef"
-        case qf = "qf"
-        case sf = "sf"
-        case f = "f"
+public class Match: JSONEncodable {
+    public enum CompLevel: String { 
+        case Qm = "qm"
+        case Ef = "ef"
+        case Qf = "qf"
+        case Sf = "sf"
+        case F = "f"
     }
     /** TBA match key with the format &#x60;yyyy[EVENT_CODE]_[COMP_LEVEL]m[MATCH_NUMBER]&#x60;, where &#x60;yyyy&#x60; is the year, and &#x60;EVENT_CODE&#x60; is the event code of the event, &#x60;COMP_LEVEL&#x60; is (qm, ef, qf, sf, f), and &#x60;MATCH_NUMBER&#x60; is the match number in the competition level. A set number may be appended to the competition level if more than one match in required per set. */
-    public var key: String?
+    public var key: String
     /** The competition level the match was played at. */
-    public var compLevel: CompLevel?
+    public var compLevel: CompLevel
     /** The set number in a series of matches where more than one match is required in the match series. */
-    public var setNumber: Int?
+    public var setNumber: Int32
     /** The match number of the match in the competition level. */
-    public var matchNumber: Int?
+    public var matchNumber: Int32
     public var alliances: MatchSimpleAlliances?
     /** The color (red/blue) of the winning alliance. Will contain an empty string in the event of no winner, or a tie. */
     public var winningAlliance: String?
     /** Event key of the event the match was played at. */
-    public var eventKey: String?
+    public var eventKey: String
     /** UNIX timestamp (seconds since 1-Jan-1970 00:00:00) of the scheduled match time, as taken from the published schedule. */
     public var time: Int64?
     /** UNIX timestamp (seconds since 1-Jan-1970 00:00:00) of actual match start time. */
@@ -40,11 +38,11 @@ public struct Match: Codable {
     /** UNIX timestamp (seconds since 1-Jan-1970 00:00:00) when the match result was posted. */
     public var postResultTime: Int64?
     /** Score breakdown for auto, teleop, etc. points. Varies from year to year. May be null. */
-    public var scoreBreakdown: Any?
+    public var scoreBreakdown: AnyObject?
     /** Array of video objects associated with this match. */
     public var videos: [MatchVideos]?
 
-    public init(key: String?, compLevel: CompLevel?, setNumber: Int?, matchNumber: Int?, alliances: MatchSimpleAlliances?, winningAlliance: String?, eventKey: String?, time: Int64?, actualTime: Int64?, predictedTime: Int64?, postResultTime: Int64?, scoreBreakdown: Any?, videos: [MatchVideos]?) {
+    public init(key: String, compLevel: CompLevel, setNumber: Int32, matchNumber: Int32, alliances: MatchSimpleAlliances?=nil, winningAlliance: String?=nil, eventKey: String, time: Int64?=nil, actualTime: Int64?=nil, predictedTime: Int64?=nil, postResultTime: Int64?=nil, scoreBreakdown: AnyObject?=nil, videos: [MatchVideos]?=nil) {
         self.key = key
         self.compLevel = compLevel
         self.setNumber = setNumber
@@ -60,22 +58,23 @@ public struct Match: Codable {
         self.videos = videos
     }
 
-    public enum CodingKeys: String, CodingKey { 
-        case key
-        case compLevel = "comp_level"
-        case setNumber = "set_number"
-        case matchNumber = "match_number"
-        case alliances
-        case winningAlliance = "winning_alliance"
-        case eventKey = "event_key"
-        case time
-        case actualTime = "actual_time"
-        case predictedTime = "predicted_time"
-        case postResultTime = "post_result_time"
-        case scoreBreakdown = "score_breakdown"
-        case videos
+    // MARK: JSONEncodable
+    func encodeToJSON() -> AnyObject {
+        var nillableDictionary = [String:AnyObject?]()
+        nillableDictionary["key"] = self.key
+        nillableDictionary["comp_level"] = self.compLevel.rawValue
+        nillableDictionary["set_number"] = self.setNumber.encodeToJSON()
+        nillableDictionary["match_number"] = self.matchNumber.encodeToJSON()
+        nillableDictionary["alliances"] = self.alliances?.encodeToJSON()
+        nillableDictionary["winning_alliance"] = self.winningAlliance
+        nillableDictionary["event_key"] = self.eventKey
+        nillableDictionary["time"] = self.time?.encodeToJSON()
+        nillableDictionary["actual_time"] = self.actualTime?.encodeToJSON()
+        nillableDictionary["predicted_time"] = self.predictedTime?.encodeToJSON()
+        nillableDictionary["post_result_time"] = self.postResultTime?.encodeToJSON()
+        nillableDictionary["score_breakdown"] = self.scoreBreakdown?.encodeToJSON()
+        nillableDictionary["videos"] = self.videos?.encodeToJSON()
+        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
+        return dictionary
     }
-
-
 }
-

@@ -9,20 +9,18 @@ import Foundation
 
 
 /** Playoff status for this team, may be null if the team did not make playoffs, or playoffs have not begun. */
-
-public struct TeamEventStatusPlayoff: Codable {
-
-    public enum Level: String, Codable {
-        case qm = "qm"
-        case ef = "ef"
-        case qf = "qf"
-        case sf = "sf"
-        case f = "f"
+public class TeamEventStatusPlayoff: JSONEncodable {
+    public enum Level: String { 
+        case Qm = "qm"
+        case Ef = "ef"
+        case Qf = "qf"
+        case Sf = "sf"
+        case F = "f"
     }
-    public enum Status: String, Codable {
-        case won = "won"
-        case eliminated = "eliminated"
-        case playing = "playing"
+    public enum Status: String { 
+        case Won = "won"
+        case Eliminated = "eliminated"
+        case Playing = "playing"
     }
     /** The highest playoff level the team reached. */
     public var level: Level?
@@ -31,9 +29,9 @@ public struct TeamEventStatusPlayoff: Codable {
     /** Current competition status for the playoffs. */
     public var status: Status?
     /** The average match score during playoffs. Year specific. May be null if not relevant for a given year. */
-    public var playoffAverage: Int?
+    public var playoffAverage: Int32?
 
-    public init(level: Level?, currentLevelRecord: WLTRecord?, record: WLTRecord?, status: Status?, playoffAverage: Int?) {
+    public init(level: Level?=nil, currentLevelRecord: WLTRecord?=nil, record: WLTRecord?=nil, status: Status?=nil, playoffAverage: Int32?=nil) {
         self.level = level
         self.currentLevelRecord = currentLevelRecord
         self.record = record
@@ -41,14 +39,15 @@ public struct TeamEventStatusPlayoff: Codable {
         self.playoffAverage = playoffAverage
     }
 
-    public enum CodingKeys: String, CodingKey { 
-        case level
-        case currentLevelRecord = "current_level_record"
-        case record
-        case status
-        case playoffAverage = "playoff_average"
+    // MARK: JSONEncodable
+    func encodeToJSON() -> AnyObject {
+        var nillableDictionary = [String:AnyObject?]()
+        nillableDictionary["level"] = self.level?.rawValue
+        nillableDictionary["current_level_record"] = self.currentLevelRecord?.encodeToJSON()
+        nillableDictionary["record"] = self.record?.encodeToJSON()
+        nillableDictionary["status"] = self.status?.rawValue
+        nillableDictionary["playoff_average"] = self.playoffAverage?.encodeToJSON()
+        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
+        return dictionary
     }
-
-
 }
-

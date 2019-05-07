@@ -8,17 +8,15 @@
 import Foundation
 
 
-
-public struct TeamSimple: Codable {
-
+public class TeamSimple: JSONEncodable {
     /** TBA team key with the format &#x60;frcXXXX&#x60; with &#x60;XXXX&#x60; representing the team number. */
-    public var key: String?
+    public var key: String
     /** Official team number issued by FIRST. */
-    public var teamNumber: Int?
+    public var teamNumber: Int32
     /** Team nickname provided by FIRST. */
     public var nickname: String?
     /** Official long name registered with FIRST. */
-    public var name: String?
+    public var name: String
     /** City of team derived from parsing the address registered with FIRST. */
     public var city: String?
     /** State of team derived from parsing the address registered with FIRST. */
@@ -26,7 +24,7 @@ public struct TeamSimple: Codable {
     /** Country of team derived from parsing the address registered with FIRST. */
     public var country: String?
 
-    public init(key: String?, teamNumber: Int?, nickname: String?, name: String?, city: String?, stateProv: String?, country: String?) {
+    public init(key: String, teamNumber: Int32, nickname: String?=nil, name: String, city: String?=nil, stateProv: String?=nil, country: String?=nil) {
         self.key = key
         self.teamNumber = teamNumber
         self.nickname = nickname
@@ -36,16 +34,17 @@ public struct TeamSimple: Codable {
         self.country = country
     }
 
-    public enum CodingKeys: String, CodingKey { 
-        case key
-        case teamNumber = "team_number"
-        case nickname
-        case name
-        case city
-        case stateProv = "state_prov"
-        case country
+    // MARK: JSONEncodable
+    func encodeToJSON() -> AnyObject {
+        var nillableDictionary = [String:AnyObject?]()
+        nillableDictionary["key"] = self.key
+        nillableDictionary["team_number"] = self.teamNumber.encodeToJSON()
+        nillableDictionary["nickname"] = self.nickname
+        nillableDictionary["name"] = self.name
+        nillableDictionary["city"] = self.city
+        nillableDictionary["state_prov"] = self.stateProv
+        nillableDictionary["country"] = self.country
+        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
+        return dictionary
     }
-
-
 }
-

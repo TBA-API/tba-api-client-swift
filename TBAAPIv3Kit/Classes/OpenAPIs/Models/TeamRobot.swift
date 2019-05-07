@@ -8,32 +8,31 @@
 import Foundation
 
 
-
-public struct TeamRobot: Codable {
-
+public class TeamRobot: JSONEncodable {
     /** Year this robot competed in. */
-    public var year: Int?
+    public var year: Int32
     /** Name of the robot as provided by the team. */
-    public var robotName: String?
+    public var robotName: String
     /** Internal TBA identifier for this robot. */
-    public var key: String?
+    public var key: String
     /** TBA team key for this robot. */
-    public var teamKey: String?
+    public var teamKey: String
 
-    public init(year: Int?, robotName: String?, key: String?, teamKey: String?) {
+    public init(year: Int32, robotName: String, key: String, teamKey: String) {
         self.year = year
         self.robotName = robotName
         self.key = key
         self.teamKey = teamKey
     }
 
-    public enum CodingKeys: String, CodingKey { 
-        case year
-        case robotName = "robot_name"
-        case key
-        case teamKey = "team_key"
+    // MARK: JSONEncodable
+    func encodeToJSON() -> AnyObject {
+        var nillableDictionary = [String:AnyObject?]()
+        nillableDictionary["year"] = self.year.encodeToJSON()
+        nillableDictionary["robot_name"] = self.robotName
+        nillableDictionary["key"] = self.key
+        nillableDictionary["team_key"] = self.teamKey
+        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
+        return dictionary
     }
-
-
 }
-

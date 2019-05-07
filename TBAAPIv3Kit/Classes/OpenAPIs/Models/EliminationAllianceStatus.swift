@@ -8,16 +8,14 @@
 import Foundation
 
 
-
-public struct EliminationAllianceStatus: Codable {
-
+public class EliminationAllianceStatus: JSONEncodable {
     public var playoffAverage: Double?
     public var level: String?
     public var record: WLTRecord?
     public var currentLevelRecord: WLTRecord?
     public var status: String?
 
-    public init(playoffAverage: Double?, level: String?, record: WLTRecord?, currentLevelRecord: WLTRecord?, status: String?) {
+    public init(playoffAverage: Double?=nil, level: String?=nil, record: WLTRecord?=nil, currentLevelRecord: WLTRecord?=nil, status: String?=nil) {
         self.playoffAverage = playoffAverage
         self.level = level
         self.record = record
@@ -25,14 +23,15 @@ public struct EliminationAllianceStatus: Codable {
         self.status = status
     }
 
-    public enum CodingKeys: String, CodingKey { 
-        case playoffAverage = "playoff_average"
-        case level
-        case record
-        case currentLevelRecord = "current_level_record"
-        case status
+    // MARK: JSONEncodable
+    func encodeToJSON() -> AnyObject {
+        var nillableDictionary = [String:AnyObject?]()
+        nillableDictionary["playoff_average"] = self.playoffAverage
+        nillableDictionary["level"] = self.level
+        nillableDictionary["record"] = self.record?.encodeToJSON()
+        nillableDictionary["current_level_record"] = self.currentLevelRecord?.encodeToJSON()
+        nillableDictionary["status"] = self.status
+        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
+        return dictionary
     }
-
-
 }
-

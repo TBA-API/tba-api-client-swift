@@ -9,24 +9,23 @@ import Foundation
 
 
 /** An &#x60;Award_Recipient&#x60; object represents the team and/or person who received an award at an event. */
-
-public struct AwardRecipient: Codable {
-
+public class AwardRecipient: JSONEncodable {
     /** The TBA team key for the team that was given the award. May be null. */
     public var teamKey: String?
     /** The name of the individual given the award. May be null. */
     public var awardee: String?
 
-    public init(teamKey: String?, awardee: String?) {
+    public init(teamKey: String?=nil, awardee: String?=nil) {
         self.teamKey = teamKey
         self.awardee = awardee
     }
 
-    public enum CodingKeys: String, CodingKey { 
-        case teamKey = "team_key"
-        case awardee
+    // MARK: JSONEncodable
+    func encodeToJSON() -> AnyObject {
+        var nillableDictionary = [String:AnyObject?]()
+        nillableDictionary["team_key"] = self.teamKey
+        nillableDictionary["awardee"] = self.awardee
+        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
+        return dictionary
     }
-
-
 }
-

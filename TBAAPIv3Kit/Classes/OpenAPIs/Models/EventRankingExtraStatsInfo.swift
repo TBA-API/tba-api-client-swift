@@ -8,19 +8,23 @@
 import Foundation
 
 
-
-public struct EventRankingExtraStatsInfo: Codable {
-
+public class EventRankingExtraStatsInfo: JSONEncodable {
     /** Integer expressing the number of digits of precision in the number provided in &#x60;sort_orders&#x60;. */
-    public var precision: Double?
+    public var precision: Double
     /** Name of the field used in the &#x60;extra_stats&#x60; array. */
-    public var name: String?
+    public var name: String
 
-    public init(precision: Double?, name: String?) {
+    public init(precision: Double, name: String) {
         self.precision = precision
         self.name = name
     }
 
-
+    // MARK: JSONEncodable
+    func encodeToJSON() -> AnyObject {
+        var nillableDictionary = [String:AnyObject?]()
+        nillableDictionary["precision"] = self.precision
+        nillableDictionary["name"] = self.name
+        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
+        return dictionary
+    }
 }
-

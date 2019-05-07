@@ -8,19 +8,17 @@
 import Foundation
 
 
-
-public struct EliminationAlliance: Codable {
-
+public class EliminationAlliance: JSONEncodable {
     /** Alliance name, may be null. */
     public var name: String?
     public var backup: EliminationAllianceBackup?
     /** List of teams that declined the alliance. */
     public var declines: [String]?
     /** List of team keys picked for the alliance. First pick is captain. */
-    public var picks: [String]?
+    public var picks: [String]
     public var status: EliminationAllianceStatus?
 
-    public init(name: String?, backup: EliminationAllianceBackup?, declines: [String]?, picks: [String]?, status: EliminationAllianceStatus?) {
+    public init(name: String?=nil, backup: EliminationAllianceBackup?=nil, declines: [String]?=nil, picks: [String], status: EliminationAllianceStatus?=nil) {
         self.name = name
         self.backup = backup
         self.declines = declines
@@ -28,6 +26,15 @@ public struct EliminationAlliance: Codable {
         self.status = status
     }
 
-
+    // MARK: JSONEncodable
+    func encodeToJSON() -> AnyObject {
+        var nillableDictionary = [String:AnyObject?]()
+        nillableDictionary["name"] = self.name
+        nillableDictionary["backup"] = self.backup?.encodeToJSON()
+        nillableDictionary["declines"] = self.declines?.encodeToJSON()
+        nillableDictionary["picks"] = self.picks.encodeToJSON()
+        nillableDictionary["status"] = self.status?.encodeToJSON()
+        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
+        return dictionary
+    }
 }
-
