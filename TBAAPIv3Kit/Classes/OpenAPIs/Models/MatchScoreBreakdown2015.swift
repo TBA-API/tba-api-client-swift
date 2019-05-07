@@ -9,32 +9,33 @@ import Foundation
 
 
 /** See the 2015 FMS API documentation for a description of each value */
-public class MatchScoreBreakdown2015: JSONEncodable {
-    public enum Coopertition: String { 
-        case None = "None"
-        case Unknown = "Unknown"
-        case Stack = "Stack"
+
+public struct MatchScoreBreakdown2015: Codable {
+
+    public enum Coopertition: String, Codable {
+        case _none = "None"
+        case unknown = "Unknown"
+        case stack = "Stack"
     }
     public var blue: MatchScoreBreakdown2015Alliance?
     public var red: MatchScoreBreakdown2015Alliance?
     public var coopertition: Coopertition?
-    public var coopertitionPoints: Int32?
+    public var coopertitionPoints: Int?
 
-    public init(blue: MatchScoreBreakdown2015Alliance?=nil, red: MatchScoreBreakdown2015Alliance?=nil, coopertition: Coopertition?=nil, coopertitionPoints: Int32?=nil) {
+    public init(blue: MatchScoreBreakdown2015Alliance?, red: MatchScoreBreakdown2015Alliance?, coopertition: Coopertition?, coopertitionPoints: Int?) {
         self.blue = blue
         self.red = red
         self.coopertition = coopertition
         self.coopertitionPoints = coopertitionPoints
     }
 
-    // MARK: JSONEncodable
-    func encodeToJSON() -> AnyObject {
-        var nillableDictionary = [String:AnyObject?]()
-        nillableDictionary["blue"] = self.blue?.encodeToJSON()
-        nillableDictionary["red"] = self.red?.encodeToJSON()
-        nillableDictionary["coopertition"] = self.coopertition?.rawValue
-        nillableDictionary["coopertition_points"] = self.coopertitionPoints?.encodeToJSON()
-        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
-        return dictionary
+    public enum CodingKeys: String, CodingKey { 
+        case blue
+        case red
+        case coopertition
+        case coopertitionPoints = "coopertition_points"
     }
+
+
 }
+

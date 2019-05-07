@@ -8,22 +8,24 @@
 import Foundation
 
 
-public class TeamEventStatusRankRanking: JSONEncodable {
+
+public struct TeamEventStatusRankRanking: Codable {
+
     /** Number of matches played. */
-    public var matchesPlayed: Int32?
+    public var matchesPlayed: Int?
     /** For some years, average qualification score. Can be null. */
     public var qualAverage: Double?
     /** Ordered list of values used to determine the rank. See the &#x60;sort_order_info&#x60; property for the name of each value. */
     public var sortOrders: [Double]?
     public var record: WLTRecord?
     /** Relative rank of this team. */
-    public var rank: Int32?
+    public var rank: Int?
     /** Number of matches the team was disqualified for. */
-    public var dq: Int32?
+    public var dq: Int?
     /** TBA team key for this rank. */
     public var teamKey: String?
 
-    public init(matchesPlayed: Int32?=nil, qualAverage: Double?=nil, sortOrders: [Double]?=nil, record: WLTRecord?=nil, rank: Int32?=nil, dq: Int32?=nil, teamKey: String?=nil) {
+    public init(matchesPlayed: Int?, qualAverage: Double?, sortOrders: [Double]?, record: WLTRecord?, rank: Int?, dq: Int?, teamKey: String?) {
         self.matchesPlayed = matchesPlayed
         self.qualAverage = qualAverage
         self.sortOrders = sortOrders
@@ -33,17 +35,16 @@ public class TeamEventStatusRankRanking: JSONEncodable {
         self.teamKey = teamKey
     }
 
-    // MARK: JSONEncodable
-    func encodeToJSON() -> AnyObject {
-        var nillableDictionary = [String:AnyObject?]()
-        nillableDictionary["matches_played"] = self.matchesPlayed?.encodeToJSON()
-        nillableDictionary["qual_average"] = self.qualAverage
-        nillableDictionary["sort_orders"] = self.sortOrders?.encodeToJSON()
-        nillableDictionary["record"] = self.record?.encodeToJSON()
-        nillableDictionary["rank"] = self.rank?.encodeToJSON()
-        nillableDictionary["dq"] = self.dq?.encodeToJSON()
-        nillableDictionary["team_key"] = self.teamKey
-        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
-        return dictionary
+    public enum CodingKeys: String, CodingKey { 
+        case matchesPlayed = "matches_played"
+        case qualAverage = "qual_average"
+        case sortOrders = "sort_orders"
+        case record
+        case rank
+        case dq
+        case teamKey = "team_key"
     }
+
+
 }
+

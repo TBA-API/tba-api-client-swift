@@ -5,65 +5,48 @@
 // https://openapi-generator.tech
 //
 
+import Foundation
 import Alamofire
 
 extension TBAAPIv3KitAPI {
 
 
-public class TBAAPI: APIBase {
+open class TBAAPI {
     /**
 
      - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    public class func getStatus(ifModifiedSince ifModifiedSince: String? = nil, completion: ((data: APIStatus?, error: ErrorType?) -> Void)) {
+    open class func getStatus(ifModifiedSince: String? = nil, completion: @escaping ((_ data: APIStatus?,_ error: Error?) -> Void)) {
         getStatusWithRequestBuilder(ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
-            completion(data: response?.body, error: error);
+            completion(response?.body, error)
         }
     }
 
-
     /**
      - GET /status
-     - Returns API status, and TBA status information.     - API Key:
+     - Returns API status, and TBA status information.
+     - API Key:
        - type: apiKey X-TBA-Auth-Key 
        - name: apiKey
      - responseHeaders: [Cache-Control(String), Last-Modified(String)]
-     - examples: [{contentType=application/json, example={
-  "is_datafeed_down" : true,
-  "down_events" : [ "down_events", "down_events" ],
-  "max_season" : 6,
-  "current_season" : 0,
-  "android" : {
-    "min_app_version" : 1,
-    "latest_app_version" : 5
-  },
-  "ios" : {
-    "min_app_version" : 1,
-    "latest_app_version" : 5
-  }
-}, statusCode=200}]
      - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
-
      - returns: RequestBuilder<APIStatus> 
      */
-    public class func getStatusWithRequestBuilder(ifModifiedSince ifModifiedSince: String? = nil) -> RequestBuilder<APIStatus> {
+    open class func getStatusWithRequestBuilder(ifModifiedSince: String? = nil) -> RequestBuilder<APIStatus> {
         let path = "/status"
         let URLString = TBAAPIv3KitAPI.basePath + path
-
-        let nillableParameters: [String:AnyObject?] = [:]
- 
-        let parameters = APIHelper.rejectNil(nillableParameters)
- 
-        let convertedParameters = APIHelper.convertBoolToString(parameters)
-        let nillableHeaders: [String: AnyObject?] = [
+        let parameters: [String:Any]? = nil
+        
+        let url = URLComponents(string: URLString)
+        let nillableHeaders: [String: Any?] = [
             "If-Modified-Since": ifModifiedSince
         ]
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
- 
+
         let requestBuilder: RequestBuilder<APIStatus>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: URLString, parameters: convertedParameters, isBody: true, headers: headerParameters)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
 
 }

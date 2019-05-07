@@ -9,30 +9,32 @@ import Foundation
 
 
 /** The &#x60;Media&#x60; object contains a reference for most any media associated with a team or event on TBA. */
-public class Media: JSONEncodable {
-    public enum ModelType: String { 
-        case Youtube = "youtube"
-        case Cdphotothread = "cdphotothread"
-        case Imgur = "imgur"
-        case FacebookProfile = "facebook-profile"
-        case YoutubeChannel = "youtube-channel"
-        case TwitterProfile = "twitter-profile"
-        case GithubProfile = "github-profile"
-        case InstagramProfile = "instagram-profile"
-        case PeriscopeProfile = "periscope-profile"
-        case Grabcad = "grabcad"
-        case InstagramImage = "instagram-image"
-        case ExternalLink = "external-link"
-        case Avatar = "avatar"
+
+public struct Media: Codable {
+
+    public enum ModelType: String, Codable {
+        case youtube = "youtube"
+        case cdphotothread = "cdphotothread"
+        case imgur = "imgur"
+        case facebookProfile = "facebook-profile"
+        case youtubeChannel = "youtube-channel"
+        case twitterProfile = "twitter-profile"
+        case githubProfile = "github-profile"
+        case instagramProfile = "instagram-profile"
+        case periscopeProfile = "periscope-profile"
+        case grabcad = "grabcad"
+        case instagramImage = "instagram-image"
+        case externalLink = "external-link"
+        case avatar = "avatar"
     }
     /** TBA identifier for this media. */
-    public var key: String
+    public var key: String?
     /** String type of the media element. */
-    public var type: ModelType
+    public var type: ModelType?
     /** The key used to identify this media on the media site. */
     public var foreignKey: String?
     /** If required, a JSON dict of additional media information. */
-    public var details: AnyObject?
+    public var details: Any?
     /** True if the media is of high quality. */
     public var preferred: Bool?
     /** Direct URL to the media. */
@@ -40,7 +42,7 @@ public class Media: JSONEncodable {
     /** The URL that leads to the full web page for the media, if one exists. */
     public var viewUrl: String?
 
-    public init(key: String, type: ModelType, foreignKey: String?=nil, details: AnyObject?=nil, preferred: Bool?=nil, directUrl: String?=nil, viewUrl: String?=nil) {
+    public init(key: String?, type: ModelType?, foreignKey: String?, details: Any?, preferred: Bool?, directUrl: String?, viewUrl: String?) {
         self.key = key
         self.type = type
         self.foreignKey = foreignKey
@@ -50,17 +52,16 @@ public class Media: JSONEncodable {
         self.viewUrl = viewUrl
     }
 
-    // MARK: JSONEncodable
-    func encodeToJSON() -> AnyObject {
-        var nillableDictionary = [String:AnyObject?]()
-        nillableDictionary["key"] = self.key
-        nillableDictionary["type"] = self.type.rawValue
-        nillableDictionary["foreign_key"] = self.foreignKey
-        nillableDictionary["details"] = self.details?.encodeToJSON()
-        nillableDictionary["preferred"] = self.preferred
-        nillableDictionary["direct_url"] = self.directUrl
-        nillableDictionary["view_url"] = self.viewUrl
-        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
-        return dictionary
+    public enum CodingKeys: String, CodingKey { 
+        case key
+        case type
+        case foreignKey = "foreign_key"
+        case details
+        case preferred
+        case directUrl = "direct_url"
+        case viewUrl = "view_url"
     }
+
+
 }
+

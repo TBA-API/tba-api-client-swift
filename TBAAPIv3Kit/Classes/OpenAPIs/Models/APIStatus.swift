@@ -8,19 +8,21 @@
 import Foundation
 
 
-public class APIStatus: JSONEncodable {
-    /** Year of the current FRC season. */
-    public var currentSeason: Int32
-    /** Maximum FRC season year for valid queries. */
-    public var maxSeason: Int32
-    /** True if the entire FMS API provided by FIRST is down. */
-    public var isDatafeedDown: Bool
-    /** An array of strings containing event keys of any active events that are no longer updating. */
-    public var downEvents: [String]
-    public var ios: APIStatusAppVersion
-    public var android: APIStatusAppVersion
 
-    public init(currentSeason: Int32, maxSeason: Int32, isDatafeedDown: Bool, downEvents: [String], ios: APIStatusAppVersion, android: APIStatusAppVersion) {
+public struct APIStatus: Codable {
+
+    /** Year of the current FRC season. */
+    public var currentSeason: Int?
+    /** Maximum FRC season year for valid queries. */
+    public var maxSeason: Int?
+    /** True if the entire FMS API provided by FIRST is down. */
+    public var isDatafeedDown: Bool?
+    /** An array of strings containing event keys of any active events that are no longer updating. */
+    public var downEvents: [String]?
+    public var ios: APIStatusAppVersion?
+    public var android: APIStatusAppVersion?
+
+    public init(currentSeason: Int?, maxSeason: Int?, isDatafeedDown: Bool?, downEvents: [String]?, ios: APIStatusAppVersion?, android: APIStatusAppVersion?) {
         self.currentSeason = currentSeason
         self.maxSeason = maxSeason
         self.isDatafeedDown = isDatafeedDown
@@ -29,16 +31,15 @@ public class APIStatus: JSONEncodable {
         self.android = android
     }
 
-    // MARK: JSONEncodable
-    func encodeToJSON() -> AnyObject {
-        var nillableDictionary = [String:AnyObject?]()
-        nillableDictionary["current_season"] = self.currentSeason.encodeToJSON()
-        nillableDictionary["max_season"] = self.maxSeason.encodeToJSON()
-        nillableDictionary["is_datafeed_down"] = self.isDatafeedDown
-        nillableDictionary["down_events"] = self.downEvents.encodeToJSON()
-        nillableDictionary["ios"] = self.ios.encodeToJSON()
-        nillableDictionary["android"] = self.android.encodeToJSON()
-        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
-        return dictionary
+    public enum CodingKeys: String, CodingKey { 
+        case currentSeason = "current_season"
+        case maxSeason = "max_season"
+        case isDatafeedDown = "is_datafeed_down"
+        case downEvents = "down_events"
+        case ios
+        case android
     }
+
+
 }
+

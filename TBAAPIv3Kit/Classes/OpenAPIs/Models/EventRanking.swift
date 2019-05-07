@@ -8,27 +8,28 @@
 import Foundation
 
 
-public class EventRanking: JSONEncodable {
+
+public struct EventRanking: Codable {
+
     /** List of rankings at the event. */
-    public var rankings: [EventRankingRankings]
+    public var rankings: [EventRankingRankings]?
     /** List of special TBA-generated values provided in the &#x60;extra_stats&#x60; array for each item. */
     public var extraStatsInfo: [EventRankingExtraStatsInfo]?
     /** List of year-specific values provided in the &#x60;sort_orders&#x60; array for each team. */
-    public var sortOrderInfo: [EventRankingSortOrderInfo]
+    public var sortOrderInfo: [EventRankingSortOrderInfo]?
 
-    public init(rankings: [EventRankingRankings], extraStatsInfo: [EventRankingExtraStatsInfo]?=nil, sortOrderInfo: [EventRankingSortOrderInfo]) {
+    public init(rankings: [EventRankingRankings]?, extraStatsInfo: [EventRankingExtraStatsInfo]?, sortOrderInfo: [EventRankingSortOrderInfo]?) {
         self.rankings = rankings
         self.extraStatsInfo = extraStatsInfo
         self.sortOrderInfo = sortOrderInfo
     }
 
-    // MARK: JSONEncodable
-    func encodeToJSON() -> AnyObject {
-        var nillableDictionary = [String:AnyObject?]()
-        nillableDictionary["rankings"] = self.rankings.encodeToJSON()
-        nillableDictionary["extra_stats_info"] = self.extraStatsInfo?.encodeToJSON()
-        nillableDictionary["sort_order_info"] = self.sortOrderInfo.encodeToJSON()
-        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
-        return dictionary
+    public enum CodingKeys: String, CodingKey { 
+        case rankings
+        case extraStatsInfo = "extra_stats_info"
+        case sortOrderInfo = "sort_order_info"
     }
+
+
 }
+
