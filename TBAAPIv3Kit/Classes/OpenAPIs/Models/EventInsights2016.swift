@@ -9,59 +9,57 @@ import Foundation
 
 
 /** Insights for FIRST Stronghold qualification and elimination matches. */
-
-public struct EventInsights2016: Codable {
-
+public class EventInsights2016: JSONEncodable {
     /** For the Low Bar - An array with three values, number of times damaged, number of opportunities to damage, and percentage. */
-    public var lowBar: [Float]?
+    public var lowBar: [Float]
     /** For the Cheval De Frise - An array with three values, number of times damaged, number of opportunities to damage, and percentage. */
-    public var aChevalDeFrise: [Float]?
+    public var aChevalDeFrise: [Float]
     /** For the Portcullis - An array with three values, number of times damaged, number of opportunities to damage, and percentage. */
-    public var aPortcullis: [Float]?
+    public var aPortcullis: [Float]
     /** For the Ramparts - An array with three values, number of times damaged, number of opportunities to damage, and percentage. */
-    public var bRamparts: [Float]?
+    public var bRamparts: [Float]
     /** For the Moat - An array with three values, number of times damaged, number of opportunities to damage, and percentage. */
-    public var bMoat: [Float]?
+    public var bMoat: [Float]
     /** For the Sally Port - An array with three values, number of times damaged, number of opportunities to damage, and percentage. */
-    public var cSallyPort: [Float]?
+    public var cSallyPort: [Float]
     /** For the Drawbridge - An array with three values, number of times damaged, number of opportunities to damage, and percentage. */
-    public var cDrawbridge: [Float]?
+    public var cDrawbridge: [Float]
     /** For the Rough Terrain - An array with three values, number of times damaged, number of opportunities to damage, and percentage. */
-    public var dRoughTerrain: [Float]?
+    public var dRoughTerrain: [Float]
     /** For the Rock Wall - An array with three values, number of times damaged, number of opportunities to damage, and percentage. */
-    public var dRockWall: [Float]?
+    public var dRockWall: [Float]
     /** Average number of high goals scored. */
-    public var averageHighGoals: Float?
+    public var averageHighGoals: Float
     /** Average number of low goals scored. */
-    public var averageLowGoals: Float?
+    public var averageLowGoals: Float
     /** An array with three values, number of times breached, number of opportunities to breach, and percentage. */
-    public var breaches: [Float]?
+    public var breaches: [Float]
     /** An array with three values, number of times scaled, number of opportunities to scale, and percentage. */
-    public var scales: [Float]?
+    public var scales: [Float]
     /** An array with three values, number of times challenged, number of opportunities to challenge, and percentage. */
-    public var challenges: [Float]?
+    public var challenges: [Float]
     /** An array with three values, number of times captured, number of opportunities to capture, and percentage. */
-    public var captures: [Float]?
+    public var captures: [Float]
     /** Average winning score. */
-    public var averageWinScore: Float?
+    public var averageWinScore: Float
     /** Average margin of victory. */
-    public var averageWinMargin: Float?
+    public var averageWinMargin: Float
     /** Average total score. */
-    public var averageScore: Float?
+    public var averageScore: Float
     /** Average autonomous score. */
-    public var averageAutoScore: Float?
+    public var averageAutoScore: Float
     /** Average crossing score. */
-    public var averageCrossingScore: Float?
+    public var averageCrossingScore: Float
     /** Average boulder score. */
-    public var averageBoulderScore: Float?
+    public var averageBoulderScore: Float
     /** Average tower score. */
-    public var averageTowerScore: Float?
+    public var averageTowerScore: Float
     /** Average foul score. */
-    public var averageFoulScore: Float?
+    public var averageFoulScore: Float
     /** An array with three values, high score, match key from the match with the high score, and the name of the match. */
-    public var highScore: [String]?
+    public var highScore: [String]
 
-    public init(lowBar: [Float]?, aChevalDeFrise: [Float]?, aPortcullis: [Float]?, bRamparts: [Float]?, bMoat: [Float]?, cSallyPort: [Float]?, cDrawbridge: [Float]?, dRoughTerrain: [Float]?, dRockWall: [Float]?, averageHighGoals: Float?, averageLowGoals: Float?, breaches: [Float]?, scales: [Float]?, challenges: [Float]?, captures: [Float]?, averageWinScore: Float?, averageWinMargin: Float?, averageScore: Float?, averageAutoScore: Float?, averageCrossingScore: Float?, averageBoulderScore: Float?, averageTowerScore: Float?, averageFoulScore: Float?, highScore: [String]?) {
+    public init(lowBar: [Float], aChevalDeFrise: [Float], aPortcullis: [Float], bRamparts: [Float], bMoat: [Float], cSallyPort: [Float], cDrawbridge: [Float], dRoughTerrain: [Float], dRockWall: [Float], averageHighGoals: Float, averageLowGoals: Float, breaches: [Float], scales: [Float], challenges: [Float], captures: [Float], averageWinScore: Float, averageWinMargin: Float, averageScore: Float, averageAutoScore: Float, averageCrossingScore: Float, averageBoulderScore: Float, averageTowerScore: Float, averageFoulScore: Float, highScore: [String]) {
         self.lowBar = lowBar
         self.aChevalDeFrise = aChevalDeFrise
         self.aPortcullis = aPortcullis
@@ -88,33 +86,34 @@ public struct EventInsights2016: Codable {
         self.highScore = highScore
     }
 
-    public enum CodingKeys: String, CodingKey { 
-        case lowBar = "LowBar"
-        case aChevalDeFrise = "A_ChevalDeFrise"
-        case aPortcullis = "A_Portcullis"
-        case bRamparts = "B_Ramparts"
-        case bMoat = "B_Moat"
-        case cSallyPort = "C_SallyPort"
-        case cDrawbridge = "C_Drawbridge"
-        case dRoughTerrain = "D_RoughTerrain"
-        case dRockWall = "D_RockWall"
-        case averageHighGoals = "average_high_goals"
-        case averageLowGoals = "average_low_goals"
-        case breaches
-        case scales
-        case challenges
-        case captures
-        case averageWinScore = "average_win_score"
-        case averageWinMargin = "average_win_margin"
-        case averageScore = "average_score"
-        case averageAutoScore = "average_auto_score"
-        case averageCrossingScore = "average_crossing_score"
-        case averageBoulderScore = "average_boulder_score"
-        case averageTowerScore = "average_tower_score"
-        case averageFoulScore = "average_foul_score"
-        case highScore = "high_score"
+    // MARK: JSONEncodable
+    func encodeToJSON() -> AnyObject {
+        var nillableDictionary = [String:AnyObject?]()
+        nillableDictionary["LowBar"] = self.lowBar.encodeToJSON()
+        nillableDictionary["A_ChevalDeFrise"] = self.aChevalDeFrise.encodeToJSON()
+        nillableDictionary["A_Portcullis"] = self.aPortcullis.encodeToJSON()
+        nillableDictionary["B_Ramparts"] = self.bRamparts.encodeToJSON()
+        nillableDictionary["B_Moat"] = self.bMoat.encodeToJSON()
+        nillableDictionary["C_SallyPort"] = self.cSallyPort.encodeToJSON()
+        nillableDictionary["C_Drawbridge"] = self.cDrawbridge.encodeToJSON()
+        nillableDictionary["D_RoughTerrain"] = self.dRoughTerrain.encodeToJSON()
+        nillableDictionary["D_RockWall"] = self.dRockWall.encodeToJSON()
+        nillableDictionary["average_high_goals"] = self.averageHighGoals
+        nillableDictionary["average_low_goals"] = self.averageLowGoals
+        nillableDictionary["breaches"] = self.breaches.encodeToJSON()
+        nillableDictionary["scales"] = self.scales.encodeToJSON()
+        nillableDictionary["challenges"] = self.challenges.encodeToJSON()
+        nillableDictionary["captures"] = self.captures.encodeToJSON()
+        nillableDictionary["average_win_score"] = self.averageWinScore
+        nillableDictionary["average_win_margin"] = self.averageWinMargin
+        nillableDictionary["average_score"] = self.averageScore
+        nillableDictionary["average_auto_score"] = self.averageAutoScore
+        nillableDictionary["average_crossing_score"] = self.averageCrossingScore
+        nillableDictionary["average_boulder_score"] = self.averageBoulderScore
+        nillableDictionary["average_tower_score"] = self.averageTowerScore
+        nillableDictionary["average_foul_score"] = self.averageFoulScore
+        nillableDictionary["high_score"] = self.highScore.encodeToJSON()
+        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
+        return dictionary
     }
-
-
 }
-

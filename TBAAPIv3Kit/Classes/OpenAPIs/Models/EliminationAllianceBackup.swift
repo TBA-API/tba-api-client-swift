@@ -9,24 +9,23 @@ import Foundation
 
 
 /** Backup team called in, may be null. */
-
-public struct EliminationAllianceBackup: Codable {
-
+public class EliminationAllianceBackup: JSONEncodable {
     /** Team key that was called in as the backup. */
     public var _in: String?
     /** Team key that was replaced by the backup team. */
     public var out: String?
 
-    public init(_in: String?, out: String?) {
+    public init(_in: String?=nil, out: String?=nil) {
         self._in = _in
         self.out = out
     }
 
-    public enum CodingKeys: String, CodingKey { 
-        case _in = "in"
-        case out
+    // MARK: JSONEncodable
+    func encodeToJSON() -> AnyObject {
+        var nillableDictionary = [String:AnyObject?]()
+        nillableDictionary["in"] = self._in
+        nillableDictionary["out"] = self.out
+        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
+        return dictionary
     }
-
-
 }
-

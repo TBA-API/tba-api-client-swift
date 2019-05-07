@@ -9,72 +9,70 @@ import Foundation
 
 
 /** Timeseries data for the 2018 game *FIRST* POWER UP. *WARNING:* This is *not* official data, and is subject to a significant possibility of error, or missing data. Do not rely on this data for any purpose. In fact, pretend we made it up. *WARNING:* This model is currently under active development and may change at any time, including in breaking ways. */
-
-public struct MatchTimeseries2018: Codable {
-
+public class MatchTimeseries2018: JSONEncodable {
     /** TBA event key with the format yyyy[EVENT_CODE], where yyyy is the year, and EVENT_CODE is the event code of the event. */
     public var eventKey: String?
     /** Match ID consisting of the level, match number, and set number, eg &#x60;qm45&#x60; or &#x60;f1m1&#x60;. */
     public var matchId: String?
     /** Current mode of play, can be &#x60;pre_match&#x60;, &#x60;auto&#x60;, &#x60;telop&#x60;, or &#x60;post_match&#x60;. */
     public var mode: String?
-    public var play: Int?
+    public var play: Int32?
     /** Amount of time remaining in the match, only valid during &#x60;auto&#x60; and &#x60;teleop&#x60; modes. */
-    public var timeRemaining: Int?
+    public var timeRemaining: Int32?
     /** 1 if the blue alliance is credited with the AUTO QUEST, 0 if not. */
-    public var blueAutoQuest: Int?
+    public var blueAutoQuest: Int32?
     /** Number of POWER CUBES in the BOOST section of the blue alliance VAULT. */
-    public var blueBoostCount: Int?
+    public var blueBoostCount: Int32?
     /** Returns 1 if the blue alliance BOOST was played, or 0 if not played. */
-    public var blueBoostPlayed: Int?
+    public var blueBoostPlayed: Int32?
     /** Name of the current blue alliance POWER UP being played, or &#x60;null&#x60;. */
     public var blueCurrentPowerup: String?
     /** 1 if the blue alliance is credited with FACING THE BOSS, 0 if not. */
-    public var blueFaceTheBoss: Int?
+    public var blueFaceTheBoss: Int32?
     /** Number of POWER CUBES in the FORCE section of the blue alliance VAULT. */
-    public var blueForceCount: Int?
+    public var blueForceCount: Int32?
     /** Returns 1 if the blue alliance FORCE was played, or 0 if not played. */
-    public var blueForcePlayed: Int?
+    public var blueForcePlayed: Int32?
     /** Number of POWER CUBES in the LEVITATE section of the blue alliance VAULT. */
-    public var blueLevitateCount: Int?
+    public var blueLevitateCount: Int32?
     /** Returns 1 if the blue alliance LEVITATE was played, or 0 if not played. */
-    public var blueLevitatePlayed: Int?
+    public var blueLevitatePlayed: Int32?
     /** Number of seconds remaining in the blue alliance POWER UP time, or 0 if none is active. */
     public var bluePowerupTimeRemaining: String?
     /** 1 if the blue alliance owns the SCALE, 0 if not. */
-    public var blueScaleOwned: Int?
+    public var blueScaleOwned: Int32?
     /** Current score for the blue alliance. */
-    public var blueScore: Int?
+    public var blueScore: Int32?
     /** 1 if the blue alliance owns their SWITCH, 0 if not. */
-    public var blueSwitchOwned: Int?
+    public var blueSwitchOwned: Int32?
     /** 1 if the red alliance is credited with the AUTO QUEST, 0 if not. */
-    public var redAutoQuest: Int?
+    public var redAutoQuest: Int32?
     /** Number of POWER CUBES in the BOOST section of the red alliance VAULT. */
-    public var redBoostCount: Int?
+    public var redBoostCount: Int32?
     /** Returns 1 if the red alliance BOOST was played, or 0 if not played. */
-    public var redBoostPlayed: Int?
+    public var redBoostPlayed: Int32?
     /** Name of the current red alliance POWER UP being played, or &#x60;null&#x60;. */
     public var redCurrentPowerup: String?
     /** 1 if the red alliance is credited with FACING THE BOSS, 0 if not. */
-    public var redFaceTheBoss: Int?
+    public var redFaceTheBoss: Int32?
     /** Number of POWER CUBES in the FORCE section of the red alliance VAULT. */
-    public var redForceCount: Int?
+    public var redForceCount: Int32?
     /** Returns 1 if the red alliance FORCE was played, or 0 if not played. */
-    public var redForcePlayed: Int?
+    public var redForcePlayed: Int32?
     /** Number of POWER CUBES in the LEVITATE section of the red alliance VAULT. */
-    public var redLevitateCount: Int?
+    public var redLevitateCount: Int32?
     /** Returns 1 if the red alliance LEVITATE was played, or 0 if not played. */
-    public var redLevitatePlayed: Int?
+    public var redLevitatePlayed: Int32?
     /** Number of seconds remaining in the red alliance POWER UP time, or 0 if none is active. */
     public var redPowerupTimeRemaining: String?
     /** 1 if the red alliance owns the SCALE, 0 if not. */
-    public var redScaleOwned: Int?
+    public var redScaleOwned: Int32?
     /** Current score for the red alliance. */
-    public var redScore: Int?
+    public var redScore: Int32?
     /** 1 if the red alliance owns their SWITCH, 0 if not. */
-    public var redSwitchOwned: Int?
+    public var redSwitchOwned: Int32?
 
-    public init(eventKey: String?, matchId: String?, mode: String?, play: Int?, timeRemaining: Int?, blueAutoQuest: Int?, blueBoostCount: Int?, blueBoostPlayed: Int?, blueCurrentPowerup: String?, blueFaceTheBoss: Int?, blueForceCount: Int?, blueForcePlayed: Int?, blueLevitateCount: Int?, blueLevitatePlayed: Int?, bluePowerupTimeRemaining: String?, blueScaleOwned: Int?, blueScore: Int?, blueSwitchOwned: Int?, redAutoQuest: Int?, redBoostCount: Int?, redBoostPlayed: Int?, redCurrentPowerup: String?, redFaceTheBoss: Int?, redForceCount: Int?, redForcePlayed: Int?, redLevitateCount: Int?, redLevitatePlayed: Int?, redPowerupTimeRemaining: String?, redScaleOwned: Int?, redScore: Int?, redSwitchOwned: Int?) {
+    public init(eventKey: String?=nil, matchId: String?=nil, mode: String?=nil, play: Int32?=nil, timeRemaining: Int32?=nil, blueAutoQuest: Int32?=nil, blueBoostCount: Int32?=nil, blueBoostPlayed: Int32?=nil, blueCurrentPowerup: String?=nil, blueFaceTheBoss: Int32?=nil, blueForceCount: Int32?=nil, blueForcePlayed: Int32?=nil, blueLevitateCount: Int32?=nil, blueLevitatePlayed: Int32?=nil, bluePowerupTimeRemaining: String?=nil, blueScaleOwned: Int32?=nil, blueScore: Int32?=nil, blueSwitchOwned: Int32?=nil, redAutoQuest: Int32?=nil, redBoostCount: Int32?=nil, redBoostPlayed: Int32?=nil, redCurrentPowerup: String?=nil, redFaceTheBoss: Int32?=nil, redForceCount: Int32?=nil, redForcePlayed: Int32?=nil, redLevitateCount: Int32?=nil, redLevitatePlayed: Int32?=nil, redPowerupTimeRemaining: String?=nil, redScaleOwned: Int32?=nil, redScore: Int32?=nil, redSwitchOwned: Int32?=nil) {
         self.eventKey = eventKey
         self.matchId = matchId
         self.mode = mode
@@ -108,40 +106,41 @@ public struct MatchTimeseries2018: Codable {
         self.redSwitchOwned = redSwitchOwned
     }
 
-    public enum CodingKeys: String, CodingKey { 
-        case eventKey = "event_key"
-        case matchId = "match_id"
-        case mode
-        case play
-        case timeRemaining = "time_remaining"
-        case blueAutoQuest = "blue_auto_quest"
-        case blueBoostCount = "blue_boost_count"
-        case blueBoostPlayed = "blue_boost_played"
-        case blueCurrentPowerup = "blue_current_powerup"
-        case blueFaceTheBoss = "blue_face_the_boss"
-        case blueForceCount = "blue_force_count"
-        case blueForcePlayed = "blue_force_played"
-        case blueLevitateCount = "blue_levitate_count"
-        case blueLevitatePlayed = "blue_levitate_played"
-        case bluePowerupTimeRemaining = "blue_powerup_time_remaining"
-        case blueScaleOwned = "blue_scale_owned"
-        case blueScore = "blue_score"
-        case blueSwitchOwned = "blue_switch_owned"
-        case redAutoQuest = "red_auto_quest"
-        case redBoostCount = "red_boost_count"
-        case redBoostPlayed = "red_boost_played"
-        case redCurrentPowerup = "red_current_powerup"
-        case redFaceTheBoss = "red_face_the_boss"
-        case redForceCount = "red_force_count"
-        case redForcePlayed = "red_force_played"
-        case redLevitateCount = "red_levitate_count"
-        case redLevitatePlayed = "red_levitate_played"
-        case redPowerupTimeRemaining = "red_powerup_time_remaining"
-        case redScaleOwned = "red_scale_owned"
-        case redScore = "red_score"
-        case redSwitchOwned = "red_switch_owned"
+    // MARK: JSONEncodable
+    func encodeToJSON() -> AnyObject {
+        var nillableDictionary = [String:AnyObject?]()
+        nillableDictionary["event_key"] = self.eventKey
+        nillableDictionary["match_id"] = self.matchId
+        nillableDictionary["mode"] = self.mode
+        nillableDictionary["play"] = self.play?.encodeToJSON()
+        nillableDictionary["time_remaining"] = self.timeRemaining?.encodeToJSON()
+        nillableDictionary["blue_auto_quest"] = self.blueAutoQuest?.encodeToJSON()
+        nillableDictionary["blue_boost_count"] = self.blueBoostCount?.encodeToJSON()
+        nillableDictionary["blue_boost_played"] = self.blueBoostPlayed?.encodeToJSON()
+        nillableDictionary["blue_current_powerup"] = self.blueCurrentPowerup
+        nillableDictionary["blue_face_the_boss"] = self.blueFaceTheBoss?.encodeToJSON()
+        nillableDictionary["blue_force_count"] = self.blueForceCount?.encodeToJSON()
+        nillableDictionary["blue_force_played"] = self.blueForcePlayed?.encodeToJSON()
+        nillableDictionary["blue_levitate_count"] = self.blueLevitateCount?.encodeToJSON()
+        nillableDictionary["blue_levitate_played"] = self.blueLevitatePlayed?.encodeToJSON()
+        nillableDictionary["blue_powerup_time_remaining"] = self.bluePowerupTimeRemaining
+        nillableDictionary["blue_scale_owned"] = self.blueScaleOwned?.encodeToJSON()
+        nillableDictionary["blue_score"] = self.blueScore?.encodeToJSON()
+        nillableDictionary["blue_switch_owned"] = self.blueSwitchOwned?.encodeToJSON()
+        nillableDictionary["red_auto_quest"] = self.redAutoQuest?.encodeToJSON()
+        nillableDictionary["red_boost_count"] = self.redBoostCount?.encodeToJSON()
+        nillableDictionary["red_boost_played"] = self.redBoostPlayed?.encodeToJSON()
+        nillableDictionary["red_current_powerup"] = self.redCurrentPowerup
+        nillableDictionary["red_face_the_boss"] = self.redFaceTheBoss?.encodeToJSON()
+        nillableDictionary["red_force_count"] = self.redForceCount?.encodeToJSON()
+        nillableDictionary["red_force_played"] = self.redForcePlayed?.encodeToJSON()
+        nillableDictionary["red_levitate_count"] = self.redLevitateCount?.encodeToJSON()
+        nillableDictionary["red_levitate_played"] = self.redLevitatePlayed?.encodeToJSON()
+        nillableDictionary["red_powerup_time_remaining"] = self.redPowerupTimeRemaining
+        nillableDictionary["red_scale_owned"] = self.redScaleOwned?.encodeToJSON()
+        nillableDictionary["red_score"] = self.redScore?.encodeToJSON()
+        nillableDictionary["red_switch_owned"] = self.redSwitchOwned?.encodeToJSON()
+        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
+        return dictionary
     }
-
-
 }
-

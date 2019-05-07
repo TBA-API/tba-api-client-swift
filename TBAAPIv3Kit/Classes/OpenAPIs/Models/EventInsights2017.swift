@@ -9,75 +9,73 @@ import Foundation
 
 
 /** Insights for FIRST STEAMWORKS qualification and elimination matches. */
-
-public struct EventInsights2017: Codable {
-
+public class EventInsights2017: JSONEncodable {
     /** Average foul score. */
-    public var averageFoulScore: Float?
+    public var averageFoulScore: Float
     /** Average fuel points scored. */
-    public var averageFuelPoints: Float?
+    public var averageFuelPoints: Float
     /** Average fuel points scored during auto. */
-    public var averageFuelPointsAuto: Float?
+    public var averageFuelPointsAuto: Float
     /** Average fuel points scored during teleop. */
-    public var averageFuelPointsTeleop: Float?
+    public var averageFuelPointsTeleop: Float
     /** Average points scored in the high goal. */
-    public var averageHighGoals: Float?
+    public var averageHighGoals: Float
     /** Average points scored in the high goal during auto. */
-    public var averageHighGoalsAuto: Float?
+    public var averageHighGoalsAuto: Float
     /** Average points scored in the high goal during teleop. */
-    public var averageHighGoalsTeleop: Float?
+    public var averageHighGoalsTeleop: Float
     /** Average points scored in the low goal. */
-    public var averageLowGoals: Float?
+    public var averageLowGoals: Float
     /** Average points scored in the low goal during auto. */
-    public var averageLowGoalsAuto: Float?
+    public var averageLowGoalsAuto: Float
     /** Average points scored in the low goal during teleop. */
-    public var averageLowGoalsTeleop: Float?
+    public var averageLowGoalsTeleop: Float
     /** Average mobility points scored during auto. */
-    public var averageMobilityPointsAuto: Float?
+    public var averageMobilityPointsAuto: Float
     /** Average points scored during auto. */
-    public var averagePointsAuto: Float?
+    public var averagePointsAuto: Float
     /** Average points scored during teleop. */
-    public var averagePointsTeleop: Float?
+    public var averagePointsTeleop: Float
     /** Average rotor points scored. */
-    public var averageRotorPoints: Float?
+    public var averageRotorPoints: Float
     /** Average rotor points scored during auto. */
-    public var averageRotorPointsAuto: Float?
+    public var averageRotorPointsAuto: Float
     /** Average rotor points scored during teleop. */
-    public var averageRotorPointsTeleop: Float?
+    public var averageRotorPointsTeleop: Float
     /** Average score. */
-    public var averageScore: Float?
+    public var averageScore: Float
     /** Average takeoff points scored during teleop. */
-    public var averageTakeoffPointsTeleop: Float?
+    public var averageTakeoffPointsTeleop: Float
     /** Average margin of victory. */
-    public var averageWinMargin: Float?
+    public var averageWinMargin: Float
     /** Average winning score. */
-    public var averageWinScore: Float?
+    public var averageWinScore: Float
     /** An array with three values, kPa scored, match key from the match with the high kPa, and the name of the match */
-    public var highKpa: [String]?
+    public var highKpa: [String]
     /** An array with three values, high score, match key from the match with the high score, and the name of the match */
-    public var highScore: [String]?
+    public var highScore: [String]
     /** An array with three values, number of times kPa bonus achieved, number of opportunities to bonus, and percentage. */
-    public var kpaAchieved: [Float]?
+    public var kpaAchieved: [Float]
     /** An array with three values, number of times mobility bonus achieved, number of opportunities to bonus, and percentage. */
-    public var mobilityCounts: [Float]?
+    public var mobilityCounts: [Float]
     /** An array with three values, number of times rotor 1 engaged, number of opportunities to engage, and percentage. */
-    public var rotor1Engaged: [Float]?
+    public var rotor1Engaged: [Float]
     /** An array with three values, number of times rotor 1 engaged in auto, number of opportunities to engage in auto, and percentage. */
-    public var rotor1EngagedAuto: [Float]?
+    public var rotor1EngagedAuto: [Float]
     /** An array with three values, number of times rotor 2 engaged, number of opportunities to engage, and percentage. */
-    public var rotor2Engaged: [Float]?
+    public var rotor2Engaged: [Float]
     /** An array with three values, number of times rotor 2 engaged in auto, number of opportunities to engage in auto, and percentage. */
-    public var rotor2EngagedAuto: [Float]?
+    public var rotor2EngagedAuto: [Float]
     /** An array with three values, number of times rotor 3 engaged, number of opportunities to engage, and percentage. */
-    public var rotor3Engaged: [Float]?
+    public var rotor3Engaged: [Float]
     /** An array with three values, number of times rotor 4 engaged, number of opportunities to engage, and percentage. */
-    public var rotor4Engaged: [Float]?
+    public var rotor4Engaged: [Float]
     /** An array with three values, number of times takeoff was counted, number of opportunities to takeoff, and percentage. */
-    public var takeoffCounts: [Float]?
+    public var takeoffCounts: [Float]
     /** An array with three values, number of times a unicorn match (Win + kPa &amp; Rotor Bonuses) occured, number of opportunities to have a unicorn match, and percentage. */
-    public var unicornMatches: [Float]?
+    public var unicornMatches: [Float]
 
-    public init(averageFoulScore: Float?, averageFuelPoints: Float?, averageFuelPointsAuto: Float?, averageFuelPointsTeleop: Float?, averageHighGoals: Float?, averageHighGoalsAuto: Float?, averageHighGoalsTeleop: Float?, averageLowGoals: Float?, averageLowGoalsAuto: Float?, averageLowGoalsTeleop: Float?, averageMobilityPointsAuto: Float?, averagePointsAuto: Float?, averagePointsTeleop: Float?, averageRotorPoints: Float?, averageRotorPointsAuto: Float?, averageRotorPointsTeleop: Float?, averageScore: Float?, averageTakeoffPointsTeleop: Float?, averageWinMargin: Float?, averageWinScore: Float?, highKpa: [String]?, highScore: [String]?, kpaAchieved: [Float]?, mobilityCounts: [Float]?, rotor1Engaged: [Float]?, rotor1EngagedAuto: [Float]?, rotor2Engaged: [Float]?, rotor2EngagedAuto: [Float]?, rotor3Engaged: [Float]?, rotor4Engaged: [Float]?, takeoffCounts: [Float]?, unicornMatches: [Float]?) {
+    public init(averageFoulScore: Float, averageFuelPoints: Float, averageFuelPointsAuto: Float, averageFuelPointsTeleop: Float, averageHighGoals: Float, averageHighGoalsAuto: Float, averageHighGoalsTeleop: Float, averageLowGoals: Float, averageLowGoalsAuto: Float, averageLowGoalsTeleop: Float, averageMobilityPointsAuto: Float, averagePointsAuto: Float, averagePointsTeleop: Float, averageRotorPoints: Float, averageRotorPointsAuto: Float, averageRotorPointsTeleop: Float, averageScore: Float, averageTakeoffPointsTeleop: Float, averageWinMargin: Float, averageWinScore: Float, highKpa: [String], highScore: [String], kpaAchieved: [Float], mobilityCounts: [Float], rotor1Engaged: [Float], rotor1EngagedAuto: [Float], rotor2Engaged: [Float], rotor2EngagedAuto: [Float], rotor3Engaged: [Float], rotor4Engaged: [Float], takeoffCounts: [Float], unicornMatches: [Float]) {
         self.averageFoulScore = averageFoulScore
         self.averageFuelPoints = averageFuelPoints
         self.averageFuelPointsAuto = averageFuelPointsAuto
@@ -112,41 +110,42 @@ public struct EventInsights2017: Codable {
         self.unicornMatches = unicornMatches
     }
 
-    public enum CodingKeys: String, CodingKey { 
-        case averageFoulScore = "average_foul_score"
-        case averageFuelPoints = "average_fuel_points"
-        case averageFuelPointsAuto = "average_fuel_points_auto"
-        case averageFuelPointsTeleop = "average_fuel_points_teleop"
-        case averageHighGoals = "average_high_goals"
-        case averageHighGoalsAuto = "average_high_goals_auto"
-        case averageHighGoalsTeleop = "average_high_goals_teleop"
-        case averageLowGoals = "average_low_goals"
-        case averageLowGoalsAuto = "average_low_goals_auto"
-        case averageLowGoalsTeleop = "average_low_goals_teleop"
-        case averageMobilityPointsAuto = "average_mobility_points_auto"
-        case averagePointsAuto = "average_points_auto"
-        case averagePointsTeleop = "average_points_teleop"
-        case averageRotorPoints = "average_rotor_points"
-        case averageRotorPointsAuto = "average_rotor_points_auto"
-        case averageRotorPointsTeleop = "average_rotor_points_teleop"
-        case averageScore = "average_score"
-        case averageTakeoffPointsTeleop = "average_takeoff_points_teleop"
-        case averageWinMargin = "average_win_margin"
-        case averageWinScore = "average_win_score"
-        case highKpa = "high_kpa"
-        case highScore = "high_score"
-        case kpaAchieved = "kpa_achieved"
-        case mobilityCounts = "mobility_counts"
-        case rotor1Engaged = "rotor_1_engaged"
-        case rotor1EngagedAuto = "rotor_1_engaged_auto"
-        case rotor2Engaged = "rotor_2_engaged"
-        case rotor2EngagedAuto = "rotor_2_engaged_auto"
-        case rotor3Engaged = "rotor_3_engaged"
-        case rotor4Engaged = "rotor_4_engaged"
-        case takeoffCounts = "takeoff_counts"
-        case unicornMatches = "unicorn_matches"
+    // MARK: JSONEncodable
+    func encodeToJSON() -> AnyObject {
+        var nillableDictionary = [String:AnyObject?]()
+        nillableDictionary["average_foul_score"] = self.averageFoulScore
+        nillableDictionary["average_fuel_points"] = self.averageFuelPoints
+        nillableDictionary["average_fuel_points_auto"] = self.averageFuelPointsAuto
+        nillableDictionary["average_fuel_points_teleop"] = self.averageFuelPointsTeleop
+        nillableDictionary["average_high_goals"] = self.averageHighGoals
+        nillableDictionary["average_high_goals_auto"] = self.averageHighGoalsAuto
+        nillableDictionary["average_high_goals_teleop"] = self.averageHighGoalsTeleop
+        nillableDictionary["average_low_goals"] = self.averageLowGoals
+        nillableDictionary["average_low_goals_auto"] = self.averageLowGoalsAuto
+        nillableDictionary["average_low_goals_teleop"] = self.averageLowGoalsTeleop
+        nillableDictionary["average_mobility_points_auto"] = self.averageMobilityPointsAuto
+        nillableDictionary["average_points_auto"] = self.averagePointsAuto
+        nillableDictionary["average_points_teleop"] = self.averagePointsTeleop
+        nillableDictionary["average_rotor_points"] = self.averageRotorPoints
+        nillableDictionary["average_rotor_points_auto"] = self.averageRotorPointsAuto
+        nillableDictionary["average_rotor_points_teleop"] = self.averageRotorPointsTeleop
+        nillableDictionary["average_score"] = self.averageScore
+        nillableDictionary["average_takeoff_points_teleop"] = self.averageTakeoffPointsTeleop
+        nillableDictionary["average_win_margin"] = self.averageWinMargin
+        nillableDictionary["average_win_score"] = self.averageWinScore
+        nillableDictionary["high_kpa"] = self.highKpa.encodeToJSON()
+        nillableDictionary["high_score"] = self.highScore.encodeToJSON()
+        nillableDictionary["kpa_achieved"] = self.kpaAchieved.encodeToJSON()
+        nillableDictionary["mobility_counts"] = self.mobilityCounts.encodeToJSON()
+        nillableDictionary["rotor_1_engaged"] = self.rotor1Engaged.encodeToJSON()
+        nillableDictionary["rotor_1_engaged_auto"] = self.rotor1EngagedAuto.encodeToJSON()
+        nillableDictionary["rotor_2_engaged"] = self.rotor2Engaged.encodeToJSON()
+        nillableDictionary["rotor_2_engaged_auto"] = self.rotor2EngagedAuto.encodeToJSON()
+        nillableDictionary["rotor_3_engaged"] = self.rotor3Engaged.encodeToJSON()
+        nillableDictionary["rotor_4_engaged"] = self.rotor4Engaged.encodeToJSON()
+        nillableDictionary["takeoff_counts"] = self.takeoffCounts.encodeToJSON()
+        nillableDictionary["unicorn_matches"] = self.unicornMatches.encodeToJSON()
+        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
+        return dictionary
     }
-
-
 }
-

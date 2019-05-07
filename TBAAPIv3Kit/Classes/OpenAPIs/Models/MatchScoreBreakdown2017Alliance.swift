@@ -8,59 +8,57 @@
 import Foundation
 
 
-
-public struct MatchScoreBreakdown2017Alliance: Codable {
-
-    public enum Robot1Auto: String, Codable {
-        case unknown = "Unknown"
-        case mobility = "Mobility"
-        case _none = "None"
+public class MatchScoreBreakdown2017Alliance: JSONEncodable {
+    public enum Robot1Auto: String { 
+        case Unknown = "Unknown"
+        case Mobility = "Mobility"
+        case None = "None"
     }
-    public enum Robot2Auto: String, Codable {
-        case unknown = "Unknown"
-        case mobility = "Mobility"
-        case _none = "None"
+    public enum Robot2Auto: String { 
+        case Unknown = "Unknown"
+        case Mobility = "Mobility"
+        case None = "None"
     }
-    public enum Robot3Auto: String, Codable {
-        case unknown = "Unknown"
-        case mobility = "Mobility"
-        case _none = "None"
+    public enum Robot3Auto: String { 
+        case Unknown = "Unknown"
+        case Mobility = "Mobility"
+        case None = "None"
     }
-    public var autoPoints: Int?
-    public var teleopPoints: Int?
-    public var foulPoints: Int?
-    public var adjustPoints: Int?
-    public var totalPoints: Int?
+    public var autoPoints: Int32?
+    public var teleopPoints: Int32?
+    public var foulPoints: Int32?
+    public var adjustPoints: Int32?
+    public var totalPoints: Int32?
     public var robot1Auto: Robot1Auto?
     public var robot2Auto: Robot2Auto?
     public var robot3Auto: Robot3Auto?
     public var rotor1Auto: Bool?
     public var rotor2Auto: Bool?
-    public var autoFuelLow: Int?
-    public var autoFuelHigh: Int?
-    public var autoMobilityPoints: Int?
-    public var autoRotorPoints: Int?
-    public var autoFuelPoints: Int?
-    public var teleopFuelPoints: Int?
-    public var teleopFuelLow: Int?
-    public var teleopFuelHigh: Int?
-    public var teleopRotorPoints: Int?
+    public var autoFuelLow: Int32?
+    public var autoFuelHigh: Int32?
+    public var autoMobilityPoints: Int32?
+    public var autoRotorPoints: Int32?
+    public var autoFuelPoints: Int32?
+    public var teleopFuelPoints: Int32?
+    public var teleopFuelLow: Int32?
+    public var teleopFuelHigh: Int32?
+    public var teleopRotorPoints: Int32?
     public var kPaRankingPointAchieved: Bool?
-    public var teleopTakeoffPoints: Int?
-    public var kPaBonusPoints: Int?
-    public var rotorBonusPoints: Int?
+    public var teleopTakeoffPoints: Int32?
+    public var kPaBonusPoints: Int32?
+    public var rotorBonusPoints: Int32?
     public var rotor1Engaged: Bool?
     public var rotor2Engaged: Bool?
     public var rotor3Engaged: Bool?
     public var rotor4Engaged: Bool?
     public var rotorRankingPointAchieved: Bool?
-    public var techFoulCount: Int?
-    public var foulCount: Int?
+    public var techFoulCount: Int32?
+    public var foulCount: Int32?
     public var touchpadNear: String?
     public var touchpadMiddle: String?
     public var touchpadFar: String?
 
-    public init(autoPoints: Int?, teleopPoints: Int?, foulPoints: Int?, adjustPoints: Int?, totalPoints: Int?, robot1Auto: Robot1Auto?, robot2Auto: Robot2Auto?, robot3Auto: Robot3Auto?, rotor1Auto: Bool?, rotor2Auto: Bool?, autoFuelLow: Int?, autoFuelHigh: Int?, autoMobilityPoints: Int?, autoRotorPoints: Int?, autoFuelPoints: Int?, teleopFuelPoints: Int?, teleopFuelLow: Int?, teleopFuelHigh: Int?, teleopRotorPoints: Int?, kPaRankingPointAchieved: Bool?, teleopTakeoffPoints: Int?, kPaBonusPoints: Int?, rotorBonusPoints: Int?, rotor1Engaged: Bool?, rotor2Engaged: Bool?, rotor3Engaged: Bool?, rotor4Engaged: Bool?, rotorRankingPointAchieved: Bool?, techFoulCount: Int?, foulCount: Int?, touchpadNear: String?, touchpadMiddle: String?, touchpadFar: String?) {
+    public init(autoPoints: Int32?=nil, teleopPoints: Int32?=nil, foulPoints: Int32?=nil, adjustPoints: Int32?=nil, totalPoints: Int32?=nil, robot1Auto: Robot1Auto?=nil, robot2Auto: Robot2Auto?=nil, robot3Auto: Robot3Auto?=nil, rotor1Auto: Bool?=nil, rotor2Auto: Bool?=nil, autoFuelLow: Int32?=nil, autoFuelHigh: Int32?=nil, autoMobilityPoints: Int32?=nil, autoRotorPoints: Int32?=nil, autoFuelPoints: Int32?=nil, teleopFuelPoints: Int32?=nil, teleopFuelLow: Int32?=nil, teleopFuelHigh: Int32?=nil, teleopRotorPoints: Int32?=nil, kPaRankingPointAchieved: Bool?=nil, teleopTakeoffPoints: Int32?=nil, kPaBonusPoints: Int32?=nil, rotorBonusPoints: Int32?=nil, rotor1Engaged: Bool?=nil, rotor2Engaged: Bool?=nil, rotor3Engaged: Bool?=nil, rotor4Engaged: Bool?=nil, rotorRankingPointAchieved: Bool?=nil, techFoulCount: Int32?=nil, foulCount: Int32?=nil, touchpadNear: String?=nil, touchpadMiddle: String?=nil, touchpadFar: String?=nil) {
         self.autoPoints = autoPoints
         self.teleopPoints = teleopPoints
         self.foulPoints = foulPoints
@@ -96,6 +94,43 @@ public struct MatchScoreBreakdown2017Alliance: Codable {
         self.touchpadFar = touchpadFar
     }
 
-
+    // MARK: JSONEncodable
+    func encodeToJSON() -> AnyObject {
+        var nillableDictionary = [String:AnyObject?]()
+        nillableDictionary["autoPoints"] = self.autoPoints?.encodeToJSON()
+        nillableDictionary["teleopPoints"] = self.teleopPoints?.encodeToJSON()
+        nillableDictionary["foulPoints"] = self.foulPoints?.encodeToJSON()
+        nillableDictionary["adjustPoints"] = self.adjustPoints?.encodeToJSON()
+        nillableDictionary["totalPoints"] = self.totalPoints?.encodeToJSON()
+        nillableDictionary["robot1Auto"] = self.robot1Auto?.rawValue
+        nillableDictionary["robot2Auto"] = self.robot2Auto?.rawValue
+        nillableDictionary["robot3Auto"] = self.robot3Auto?.rawValue
+        nillableDictionary["rotor1Auto"] = self.rotor1Auto
+        nillableDictionary["rotor2Auto"] = self.rotor2Auto
+        nillableDictionary["autoFuelLow"] = self.autoFuelLow?.encodeToJSON()
+        nillableDictionary["autoFuelHigh"] = self.autoFuelHigh?.encodeToJSON()
+        nillableDictionary["autoMobilityPoints"] = self.autoMobilityPoints?.encodeToJSON()
+        nillableDictionary["autoRotorPoints"] = self.autoRotorPoints?.encodeToJSON()
+        nillableDictionary["autoFuelPoints"] = self.autoFuelPoints?.encodeToJSON()
+        nillableDictionary["teleopFuelPoints"] = self.teleopFuelPoints?.encodeToJSON()
+        nillableDictionary["teleopFuelLow"] = self.teleopFuelLow?.encodeToJSON()
+        nillableDictionary["teleopFuelHigh"] = self.teleopFuelHigh?.encodeToJSON()
+        nillableDictionary["teleopRotorPoints"] = self.teleopRotorPoints?.encodeToJSON()
+        nillableDictionary["kPaRankingPointAchieved"] = self.kPaRankingPointAchieved
+        nillableDictionary["teleopTakeoffPoints"] = self.teleopTakeoffPoints?.encodeToJSON()
+        nillableDictionary["kPaBonusPoints"] = self.kPaBonusPoints?.encodeToJSON()
+        nillableDictionary["rotorBonusPoints"] = self.rotorBonusPoints?.encodeToJSON()
+        nillableDictionary["rotor1Engaged"] = self.rotor1Engaged
+        nillableDictionary["rotor2Engaged"] = self.rotor2Engaged
+        nillableDictionary["rotor3Engaged"] = self.rotor3Engaged
+        nillableDictionary["rotor4Engaged"] = self.rotor4Engaged
+        nillableDictionary["rotorRankingPointAchieved"] = self.rotorRankingPointAchieved
+        nillableDictionary["techFoulCount"] = self.techFoulCount?.encodeToJSON()
+        nillableDictionary["foulCount"] = self.foulCount?.encodeToJSON()
+        nillableDictionary["touchpadNear"] = self.touchpadNear
+        nillableDictionary["touchpadMiddle"] = self.touchpadMiddle
+        nillableDictionary["touchpadFar"] = self.touchpadFar
+        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
+        return dictionary
+    }
 }
-

@@ -8,32 +8,31 @@
 import Foundation
 
 
-
-public struct DistrictList: Codable {
-
+public class DistrictList: JSONEncodable {
     /** The short identifier for the district. */
-    public var abbreviation: String?
+    public var abbreviation: String
     /** The long name for the district. */
-    public var displayName: String?
+    public var displayName: String
     /** Key for this district, e.g. &#x60;2016ne&#x60;. */
-    public var key: String?
+    public var key: String
     /** Year this district participated. */
-    public var year: Int?
+    public var year: Int32
 
-    public init(abbreviation: String?, displayName: String?, key: String?, year: Int?) {
+    public init(abbreviation: String, displayName: String, key: String, year: Int32) {
         self.abbreviation = abbreviation
         self.displayName = displayName
         self.key = key
         self.year = year
     }
 
-    public enum CodingKeys: String, CodingKey { 
-        case abbreviation
-        case displayName = "display_name"
-        case key
-        case year
+    // MARK: JSONEncodable
+    func encodeToJSON() -> AnyObject {
+        var nillableDictionary = [String:AnyObject?]()
+        nillableDictionary["abbreviation"] = self.abbreviation
+        nillableDictionary["display_name"] = self.displayName
+        nillableDictionary["key"] = self.key
+        nillableDictionary["year"] = self.year.encodeToJSON()
+        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
+        return dictionary
     }
-
-
 }
-

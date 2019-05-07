@@ -9,22 +9,27 @@ import Foundation
 
 
 /** A Win-Loss-Tie record for a team, or an alliance. */
-
-public struct WLTRecord: Codable {
-
+public class WLTRecord: JSONEncodable {
     /** Number of losses. */
-    public var losses: Int?
+    public var losses: Int32
     /** Number of wins. */
-    public var wins: Int?
+    public var wins: Int32
     /** Number of ties. */
-    public var ties: Int?
+    public var ties: Int32
 
-    public init(losses: Int?, wins: Int?, ties: Int?) {
+    public init(losses: Int32, wins: Int32, ties: Int32) {
         self.losses = losses
         self.wins = wins
         self.ties = ties
     }
 
-
+    // MARK: JSONEncodable
+    func encodeToJSON() -> AnyObject {
+        var nillableDictionary = [String:AnyObject?]()
+        nillableDictionary["losses"] = self.losses.encodeToJSON()
+        nillableDictionary["wins"] = self.wins.encodeToJSON()
+        nillableDictionary["ties"] = self.ties.encodeToJSON()
+        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
+        return dictionary
+    }
 }
-

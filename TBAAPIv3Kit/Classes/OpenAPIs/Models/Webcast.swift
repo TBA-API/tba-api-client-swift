@@ -8,31 +8,36 @@
 import Foundation
 
 
-
-public struct Webcast: Codable {
-
-    public enum ModelType: String, Codable {
-        case youtube = "youtube"
-        case twitch = "twitch"
-        case ustream = "ustream"
-        case iframe = "iframe"
-        case html5 = "html5"
-        case rtmp = "rtmp"
-        case livestream = "livestream"
+public class Webcast: JSONEncodable {
+    public enum ModelType: String { 
+        case Youtube = "youtube"
+        case Twitch = "twitch"
+        case Ustream = "ustream"
+        case Iframe = "iframe"
+        case Html5 = "html5"
+        case Rtmp = "rtmp"
+        case Livestream = "livestream"
     }
     /** Type of webcast, typically descriptive of the streaming provider. */
-    public var type: ModelType?
+    public var type: ModelType
     /** Type specific channel information. May be the YouTube stream, or Twitch channel name. In the case of iframe types, contains HTML to embed the stream in an HTML iframe. */
-    public var channel: String?
+    public var channel: String
     /** File identification as may be required for some types. May be null. */
     public var file: String?
 
-    public init(type: ModelType?, channel: String?, file: String?) {
+    public init(type: ModelType, channel: String, file: String?=nil) {
         self.type = type
         self.channel = channel
         self.file = file
     }
 
-
+    // MARK: JSONEncodable
+    func encodeToJSON() -> AnyObject {
+        var nillableDictionary = [String:AnyObject?]()
+        nillableDictionary["type"] = self.type.rawValue
+        nillableDictionary["channel"] = self.channel
+        nillableDictionary["file"] = self.file
+        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
+        return dictionary
+    }
 }
-

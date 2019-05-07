@@ -8,19 +8,23 @@
 import Foundation
 
 
-
-public struct MatchVideos: Codable {
-
+public class MatchVideos: JSONEncodable {
     /** Can be one of &#39;youtube&#39; or &#39;tba&#39; */
     public var type: String?
     /** Unique key representing this video */
     public var key: String?
 
-    public init(type: String?, key: String?) {
+    public init(type: String?=nil, key: String?=nil) {
         self.type = type
         self.key = key
     }
 
-
+    // MARK: JSONEncodable
+    func encodeToJSON() -> AnyObject {
+        var nillableDictionary = [String:AnyObject?]()
+        nillableDictionary["type"] = self.type
+        nillableDictionary["key"] = self.key
+        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
+        return dictionary
+    }
 }
-

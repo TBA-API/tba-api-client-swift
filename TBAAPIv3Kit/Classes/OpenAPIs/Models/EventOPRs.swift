@@ -9,9 +9,7 @@ import Foundation
 
 
 /** OPR, DPR, and CCWM for teams at the event. */
-
-public struct EventOPRs: Codable {
-
+public class EventOPRs: JSONEncodable {
     /** A key-value pair with team key (eg &#x60;frc254&#x60;) as key and OPR as value. */
     public var oprs: [String:Float]?
     /** A key-value pair with team key (eg &#x60;frc254&#x60;) as key and DPR as value. */
@@ -19,12 +17,19 @@ public struct EventOPRs: Codable {
     /** A key-value pair with team key (eg &#x60;frc254&#x60;) as key and CCWM as value. */
     public var ccwms: [String:Float]?
 
-    public init(oprs: [String:Float]?, dprs: [String:Float]?, ccwms: [String:Float]?) {
+    public init(oprs: [String:Float]?=nil, dprs: [String:Float]?=nil, ccwms: [String:Float]?=nil) {
         self.oprs = oprs
         self.dprs = dprs
         self.ccwms = ccwms
     }
 
-
+    // MARK: JSONEncodable
+    func encodeToJSON() -> AnyObject {
+        var nillableDictionary = [String:AnyObject?]()
+        nillableDictionary["oprs"] = self.oprs?.encodeToJSON()
+        nillableDictionary["dprs"] = self.dprs?.encodeToJSON()
+        nillableDictionary["ccwms"] = self.ccwms?.encodeToJSON()
+        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
+        return dictionary
+    }
 }
-

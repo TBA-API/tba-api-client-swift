@@ -9,19 +9,23 @@ import Foundation
 
 
 /** A year-specific event insight object expressed as a JSON string, separated in to &#x60;qual&#x60; and &#x60;playoff&#x60; fields. See also Event_Insights_2016, Event_Insights_2017, etc. */
-
-public struct EventInsights: Codable {
-
+public class EventInsights: JSONEncodable {
     /** Inights for the qualification round of an event */
-    public var qual: Any?
+    public var qual: AnyObject?
     /** Insights for the playoff round of an event */
-    public var playoff: Any?
+    public var playoff: AnyObject?
 
-    public init(qual: Any?, playoff: Any?) {
+    public init(qual: AnyObject?=nil, playoff: AnyObject?=nil) {
         self.qual = qual
         self.playoff = playoff
     }
 
-
+    // MARK: JSONEncodable
+    func encodeToJSON() -> AnyObject {
+        var nillableDictionary = [String:AnyObject?]()
+        nillableDictionary["qual"] = self.qual?.encodeToJSON()
+        nillableDictionary["playoff"] = self.playoff?.encodeToJSON()
+        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
+        return dictionary
+    }
 }
-

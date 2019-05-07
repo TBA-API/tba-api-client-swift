@@ -8,11 +8,9 @@
 import Foundation
 
 
-
-public struct MatchScoreBreakdown2019Alliance: Codable {
-
-    public var adjustPoints: Int?
-    public var autoPoints: Int?
+public class MatchScoreBreakdown2019Alliance: JSONEncodable {
+    public var adjustPoints: Int32?
+    public var autoPoints: Int32?
     public var bay1: String?
     public var bay2: String?
     public var bay3: String?
@@ -21,21 +19,21 @@ public struct MatchScoreBreakdown2019Alliance: Codable {
     public var bay6: String?
     public var bay7: String?
     public var bay8: String?
-    public var cargoPoints: Int?
+    public var cargoPoints: Int32?
     public var completeRocketRankingPoint: Bool?
     public var completedRocketFar: Bool?
     public var completedRocketNear: Bool?
     public var endgameRobot1: String?
     public var endgameRobot2: String?
     public var endgameRobot3: String?
-    public var foulCount: Int?
-    public var foulPoints: Int?
-    public var habClimbPoints: Int?
+    public var foulCount: Int32?
+    public var foulPoints: Int32?
+    public var habClimbPoints: Int32?
     public var habDockingRankingPoint: Bool?
     public var habLineRobot1: String?
     public var habLineRobot2: String?
     public var habLineRobot3: String?
-    public var hatchPanelPoints: Int?
+    public var hatchPanelPoints: Int32?
     public var lowLeftRocketFar: String?
     public var lowLeftRocketNear: String?
     public var lowRightRocketFar: String?
@@ -53,17 +51,17 @@ public struct MatchScoreBreakdown2019Alliance: Codable {
     public var preMatchLevelRobot1: String?
     public var preMatchLevelRobot2: String?
     public var preMatchLevelRobot3: String?
-    public var rp: Int?
-    public var sandStormBonusPoints: Int?
-    public var techFoulCount: Int?
-    public var teleopPoints: Int?
+    public var rp: Int32?
+    public var sandStormBonusPoints: Int32?
+    public var techFoulCount: Int32?
+    public var teleopPoints: Int32?
     public var topLeftRocketFar: String?
     public var topLeftRocketNear: String?
     public var topRightRocketFar: String?
     public var topRightRocketNear: String?
-    public var totalPoints: Int?
+    public var totalPoints: Int32?
 
-    public init(adjustPoints: Int?, autoPoints: Int?, bay1: String?, bay2: String?, bay3: String?, bay4: String?, bay5: String?, bay6: String?, bay7: String?, bay8: String?, cargoPoints: Int?, completeRocketRankingPoint: Bool?, completedRocketFar: Bool?, completedRocketNear: Bool?, endgameRobot1: String?, endgameRobot2: String?, endgameRobot3: String?, foulCount: Int?, foulPoints: Int?, habClimbPoints: Int?, habDockingRankingPoint: Bool?, habLineRobot1: String?, habLineRobot2: String?, habLineRobot3: String?, hatchPanelPoints: Int?, lowLeftRocketFar: String?, lowLeftRocketNear: String?, lowRightRocketFar: String?, lowRightRocketNear: String?, midLeftRocketFar: String?, midLeftRocketNear: String?, midRightRocketFar: String?, midRightRocketNear: String?, preMatchBay1: String?, preMatchBay2: String?, preMatchBay3: String?, preMatchBay6: String?, preMatchBay7: String?, preMatchBay8: String?, preMatchLevelRobot1: String?, preMatchLevelRobot2: String?, preMatchLevelRobot3: String?, rp: Int?, sandStormBonusPoints: Int?, techFoulCount: Int?, teleopPoints: Int?, topLeftRocketFar: String?, topLeftRocketNear: String?, topRightRocketFar: String?, topRightRocketNear: String?, totalPoints: Int?) {
+    public init(adjustPoints: Int32?=nil, autoPoints: Int32?=nil, bay1: String?=nil, bay2: String?=nil, bay3: String?=nil, bay4: String?=nil, bay5: String?=nil, bay6: String?=nil, bay7: String?=nil, bay8: String?=nil, cargoPoints: Int32?=nil, completeRocketRankingPoint: Bool?=nil, completedRocketFar: Bool?=nil, completedRocketNear: Bool?=nil, endgameRobot1: String?=nil, endgameRobot2: String?=nil, endgameRobot3: String?=nil, foulCount: Int32?=nil, foulPoints: Int32?=nil, habClimbPoints: Int32?=nil, habDockingRankingPoint: Bool?=nil, habLineRobot1: String?=nil, habLineRobot2: String?=nil, habLineRobot3: String?=nil, hatchPanelPoints: Int32?=nil, lowLeftRocketFar: String?=nil, lowLeftRocketNear: String?=nil, lowRightRocketFar: String?=nil, lowRightRocketNear: String?=nil, midLeftRocketFar: String?=nil, midLeftRocketNear: String?=nil, midRightRocketFar: String?=nil, midRightRocketNear: String?=nil, preMatchBay1: String?=nil, preMatchBay2: String?=nil, preMatchBay3: String?=nil, preMatchBay6: String?=nil, preMatchBay7: String?=nil, preMatchBay8: String?=nil, preMatchLevelRobot1: String?=nil, preMatchLevelRobot2: String?=nil, preMatchLevelRobot3: String?=nil, rp: Int32?=nil, sandStormBonusPoints: Int32?=nil, techFoulCount: Int32?=nil, teleopPoints: Int32?=nil, topLeftRocketFar: String?=nil, topLeftRocketNear: String?=nil, topRightRocketFar: String?=nil, topRightRocketNear: String?=nil, totalPoints: Int32?=nil) {
         self.adjustPoints = adjustPoints
         self.autoPoints = autoPoints
         self.bay1 = bay1
@@ -117,6 +115,61 @@ public struct MatchScoreBreakdown2019Alliance: Codable {
         self.totalPoints = totalPoints
     }
 
-
+    // MARK: JSONEncodable
+    func encodeToJSON() -> AnyObject {
+        var nillableDictionary = [String:AnyObject?]()
+        nillableDictionary["adjustPoints"] = self.adjustPoints?.encodeToJSON()
+        nillableDictionary["autoPoints"] = self.autoPoints?.encodeToJSON()
+        nillableDictionary["bay1"] = self.bay1
+        nillableDictionary["bay2"] = self.bay2
+        nillableDictionary["bay3"] = self.bay3
+        nillableDictionary["bay4"] = self.bay4
+        nillableDictionary["bay5"] = self.bay5
+        nillableDictionary["bay6"] = self.bay6
+        nillableDictionary["bay7"] = self.bay7
+        nillableDictionary["bay8"] = self.bay8
+        nillableDictionary["cargoPoints"] = self.cargoPoints?.encodeToJSON()
+        nillableDictionary["completeRocketRankingPoint"] = self.completeRocketRankingPoint
+        nillableDictionary["completedRocketFar"] = self.completedRocketFar
+        nillableDictionary["completedRocketNear"] = self.completedRocketNear
+        nillableDictionary["endgameRobot1"] = self.endgameRobot1
+        nillableDictionary["endgameRobot2"] = self.endgameRobot2
+        nillableDictionary["endgameRobot3"] = self.endgameRobot3
+        nillableDictionary["foulCount"] = self.foulCount?.encodeToJSON()
+        nillableDictionary["foulPoints"] = self.foulPoints?.encodeToJSON()
+        nillableDictionary["habClimbPoints"] = self.habClimbPoints?.encodeToJSON()
+        nillableDictionary["habDockingRankingPoint"] = self.habDockingRankingPoint
+        nillableDictionary["habLineRobot1"] = self.habLineRobot1
+        nillableDictionary["habLineRobot2"] = self.habLineRobot2
+        nillableDictionary["habLineRobot3"] = self.habLineRobot3
+        nillableDictionary["hatchPanelPoints"] = self.hatchPanelPoints?.encodeToJSON()
+        nillableDictionary["lowLeftRocketFar"] = self.lowLeftRocketFar
+        nillableDictionary["lowLeftRocketNear"] = self.lowLeftRocketNear
+        nillableDictionary["lowRightRocketFar"] = self.lowRightRocketFar
+        nillableDictionary["lowRightRocketNear"] = self.lowRightRocketNear
+        nillableDictionary["midLeftRocketFar"] = self.midLeftRocketFar
+        nillableDictionary["midLeftRocketNear"] = self.midLeftRocketNear
+        nillableDictionary["midRightRocketFar"] = self.midRightRocketFar
+        nillableDictionary["midRightRocketNear"] = self.midRightRocketNear
+        nillableDictionary["preMatchBay1"] = self.preMatchBay1
+        nillableDictionary["preMatchBay2"] = self.preMatchBay2
+        nillableDictionary["preMatchBay3"] = self.preMatchBay3
+        nillableDictionary["preMatchBay6"] = self.preMatchBay6
+        nillableDictionary["preMatchBay7"] = self.preMatchBay7
+        nillableDictionary["preMatchBay8"] = self.preMatchBay8
+        nillableDictionary["preMatchLevelRobot1"] = self.preMatchLevelRobot1
+        nillableDictionary["preMatchLevelRobot2"] = self.preMatchLevelRobot2
+        nillableDictionary["preMatchLevelRobot3"] = self.preMatchLevelRobot3
+        nillableDictionary["rp"] = self.rp?.encodeToJSON()
+        nillableDictionary["sandStormBonusPoints"] = self.sandStormBonusPoints?.encodeToJSON()
+        nillableDictionary["techFoulCount"] = self.techFoulCount?.encodeToJSON()
+        nillableDictionary["teleopPoints"] = self.teleopPoints?.encodeToJSON()
+        nillableDictionary["topLeftRocketFar"] = self.topLeftRocketFar
+        nillableDictionary["topLeftRocketNear"] = self.topLeftRocketNear
+        nillableDictionary["topRightRocketFar"] = self.topRightRocketFar
+        nillableDictionary["topRightRocketNear"] = self.topRightRocketNear
+        nillableDictionary["totalPoints"] = self.totalPoints?.encodeToJSON()
+        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
+        return dictionary
+    }
 }
-
