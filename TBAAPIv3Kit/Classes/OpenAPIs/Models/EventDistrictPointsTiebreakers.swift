@@ -8,21 +8,22 @@
 import Foundation
 
 
-public class EventDistrictPointsTiebreakers: JSONEncodable {
-    public var highestQualScores: [Int32]?
-    public var qualWins: Int32?
 
-    public init(highestQualScores: [Int32]?=nil, qualWins: Int32?=nil) {
+public struct EventDistrictPointsTiebreakers: Codable {
+
+    public var highestQualScores: [Int]?
+    public var qualWins: Int?
+
+    public init(highestQualScores: [Int]?, qualWins: Int?) {
         self.highestQualScores = highestQualScores
         self.qualWins = qualWins
     }
 
-    // MARK: JSONEncodable
-    func encodeToJSON() -> AnyObject {
-        var nillableDictionary = [String:AnyObject?]()
-        nillableDictionary["highest_qual_scores"] = self.highestQualScores?.encodeToJSON()
-        nillableDictionary["qual_wins"] = self.qualWins?.encodeToJSON()
-        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
-        return dictionary
+    public enum CodingKeys: String, CodingKey { 
+        case highestQualScores = "highest_qual_scores"
+        case qualWins = "qual_wins"
     }
+
+
 }
+

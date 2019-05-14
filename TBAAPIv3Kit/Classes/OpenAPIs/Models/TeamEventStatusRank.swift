@@ -8,29 +8,30 @@
 import Foundation
 
 
-public class TeamEventStatusRank: JSONEncodable {
+
+public struct TeamEventStatusRank: Codable {
+
     /** Number of teams ranked. */
-    public var numTeams: Int32?
+    public var numTeams: Int?
     public var ranking: TeamEventStatusRankRanking?
     /** Ordered list of names corresponding to the elements of the &#x60;sort_orders&#x60; array. */
     public var sortOrderInfo: [TeamEventStatusRankSortOrderInfo]?
     public var status: String?
 
-    public init(numTeams: Int32?=nil, ranking: TeamEventStatusRankRanking?=nil, sortOrderInfo: [TeamEventStatusRankSortOrderInfo]?=nil, status: String?=nil) {
+    public init(numTeams: Int?, ranking: TeamEventStatusRankRanking?, sortOrderInfo: [TeamEventStatusRankSortOrderInfo]?, status: String?) {
         self.numTeams = numTeams
         self.ranking = ranking
         self.sortOrderInfo = sortOrderInfo
         self.status = status
     }
 
-    // MARK: JSONEncodable
-    func encodeToJSON() -> AnyObject {
-        var nillableDictionary = [String:AnyObject?]()
-        nillableDictionary["num_teams"] = self.numTeams?.encodeToJSON()
-        nillableDictionary["ranking"] = self.ranking?.encodeToJSON()
-        nillableDictionary["sort_order_info"] = self.sortOrderInfo?.encodeToJSON()
-        nillableDictionary["status"] = self.status
-        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
-        return dictionary
+    public enum CodingKeys: String, CodingKey { 
+        case numTeams = "num_teams"
+        case ranking
+        case sortOrderInfo = "sort_order_info"
+        case status
     }
+
+
 }
+

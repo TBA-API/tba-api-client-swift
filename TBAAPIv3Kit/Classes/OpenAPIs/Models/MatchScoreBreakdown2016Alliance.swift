@@ -8,62 +8,64 @@
 import Foundation
 
 
-public class MatchScoreBreakdown2016Alliance: JSONEncodable {
-    public enum Robot1Auto: String { 
-        case Crossed = "Crossed"
-        case Reached = "Reached"
-        case None = "None"
+
+public struct MatchScoreBreakdown2016Alliance: Codable {
+
+    public enum Robot1Auto: String, Codable {
+        case crossed = "Crossed"
+        case reached = "Reached"
+        case _none = "None"
     }
-    public enum Robot2Auto: String { 
-        case Crossed = "Crossed"
-        case Reached = "Reached"
-        case None = "None"
+    public enum Robot2Auto: String, Codable {
+        case crossed = "Crossed"
+        case reached = "Reached"
+        case _none = "None"
     }
-    public enum Robot3Auto: String { 
-        case Crossed = "Crossed"
-        case Reached = "Reached"
-        case None = "None"
+    public enum Robot3Auto: String, Codable {
+        case crossed = "Crossed"
+        case reached = "Reached"
+        case _none = "None"
     }
-    public var autoPoints: Int32?
-    public var teleopPoints: Int32?
-    public var breachPoints: Int32?
-    public var foulPoints: Int32?
-    public var capturePoints: Int32?
-    public var adjustPoints: Int32?
-    public var totalPoints: Int32?
+    public var autoPoints: Int?
+    public var teleopPoints: Int?
+    public var breachPoints: Int?
+    public var foulPoints: Int?
+    public var capturePoints: Int?
+    public var adjustPoints: Int?
+    public var totalPoints: Int?
     public var robot1Auto: Robot1Auto?
     public var robot2Auto: Robot2Auto?
     public var robot3Auto: Robot3Auto?
-    public var autoReachPoints: Int32?
-    public var autoCrossingPoints: Int32?
-    public var autoBouldersLow: Int32?
-    public var autoBouldersHigh: Int32?
-    public var autoBoulderPoints: Int32?
-    public var teleopCrossingPoints: Int32?
-    public var teleopBouldersLow: Int32?
-    public var teleopBouldersHigh: Int32?
-    public var teleopBoulderPoints: Int32?
+    public var autoReachPoints: Int?
+    public var autoCrossingPoints: Int?
+    public var autoBouldersLow: Int?
+    public var autoBouldersHigh: Int?
+    public var autoBoulderPoints: Int?
+    public var teleopCrossingPoints: Int?
+    public var teleopBouldersLow: Int?
+    public var teleopBouldersHigh: Int?
+    public var teleopBoulderPoints: Int?
     public var teleopDefensesBreached: Bool?
-    public var teleopChallengePoints: Int32?
-    public var teleopScalePoints: Int32?
-    public var teleopTowerCaptured: Int32?
+    public var teleopChallengePoints: Int?
+    public var teleopScalePoints: Int?
+    public var teleopTowerCaptured: Int?
     public var towerFaceA: String?
     public var towerFaceB: String?
     public var towerFaceC: String?
-    public var towerEndStrength: Int32?
-    public var techFoulCount: Int32?
-    public var foulCount: Int32?
+    public var towerEndStrength: Int?
+    public var techFoulCount: Int?
+    public var foulCount: Int?
     public var position2: String?
     public var position3: String?
     public var position4: String?
     public var position5: String?
-    public var position1crossings: Int32?
-    public var position2crossings: Int32?
-    public var position3crossings: Int32?
-    public var position4crossings: Int32?
-    public var position5crossings: Int32?
+    public var position1crossings: Int?
+    public var position2crossings: Int?
+    public var position3crossings: Int?
+    public var position4crossings: Int?
+    public var position5crossings: Int?
 
-    public init(autoPoints: Int32?=nil, teleopPoints: Int32?=nil, breachPoints: Int32?=nil, foulPoints: Int32?=nil, capturePoints: Int32?=nil, adjustPoints: Int32?=nil, totalPoints: Int32?=nil, robot1Auto: Robot1Auto?=nil, robot2Auto: Robot2Auto?=nil, robot3Auto: Robot3Auto?=nil, autoReachPoints: Int32?=nil, autoCrossingPoints: Int32?=nil, autoBouldersLow: Int32?=nil, autoBouldersHigh: Int32?=nil, autoBoulderPoints: Int32?=nil, teleopCrossingPoints: Int32?=nil, teleopBouldersLow: Int32?=nil, teleopBouldersHigh: Int32?=nil, teleopBoulderPoints: Int32?=nil, teleopDefensesBreached: Bool?=nil, teleopChallengePoints: Int32?=nil, teleopScalePoints: Int32?=nil, teleopTowerCaptured: Int32?=nil, towerFaceA: String?=nil, towerFaceB: String?=nil, towerFaceC: String?=nil, towerEndStrength: Int32?=nil, techFoulCount: Int32?=nil, foulCount: Int32?=nil, position2: String?=nil, position3: String?=nil, position4: String?=nil, position5: String?=nil, position1crossings: Int32?=nil, position2crossings: Int32?=nil, position3crossings: Int32?=nil, position4crossings: Int32?=nil, position5crossings: Int32?=nil) {
+    public init(autoPoints: Int?, teleopPoints: Int?, breachPoints: Int?, foulPoints: Int?, capturePoints: Int?, adjustPoints: Int?, totalPoints: Int?, robot1Auto: Robot1Auto?, robot2Auto: Robot2Auto?, robot3Auto: Robot3Auto?, autoReachPoints: Int?, autoCrossingPoints: Int?, autoBouldersLow: Int?, autoBouldersHigh: Int?, autoBoulderPoints: Int?, teleopCrossingPoints: Int?, teleopBouldersLow: Int?, teleopBouldersHigh: Int?, teleopBoulderPoints: Int?, teleopDefensesBreached: Bool?, teleopChallengePoints: Int?, teleopScalePoints: Int?, teleopTowerCaptured: Int?, towerFaceA: String?, towerFaceB: String?, towerFaceC: String?, towerEndStrength: Int?, techFoulCount: Int?, foulCount: Int?, position2: String?, position3: String?, position4: String?, position5: String?, position1crossings: Int?, position2crossings: Int?, position3crossings: Int?, position4crossings: Int?, position5crossings: Int?) {
         self.autoPoints = autoPoints
         self.teleopPoints = teleopPoints
         self.breachPoints = breachPoints
@@ -104,48 +106,6 @@ public class MatchScoreBreakdown2016Alliance: JSONEncodable {
         self.position5crossings = position5crossings
     }
 
-    // MARK: JSONEncodable
-    func encodeToJSON() -> AnyObject {
-        var nillableDictionary = [String:AnyObject?]()
-        nillableDictionary["autoPoints"] = self.autoPoints?.encodeToJSON()
-        nillableDictionary["teleopPoints"] = self.teleopPoints?.encodeToJSON()
-        nillableDictionary["breachPoints"] = self.breachPoints?.encodeToJSON()
-        nillableDictionary["foulPoints"] = self.foulPoints?.encodeToJSON()
-        nillableDictionary["capturePoints"] = self.capturePoints?.encodeToJSON()
-        nillableDictionary["adjustPoints"] = self.adjustPoints?.encodeToJSON()
-        nillableDictionary["totalPoints"] = self.totalPoints?.encodeToJSON()
-        nillableDictionary["robot1Auto"] = self.robot1Auto?.rawValue
-        nillableDictionary["robot2Auto"] = self.robot2Auto?.rawValue
-        nillableDictionary["robot3Auto"] = self.robot3Auto?.rawValue
-        nillableDictionary["autoReachPoints"] = self.autoReachPoints?.encodeToJSON()
-        nillableDictionary["autoCrossingPoints"] = self.autoCrossingPoints?.encodeToJSON()
-        nillableDictionary["autoBouldersLow"] = self.autoBouldersLow?.encodeToJSON()
-        nillableDictionary["autoBouldersHigh"] = self.autoBouldersHigh?.encodeToJSON()
-        nillableDictionary["autoBoulderPoints"] = self.autoBoulderPoints?.encodeToJSON()
-        nillableDictionary["teleopCrossingPoints"] = self.teleopCrossingPoints?.encodeToJSON()
-        nillableDictionary["teleopBouldersLow"] = self.teleopBouldersLow?.encodeToJSON()
-        nillableDictionary["teleopBouldersHigh"] = self.teleopBouldersHigh?.encodeToJSON()
-        nillableDictionary["teleopBoulderPoints"] = self.teleopBoulderPoints?.encodeToJSON()
-        nillableDictionary["teleopDefensesBreached"] = self.teleopDefensesBreached
-        nillableDictionary["teleopChallengePoints"] = self.teleopChallengePoints?.encodeToJSON()
-        nillableDictionary["teleopScalePoints"] = self.teleopScalePoints?.encodeToJSON()
-        nillableDictionary["teleopTowerCaptured"] = self.teleopTowerCaptured?.encodeToJSON()
-        nillableDictionary["towerFaceA"] = self.towerFaceA
-        nillableDictionary["towerFaceB"] = self.towerFaceB
-        nillableDictionary["towerFaceC"] = self.towerFaceC
-        nillableDictionary["towerEndStrength"] = self.towerEndStrength?.encodeToJSON()
-        nillableDictionary["techFoulCount"] = self.techFoulCount?.encodeToJSON()
-        nillableDictionary["foulCount"] = self.foulCount?.encodeToJSON()
-        nillableDictionary["position2"] = self.position2
-        nillableDictionary["position3"] = self.position3
-        nillableDictionary["position4"] = self.position4
-        nillableDictionary["position5"] = self.position5
-        nillableDictionary["position1crossings"] = self.position1crossings?.encodeToJSON()
-        nillableDictionary["position2crossings"] = self.position2crossings?.encodeToJSON()
-        nillableDictionary["position3crossings"] = self.position3crossings?.encodeToJSON()
-        nillableDictionary["position4crossings"] = self.position4crossings?.encodeToJSON()
-        nillableDictionary["position5crossings"] = self.position5crossings?.encodeToJSON()
-        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
-        return dictionary
-    }
+
 }
+

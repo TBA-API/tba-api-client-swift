@@ -4,176 +4,176 @@
 // https://openapi-generator.tech
 //
 
+import Foundation
 import Alamofire
 
 extension Bool: JSONEncodable {
-    func encodeToJSON() -> AnyObject { return self }
+    func encodeToJSON() -> Any { return self as Any }
 }
 
 extension Float: JSONEncodable {
-    func encodeToJSON() -> AnyObject { return self }
+    func encodeToJSON() -> Any { return self as Any }
 }
 
 extension Int: JSONEncodable {
-    func encodeToJSON() -> AnyObject { return self }
+    func encodeToJSON() -> Any { return self as Any }
 }
 
 extension Int32: JSONEncodable {
-    func encodeToJSON() -> AnyObject { return NSNumber(int: self) }
+    func encodeToJSON() -> Any { return NSNumber(value: self as Int32) }
 }
 
 extension Int64: JSONEncodable {
-    func encodeToJSON() -> AnyObject { return NSNumber(longLong: self) }
+    func encodeToJSON() -> Any { return NSNumber(value: self as Int64) }
 }
 
 extension Double: JSONEncodable {
-    func encodeToJSON() -> AnyObject { return self }
+    func encodeToJSON() -> Any { return self as Any }
 }
 
 extension String: JSONEncodable {
-    func encodeToJSON() -> AnyObject { return self }
+    func encodeToJSON() -> Any { return self as Any }
 }
 
-private func encodeIfPossible<T>(object: T) -> AnyObject {
-    if object is JSONEncodable {
-        return (object as! JSONEncodable).encodeToJSON()
+private func encodeIfPossible<T>(_ object: T) -> Any {
+    if let encodableObject = object as? JSONEncodable {
+        return encodableObject.encodeToJSON()
     } else {
-        return object as! AnyObject
+        return object as Any
     }
 }
 
 extension Array: JSONEncodable {
-    func encodeToJSON() -> AnyObject {
+    func encodeToJSON() -> Any {
         return self.map(encodeIfPossible)
     }
 }
 
 extension Dictionary: JSONEncodable {
-    func encodeToJSON() -> AnyObject {
-        var dictionary = [NSObject:AnyObject]()
+    func encodeToJSON() -> Any {
+        var dictionary = [AnyHashable: Any]()
         for (key, value) in self {
-            dictionary[key as! NSObject] = encodeIfPossible(value)
+            dictionary[key] = encodeIfPossible(value)
         }
-        return dictionary
+        return dictionary as Any
     }
 }
 
-extension NSData: JSONEncodable {
-    func encodeToJSON() -> AnyObject {
-        return self.base64EncodedStringWithOptions(NSDataBase64EncodingOptions())
+extension Data: JSONEncodable {
+    func encodeToJSON() -> Any {
+        return self.base64EncodedString(options: Data.Base64EncodingOptions())
     }
 }
 
-private let dateFormatter: NSDateFormatter = {
-    let fmt = NSDateFormatter()
-    fmt.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"
-    fmt.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-    return fmt
+private let dateFormatter: DateFormatter = {
+    if let formatter = CodableHelper.dateformatter {
+        return formatter
+    } else {
+        let formatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .iso8601)
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)
+        formatter.dateFormat = Configuration.dateFormat
+        return formatter
+    }
 }()
 
-extension NSDate: JSONEncodable {
-    func encodeToJSON() -> AnyObject {
-        return dateFormatter.stringFromDate(self)
+extension Date: JSONEncodable {
+    func encodeToJSON() -> Any {
+        return dateFormatter.string(from: self) as Any
     }
 }
 
-extension NSUUID: JSONEncodable {
-    func encodeToJSON() -> AnyObject {
-        return self.UUIDString
+extension UUID: JSONEncodable {
+    func encodeToJSON() -> Any {
+        return self.uuidString
     }
 }
 
-/// Represents an ISO-8601 full-date (RFC-3339).
-/// ex: 12-31-1999
-/// https://xml2rfc.tools.ietf.org/public/rfc/html/rfc3339.html#anchor14
-public final class ISOFullDate: CustomStringConvertible {
+extension String: CodingKey {
 
-    public let year: Int
-    public let month: Int
-    public let day: Int
-
-    public init(year year: Int, month: Int, day: Int) {
-        self.year = year
-        self.month = month
-        self.day = day
+    public var stringValue: String {
+        return self
     }
 
-    /**
-     Converts an NSDate to an ISOFullDate. Only interested in the year, month, day components.
+    public init?(stringValue: String) {
+        self.init(stringLiteral: stringValue)
+    }
 
-     - parameter date: The date to convert.
+    public var intValue: Int? {
+        return nil
+    }
 
-     - returns: An ISOFullDate constructed from the year, month, day of the date.
-     */
-    public static func from(date date: NSDate) -> ISOFullDate? {
-        guard let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian) else {
-            return nil
+    public init?(intValue: Int) {
+        return nil
+    }
+
+}
+
+extension KeyedEncodingContainerProtocol {
+
+    public mutating func encodeArray<T>(_ values: [T], forKey key: Self.Key) throws where T : Encodable {
+        var arrayContainer = nestedUnkeyedContainer(forKey: key)
+        try arrayContainer.encode(contentsOf: values)
+    }
+
+    public mutating func encodeArrayIfPresent<T>(_ values: [T]?, forKey key: Self.Key) throws where T : Encodable {
+        if let values = values {
+            try encodeArray(values, forKey: key)
+        }
+    }
+
+    public mutating func encodeMap<T>(_ pairs: [Self.Key: T]) throws where T : Encodable {
+        for (key, value) in pairs {
+            try encode(value, forKey: key)
+        }
+    }
+
+    public mutating func encodeMapIfPresent<T>(_ pairs: [Self.Key: T]?) throws where T : Encodable {
+        if let pairs = pairs {
+            try encodeMap(pairs)
+        }
+    }
+
+}
+
+extension KeyedDecodingContainerProtocol {
+
+    public func decodeArray<T>(_ type: T.Type, forKey key: Self.Key) throws -> [T] where T : Decodable {
+        var tmpArray = [T]()
+
+        var nestedContainer = try nestedUnkeyedContainer(forKey: key)
+        while !nestedContainer.isAtEnd {
+            let arrayValue = try nestedContainer.decode(T.self)
+            tmpArray.append(arrayValue)
         }
 
-        let components = calendar.components(
-            [
-                .Year,
-                .Month,
-                .Day,
-            ],
-            fromDate: date
-        )
-        return ISOFullDate(
-            year: components.year,
-            month: components.month,
-            day: components.day
-        )
+        return tmpArray
     }
 
-    /**
-     Converts a ISO-8601 full-date string to an ISOFullDate.
+    public func decodeArrayIfPresent<T>(_ type: T.Type, forKey key: Self.Key) throws -> [T]? where T : Decodable {
+        var tmpArray: [T]? = nil
 
-     - parameter string: The ISO-8601 full-date format string to convert.
+        if contains(key) {
+            tmpArray = try decodeArray(T.self, forKey: key)
+        }
 
-     - returns: An ISOFullDate constructed from the string.
-     */
-    public static func from(string string: String) -> ISOFullDate? {
-        let components = string
-            .characters
-            .split("-")
-            .map(String.init)
-            .flatMap { Int($0) }
-        guard components.count == 3 else { return nil }
-
-        return ISOFullDate(
-            year: components[0],
-            month: components[1],
-            day: components[2]
-        )
+        return tmpArray
     }
 
-    /**
-     Converts the receiver to an NSDate, in the default time zone.
+    public func decodeMap<T>(_ type: T.Type, excludedKeys: Set<Self.Key>) throws -> [Self.Key: T] where T : Decodable {
+        var map: [Self.Key : T] = [:]
 
-     - returns: An NSDate from the components of the receiver, in the default time zone.
-     */
-    public func toDate() -> NSDate? {
-        let components = NSDateComponents()
-        components.year = year
-        components.month = month
-        components.day = day
-        components.timeZone = NSTimeZone.defaultTimeZone()
-        let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
-        return calendar?.dateFromComponents(components)
+        for key in allKeys {
+            if !excludedKeys.contains(key) {
+                let value = try decode(T.self, forKey: key)
+                map[key] = value
+            }
+        }
+
+        return map
     }
 
-    // MARK: CustomStringConvertible
-
-    public var description: String {
-        return "\(year)-\(month)-\(day)"
-    }
-
-}
-
-extension ISOFullDate: JSONEncodable {
-    public func encodeToJSON() -> AnyObject {
-        return "\(year)-\(month)-\(day)"
-    }
 }
 
 

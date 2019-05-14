@@ -8,23 +8,25 @@
 import Foundation
 
 
-public class DistrictRankingEventPoints: JSONEncodable {
-    /** &#x60;true&#x60; if this event is a District Championship event. */
-    public var districtCmp: Bool
-    /** Total points awarded at this event. */
-    public var total: Int32
-    /** Points awarded for alliance selection. */
-    public var alliancePoints: Int32
-    /** Points awarded for elimination match performance. */
-    public var elimPoints: Int32
-    /** Points awarded for event awards. */
-    public var awardPoints: Int32
-    /** TBA Event key for this event. */
-    public var eventKey: String
-    /** Points awarded for qualification match performance. */
-    public var qualPoints: Int32
 
-    public init(districtCmp: Bool, total: Int32, alliancePoints: Int32, elimPoints: Int32, awardPoints: Int32, eventKey: String, qualPoints: Int32) {
+public struct DistrictRankingEventPoints: Codable {
+
+    /** &#x60;true&#x60; if this event is a District Championship event. */
+    public var districtCmp: Bool?
+    /** Total points awarded at this event. */
+    public var total: Int?
+    /** Points awarded for alliance selection. */
+    public var alliancePoints: Int?
+    /** Points awarded for elimination match performance. */
+    public var elimPoints: Int?
+    /** Points awarded for event awards. */
+    public var awardPoints: Int?
+    /** TBA Event key for this event. */
+    public var eventKey: String?
+    /** Points awarded for qualification match performance. */
+    public var qualPoints: Int?
+
+    public init(districtCmp: Bool?, total: Int?, alliancePoints: Int?, elimPoints: Int?, awardPoints: Int?, eventKey: String?, qualPoints: Int?) {
         self.districtCmp = districtCmp
         self.total = total
         self.alliancePoints = alliancePoints
@@ -34,17 +36,16 @@ public class DistrictRankingEventPoints: JSONEncodable {
         self.qualPoints = qualPoints
     }
 
-    // MARK: JSONEncodable
-    func encodeToJSON() -> AnyObject {
-        var nillableDictionary = [String:AnyObject?]()
-        nillableDictionary["district_cmp"] = self.districtCmp
-        nillableDictionary["total"] = self.total.encodeToJSON()
-        nillableDictionary["alliance_points"] = self.alliancePoints.encodeToJSON()
-        nillableDictionary["elim_points"] = self.elimPoints.encodeToJSON()
-        nillableDictionary["award_points"] = self.awardPoints.encodeToJSON()
-        nillableDictionary["event_key"] = self.eventKey
-        nillableDictionary["qual_points"] = self.qualPoints.encodeToJSON()
-        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
-        return dictionary
+    public enum CodingKeys: String, CodingKey { 
+        case districtCmp = "district_cmp"
+        case total
+        case alliancePoints = "alliance_points"
+        case elimPoints = "elim_points"
+        case awardPoints = "award_points"
+        case eventKey = "event_key"
+        case qualPoints = "qual_points"
     }
+
+
 }
+

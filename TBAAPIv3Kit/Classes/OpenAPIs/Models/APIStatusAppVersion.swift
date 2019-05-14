@@ -8,23 +8,24 @@
 import Foundation
 
 
-public class APIStatusAppVersion: JSONEncodable {
-    /** Internal use - Minimum application version required to correctly connect and process data. */
-    public var minAppVersion: Int32
-    /** Internal use - Latest application version available. */
-    public var latestAppVersion: Int32
 
-    public init(minAppVersion: Int32, latestAppVersion: Int32) {
+public struct APIStatusAppVersion: Codable {
+
+    /** Internal use - Minimum application version required to correctly connect and process data. */
+    public var minAppVersion: Int?
+    /** Internal use - Latest application version available. */
+    public var latestAppVersion: Int?
+
+    public init(minAppVersion: Int?, latestAppVersion: Int?) {
         self.minAppVersion = minAppVersion
         self.latestAppVersion = latestAppVersion
     }
 
-    // MARK: JSONEncodable
-    func encodeToJSON() -> AnyObject {
-        var nillableDictionary = [String:AnyObject?]()
-        nillableDictionary["min_app_version"] = self.minAppVersion.encodeToJSON()
-        nillableDictionary["latest_app_version"] = self.latestAppVersion.encodeToJSON()
-        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
-        return dictionary
+    public enum CodingKeys: String, CodingKey { 
+        case minAppVersion = "min_app_version"
+        case latestAppVersion = "latest_app_version"
     }
+
+
 }
+

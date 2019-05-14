@@ -8,19 +8,21 @@
 import Foundation
 
 
-public class EventDistrictPointsPoints: JSONEncodable {
-    /** Total points awarded at this event. */
-    public var total: Int32
-    /** Points awarded for alliance selection */
-    public var alliancePoints: Int32
-    /** Points awarded for elimination match performance. */
-    public var elimPoints: Int32
-    /** Points awarded for event awards. */
-    public var awardPoints: Int32
-    /** Points awarded for qualification match performance. */
-    public var qualPoints: Int32
 
-    public init(total: Int32, alliancePoints: Int32, elimPoints: Int32, awardPoints: Int32, qualPoints: Int32) {
+public struct EventDistrictPointsPoints: Codable {
+
+    /** Total points awarded at this event. */
+    public var total: Int?
+    /** Points awarded for alliance selection */
+    public var alliancePoints: Int?
+    /** Points awarded for elimination match performance. */
+    public var elimPoints: Int?
+    /** Points awarded for event awards. */
+    public var awardPoints: Int?
+    /** Points awarded for qualification match performance. */
+    public var qualPoints: Int?
+
+    public init(total: Int?, alliancePoints: Int?, elimPoints: Int?, awardPoints: Int?, qualPoints: Int?) {
         self.total = total
         self.alliancePoints = alliancePoints
         self.elimPoints = elimPoints
@@ -28,15 +30,14 @@ public class EventDistrictPointsPoints: JSONEncodable {
         self.qualPoints = qualPoints
     }
 
-    // MARK: JSONEncodable
-    func encodeToJSON() -> AnyObject {
-        var nillableDictionary = [String:AnyObject?]()
-        nillableDictionary["total"] = self.total.encodeToJSON()
-        nillableDictionary["alliance_points"] = self.alliancePoints.encodeToJSON()
-        nillableDictionary["elim_points"] = self.elimPoints.encodeToJSON()
-        nillableDictionary["award_points"] = self.awardPoints.encodeToJSON()
-        nillableDictionary["qual_points"] = self.qualPoints.encodeToJSON()
-        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
-        return dictionary
+    public enum CodingKeys: String, CodingKey { 
+        case total
+        case alliancePoints = "alliance_points"
+        case elimPoints = "elim_points"
+        case awardPoints = "award_points"
+        case qualPoints = "qual_points"
     }
+
+
 }
+

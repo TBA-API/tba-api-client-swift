@@ -8,7 +8,9 @@
 import Foundation
 
 
-public class TeamEventStatus: JSONEncodable {
+
+public struct TeamEventStatus: Codable {
+
     public var qual: TeamEventStatusRank?
     public var alliance: TeamEventStatusAlliance?
     public var playoff: TeamEventStatusPlayoff?
@@ -23,7 +25,7 @@ public class TeamEventStatus: JSONEncodable {
     /** TBA match key for the last match the team played in at this event, or null. */
     public var lastMatchKey: String?
 
-    public init(qual: TeamEventStatusRank?=nil, alliance: TeamEventStatusAlliance?=nil, playoff: TeamEventStatusPlayoff?=nil, allianceStatusStr: String?=nil, playoffStatusStr: String?=nil, overallStatusStr: String?=nil, nextMatchKey: String?=nil, lastMatchKey: String?=nil) {
+    public init(qual: TeamEventStatusRank?, alliance: TeamEventStatusAlliance?, playoff: TeamEventStatusPlayoff?, allianceStatusStr: String?, playoffStatusStr: String?, overallStatusStr: String?, nextMatchKey: String?, lastMatchKey: String?) {
         self.qual = qual
         self.alliance = alliance
         self.playoff = playoff
@@ -34,18 +36,17 @@ public class TeamEventStatus: JSONEncodable {
         self.lastMatchKey = lastMatchKey
     }
 
-    // MARK: JSONEncodable
-    func encodeToJSON() -> AnyObject {
-        var nillableDictionary = [String:AnyObject?]()
-        nillableDictionary["qual"] = self.qual?.encodeToJSON()
-        nillableDictionary["alliance"] = self.alliance?.encodeToJSON()
-        nillableDictionary["playoff"] = self.playoff?.encodeToJSON()
-        nillableDictionary["alliance_status_str"] = self.allianceStatusStr
-        nillableDictionary["playoff_status_str"] = self.playoffStatusStr
-        nillableDictionary["overall_status_str"] = self.overallStatusStr
-        nillableDictionary["next_match_key"] = self.nextMatchKey
-        nillableDictionary["last_match_key"] = self.lastMatchKey
-        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
-        return dictionary
+    public enum CodingKeys: String, CodingKey { 
+        case qual
+        case alliance
+        case playoff
+        case allianceStatusStr = "alliance_status_str"
+        case playoffStatusStr = "playoff_status_str"
+        case overallStatusStr = "overall_status_str"
+        case nextMatchKey = "next_match_key"
+        case lastMatchKey = "last_match_key"
     }
+
+
 }
+

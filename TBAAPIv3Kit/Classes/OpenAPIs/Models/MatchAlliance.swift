@@ -8,30 +8,31 @@
 import Foundation
 
 
-public class MatchAlliance: JSONEncodable {
+
+public struct MatchAlliance: Codable {
+
     /** Score for this alliance. Will be null or -1 for an unplayed match. */
-    public var score: Int32
-    public var teamKeys: [String]
+    public var score: Int?
+    public var teamKeys: [String]?
     /** TBA team keys (eg &#x60;frc254&#x60;) of any teams playing as a surrogate. */
     public var surrogateTeamKeys: [String]?
     /** TBA team keys (eg &#x60;frc254&#x60;) of any disqualified teams. */
     public var dqTeamKeys: [String]?
 
-    public init(score: Int32, teamKeys: [String], surrogateTeamKeys: [String]?=nil, dqTeamKeys: [String]?=nil) {
+    public init(score: Int?, teamKeys: [String]?, surrogateTeamKeys: [String]?, dqTeamKeys: [String]?) {
         self.score = score
         self.teamKeys = teamKeys
         self.surrogateTeamKeys = surrogateTeamKeys
         self.dqTeamKeys = dqTeamKeys
     }
 
-    // MARK: JSONEncodable
-    func encodeToJSON() -> AnyObject {
-        var nillableDictionary = [String:AnyObject?]()
-        nillableDictionary["score"] = self.score.encodeToJSON()
-        nillableDictionary["team_keys"] = self.teamKeys.encodeToJSON()
-        nillableDictionary["surrogate_team_keys"] = self.surrogateTeamKeys?.encodeToJSON()
-        nillableDictionary["dq_team_keys"] = self.dqTeamKeys?.encodeToJSON()
-        let dictionary: [String:AnyObject] = APIHelper.rejectNil(nillableDictionary) ?? [:]
-        return dictionary
+    public enum CodingKeys: String, CodingKey { 
+        case score
+        case teamKeys = "team_keys"
+        case surrogateTeamKeys = "surrogate_team_keys"
+        case dqTeamKeys = "dq_team_keys"
     }
+
+
 }
+
