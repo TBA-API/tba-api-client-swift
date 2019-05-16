@@ -30,7 +30,7 @@ public struct MatchSimple: Codable {
     public var setNumber: Int?
     /** The match number of the match in the competition level. */
     public var matchNumber: Int?
-    public var alliances: MatchSimpleAlliances?
+    public var alliances: MatchAlliances?
     /** The color (red/blue) of the winning alliance. Will contain an empty string in the event of no winner, or a tie. */
     public var winningAlliance: WinningAlliance?
     /** Event key of the event the match was played at. */
@@ -42,7 +42,7 @@ public struct MatchSimple: Codable {
     /** UNIX timestamp (seconds since 1-Jan-1970 00:00:00) of actual match start time. */
     public var actualTime: Int64?
 
-    public init(key: String?, compLevel: CompLevel?, setNumber: Int?, matchNumber: Int?, alliances: MatchSimpleAlliances?, winningAlliance: WinningAlliance?, eventKey: String?, time: Int64?, predictedTime: Int64?, actualTime: Int64?) {
+    public init(key: String?, compLevel: CompLevel?, setNumber: Int?, matchNumber: Int?, alliances: MatchAlliances?, winningAlliance: WinningAlliance?, eventKey: String?, time: Int64?, predictedTime: Int64?, actualTime: Int64?) {
         self.key = key
         self.compLevel = compLevel
         self.setNumber = setNumber

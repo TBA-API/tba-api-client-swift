@@ -26,7 +26,7 @@ public struct Match: Codable {
     public var setNumber: Int?
     /** The match number of the match in the competition level. */
     public var matchNumber: Int?
-    public var alliances: MatchSimpleAlliances?
+    public var alliances: MatchAlliances?
     /** The color (red/blue) of the winning alliance. Will contain an empty string in the event of no winner, or a tie. */
     public var winningAlliance: String?
     /** Event key of the event the match was played at. */
@@ -44,7 +44,7 @@ public struct Match: Codable {
     /** Array of video objects associated with this match. */
     public var videos: [MatchVideos]?
 
-    public init(key: String?, compLevel: CompLevel?, setNumber: Int?, matchNumber: Int?, alliances: MatchSimpleAlliances?, winningAlliance: String?, eventKey: String?, time: Int64?, actualTime: Int64?, predictedTime: Int64?, postResultTime: Int64?, scoreBreakdown: Any?, videos: [MatchVideos]?) {
+    public init(key: String?, compLevel: CompLevel?, setNumber: Int?, matchNumber: Int?, alliances: MatchAlliances?, winningAlliance: String?, eventKey: String?, time: Int64?, actualTime: Int64?, predictedTime: Int64?, postResultTime: Int64?, scoreBreakdown: Any?, videos: [MatchVideos]?) {
         self.key = key
         self.compLevel = compLevel
         self.setNumber = setNumber
