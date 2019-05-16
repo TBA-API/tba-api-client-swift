@@ -1,4 +1,5 @@
 os: osx
+install: brew update && brew install carthage && carthage bootstrap
 before_script: pod lib lint TBAAPIv3Kit.podspec
 script: pod trunk push TBAAPIv3Kit.podspec
 env:
