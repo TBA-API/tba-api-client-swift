@@ -14,10 +14,11 @@ extension TBAAPIv3KitAPI {
 open class TBAAPI {
     /**
 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getStatus(completion: @escaping ((_ data: APIStatus?,_ error: Error?) -> Void)) {
-        getStatusWithRequestBuilder().execute { (response, error) -> Void in
+    open class func getStatus(ifModifiedSince: String? = nil, completion: @escaping ((_ data: APIStatus?,_ error: Error?) -> Void)) {
+        getStatusWithRequestBuilder(ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
             completion(response?.body, error)
         }
     }
@@ -29,18 +30,23 @@ open class TBAAPI {
        - type: apiKey X-TBA-Auth-Key 
        - name: apiKey
      - responseHeaders: [Cache-Control(String), Last-Modified(String)]
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - returns: RequestBuilder<APIStatus> 
      */
-    open class func getStatusWithRequestBuilder() -> RequestBuilder<APIStatus> {
+    open class func getStatusWithRequestBuilder(ifModifiedSince: String? = nil) -> RequestBuilder<APIStatus> {
         let path = "/status"
         let URLString = TBAAPIv3KitAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         let url = URLComponents(string: URLString)
+        let nillableHeaders: [String: Any?] = [
+            "If-Modified-Since": ifModifiedSince
+        ]
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<APIStatus>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
 
 }

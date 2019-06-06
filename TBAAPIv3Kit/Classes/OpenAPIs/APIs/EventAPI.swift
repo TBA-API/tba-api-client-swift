@@ -14,10 +14,12 @@ extension TBAAPIv3KitAPI {
 open class EventAPI {
     /**
 
+     - parameter districtKey: (path) TBA District Key, eg &#x60;2016fim&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getDistrictEvents(completion: @escaping ((_ data: [Event]?,_ error: Error?) -> Void)) {
-        getDistrictEventsWithRequestBuilder().execute { (response, error) -> Void in
+    open class func getDistrictEvents(districtKey: String, ifModifiedSince: String? = nil, completion: @escaping ((_ data: [Event]?,_ error: Error?) -> Void)) {
+        getDistrictEventsWithRequestBuilder(districtKey: districtKey, ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
             completion(response?.body, error)
         }
     }
@@ -29,26 +31,37 @@ open class EventAPI {
        - type: apiKey X-TBA-Auth-Key 
        - name: apiKey
      - responseHeaders: [Cache-Control(String), Last-Modified(String)]
+     - parameter districtKey: (path) TBA District Key, eg &#x60;2016fim&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - returns: RequestBuilder<[Event]> 
      */
-    open class func getDistrictEventsWithRequestBuilder() -> RequestBuilder<[Event]> {
-        let path = "/district/{district_key}/events"
+    open class func getDistrictEventsWithRequestBuilder(districtKey: String, ifModifiedSince: String? = nil) -> RequestBuilder<[Event]> {
+        var path = "/district/{district_key}/events"
+        let districtKeyPreEscape = "\(APIHelper.mapValueToPathItem(districtKey))"
+        let districtKeyPostEscape = districtKeyPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{district_key}", with: districtKeyPostEscape, options: .literal, range: nil)
         let URLString = TBAAPIv3KitAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         let url = URLComponents(string: URLString)
+        let nillableHeaders: [String: Any?] = [
+            "If-Modified-Since": ifModifiedSince
+        ]
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<[Event]>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
 
     /**
 
+     - parameter districtKey: (path) TBA District Key, eg &#x60;2016fim&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getDistrictEventsKeys(completion: @escaping ((_ data: [String]?,_ error: Error?) -> Void)) {
-        getDistrictEventsKeysWithRequestBuilder().execute { (response, error) -> Void in
+    open class func getDistrictEventsKeys(districtKey: String, ifModifiedSince: String? = nil, completion: @escaping ((_ data: [String]?,_ error: Error?) -> Void)) {
+        getDistrictEventsKeysWithRequestBuilder(districtKey: districtKey, ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
             completion(response?.body, error)
         }
     }
@@ -60,27 +73,37 @@ open class EventAPI {
        - type: apiKey X-TBA-Auth-Key 
        - name: apiKey
      - responseHeaders: [Cache-Control(String), Last-Modified(String)]
+     - parameter districtKey: (path) TBA District Key, eg &#x60;2016fim&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - returns: RequestBuilder<[String]> 
      */
-    open class func getDistrictEventsKeysWithRequestBuilder() -> RequestBuilder<[String]> {
-        let path = "/district/{district_key}/events/keys"
+    open class func getDistrictEventsKeysWithRequestBuilder(districtKey: String, ifModifiedSince: String? = nil) -> RequestBuilder<[String]> {
+        var path = "/district/{district_key}/events/keys"
+        let districtKeyPreEscape = "\(APIHelper.mapValueToPathItem(districtKey))"
+        let districtKeyPostEscape = districtKeyPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{district_key}", with: districtKeyPostEscape, options: .literal, range: nil)
         let URLString = TBAAPIv3KitAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         let url = URLComponents(string: URLString)
+        let nillableHeaders: [String: Any?] = [
+            "If-Modified-Since": ifModifiedSince
+        ]
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<[String]>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
 
     /**
 
      - parameter districtKey: (path) TBA District Key, eg &#x60;2016fim&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getDistrictEventsSimple(districtKey: String, completion: @escaping ((_ data: [EventSimple]?,_ error: Error?) -> Void)) {
-        getDistrictEventsSimpleWithRequestBuilder(districtKey: districtKey).execute { (response, error) -> Void in
+    open class func getDistrictEventsSimple(districtKey: String, ifModifiedSince: String? = nil, completion: @escaping ((_ data: [EventSimple]?,_ error: Error?) -> Void)) {
+        getDistrictEventsSimpleWithRequestBuilder(districtKey: districtKey, ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
             completion(response?.body, error)
         }
     }
@@ -93,9 +116,10 @@ open class EventAPI {
        - name: apiKey
      - responseHeaders: [Cache-Control(String), Last-Modified(String)]
      - parameter districtKey: (path) TBA District Key, eg &#x60;2016fim&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - returns: RequestBuilder<[EventSimple]> 
      */
-    open class func getDistrictEventsSimpleWithRequestBuilder(districtKey: String) -> RequestBuilder<[EventSimple]> {
+    open class func getDistrictEventsSimpleWithRequestBuilder(districtKey: String, ifModifiedSince: String? = nil) -> RequestBuilder<[EventSimple]> {
         var path = "/district/{district_key}/events/simple"
         let districtKeyPreEscape = "\(APIHelper.mapValueToPathItem(districtKey))"
         let districtKeyPostEscape = districtKeyPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
@@ -104,18 +128,24 @@ open class EventAPI {
         let parameters: [String:Any]? = nil
         
         let url = URLComponents(string: URLString)
+        let nillableHeaders: [String: Any?] = [
+            "If-Modified-Since": ifModifiedSince
+        ]
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<[EventSimple]>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
 
     /**
 
+     - parameter eventKey: (path) TBA Event Key, eg &#x60;2016nytr&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getEvent(completion: @escaping ((_ data: Event?,_ error: Error?) -> Void)) {
-        getEventWithRequestBuilder().execute { (response, error) -> Void in
+    open class func getEvent(eventKey: String, ifModifiedSince: String? = nil, completion: @escaping ((_ data: Event?,_ error: Error?) -> Void)) {
+        getEventWithRequestBuilder(eventKey: eventKey, ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
             completion(response?.body, error)
         }
     }
@@ -127,26 +157,37 @@ open class EventAPI {
        - type: apiKey X-TBA-Auth-Key 
        - name: apiKey
      - responseHeaders: [Cache-Control(String), Last-Modified(String)]
+     - parameter eventKey: (path) TBA Event Key, eg &#x60;2016nytr&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - returns: RequestBuilder<Event> 
      */
-    open class func getEventWithRequestBuilder() -> RequestBuilder<Event> {
-        let path = "/event/{event_key}"
+    open class func getEventWithRequestBuilder(eventKey: String, ifModifiedSince: String? = nil) -> RequestBuilder<Event> {
+        var path = "/event/{event_key}"
+        let eventKeyPreEscape = "\(APIHelper.mapValueToPathItem(eventKey))"
+        let eventKeyPostEscape = eventKeyPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{event_key}", with: eventKeyPostEscape, options: .literal, range: nil)
         let URLString = TBAAPIv3KitAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         let url = URLComponents(string: URLString)
+        let nillableHeaders: [String: Any?] = [
+            "If-Modified-Since": ifModifiedSince
+        ]
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<Event>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
 
     /**
 
+     - parameter eventKey: (path) TBA Event Key, eg &#x60;2016nytr&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getEventAlliances(completion: @escaping ((_ data: [EliminationAlliance]?,_ error: Error?) -> Void)) {
-        getEventAlliancesWithRequestBuilder().execute { (response, error) -> Void in
+    open class func getEventAlliances(eventKey: String, ifModifiedSince: String? = nil, completion: @escaping ((_ data: [EliminationAlliance]?,_ error: Error?) -> Void)) {
+        getEventAlliancesWithRequestBuilder(eventKey: eventKey, ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
             completion(response?.body, error)
         }
     }
@@ -158,26 +199,37 @@ open class EventAPI {
        - type: apiKey X-TBA-Auth-Key 
        - name: apiKey
      - responseHeaders: [Cache-Control(String), Last-Modified(String)]
+     - parameter eventKey: (path) TBA Event Key, eg &#x60;2016nytr&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - returns: RequestBuilder<[EliminationAlliance]> 
      */
-    open class func getEventAlliancesWithRequestBuilder() -> RequestBuilder<[EliminationAlliance]> {
-        let path = "/event/{event_key}/alliances"
+    open class func getEventAlliancesWithRequestBuilder(eventKey: String, ifModifiedSince: String? = nil) -> RequestBuilder<[EliminationAlliance]> {
+        var path = "/event/{event_key}/alliances"
+        let eventKeyPreEscape = "\(APIHelper.mapValueToPathItem(eventKey))"
+        let eventKeyPostEscape = eventKeyPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{event_key}", with: eventKeyPostEscape, options: .literal, range: nil)
         let URLString = TBAAPIv3KitAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         let url = URLComponents(string: URLString)
+        let nillableHeaders: [String: Any?] = [
+            "If-Modified-Since": ifModifiedSince
+        ]
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<[EliminationAlliance]>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
 
     /**
 
+     - parameter eventKey: (path) TBA Event Key, eg &#x60;2016nytr&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getEventAwards(completion: @escaping ((_ data: [Award]?,_ error: Error?) -> Void)) {
-        getEventAwardsWithRequestBuilder().execute { (response, error) -> Void in
+    open class func getEventAwards(eventKey: String, ifModifiedSince: String? = nil, completion: @escaping ((_ data: [Award]?,_ error: Error?) -> Void)) {
+        getEventAwardsWithRequestBuilder(eventKey: eventKey, ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
             completion(response?.body, error)
         }
     }
@@ -189,26 +241,37 @@ open class EventAPI {
        - type: apiKey X-TBA-Auth-Key 
        - name: apiKey
      - responseHeaders: [Cache-Control(String), Last-Modified(String)]
+     - parameter eventKey: (path) TBA Event Key, eg &#x60;2016nytr&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - returns: RequestBuilder<[Award]> 
      */
-    open class func getEventAwardsWithRequestBuilder() -> RequestBuilder<[Award]> {
-        let path = "/event/{event_key}/awards"
+    open class func getEventAwardsWithRequestBuilder(eventKey: String, ifModifiedSince: String? = nil) -> RequestBuilder<[Award]> {
+        var path = "/event/{event_key}/awards"
+        let eventKeyPreEscape = "\(APIHelper.mapValueToPathItem(eventKey))"
+        let eventKeyPostEscape = eventKeyPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{event_key}", with: eventKeyPostEscape, options: .literal, range: nil)
         let URLString = TBAAPIv3KitAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         let url = URLComponents(string: URLString)
+        let nillableHeaders: [String: Any?] = [
+            "If-Modified-Since": ifModifiedSince
+        ]
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<[Award]>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
 
     /**
 
+     - parameter eventKey: (path) TBA Event Key, eg &#x60;2016nytr&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getEventDistrictPoints(completion: @escaping ((_ data: EventDistrictPoints?,_ error: Error?) -> Void)) {
-        getEventDistrictPointsWithRequestBuilder().execute { (response, error) -> Void in
+    open class func getEventDistrictPoints(eventKey: String, ifModifiedSince: String? = nil, completion: @escaping ((_ data: EventDistrictPoints?,_ error: Error?) -> Void)) {
+        getEventDistrictPointsWithRequestBuilder(eventKey: eventKey, ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
             completion(response?.body, error)
         }
     }
@@ -220,26 +283,37 @@ open class EventAPI {
        - type: apiKey X-TBA-Auth-Key 
        - name: apiKey
      - responseHeaders: [Cache-Control(String), Last-Modified(String)]
+     - parameter eventKey: (path) TBA Event Key, eg &#x60;2016nytr&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - returns: RequestBuilder<EventDistrictPoints> 
      */
-    open class func getEventDistrictPointsWithRequestBuilder() -> RequestBuilder<EventDistrictPoints> {
-        let path = "/event/{event_key}/district_points"
+    open class func getEventDistrictPointsWithRequestBuilder(eventKey: String, ifModifiedSince: String? = nil) -> RequestBuilder<EventDistrictPoints> {
+        var path = "/event/{event_key}/district_points"
+        let eventKeyPreEscape = "\(APIHelper.mapValueToPathItem(eventKey))"
+        let eventKeyPostEscape = eventKeyPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{event_key}", with: eventKeyPostEscape, options: .literal, range: nil)
         let URLString = TBAAPIv3KitAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         let url = URLComponents(string: URLString)
+        let nillableHeaders: [String: Any?] = [
+            "If-Modified-Since": ifModifiedSince
+        ]
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<EventDistrictPoints>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
 
     /**
 
+     - parameter eventKey: (path) TBA Event Key, eg &#x60;2016nytr&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getEventInsights(completion: @escaping ((_ data: EventInsights?,_ error: Error?) -> Void)) {
-        getEventInsightsWithRequestBuilder().execute { (response, error) -> Void in
+    open class func getEventInsights(eventKey: String, ifModifiedSince: String? = nil, completion: @escaping ((_ data: EventInsights?,_ error: Error?) -> Void)) {
+        getEventInsightsWithRequestBuilder(eventKey: eventKey, ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
             completion(response?.body, error)
         }
     }
@@ -251,26 +325,37 @@ open class EventAPI {
        - type: apiKey X-TBA-Auth-Key 
        - name: apiKey
      - responseHeaders: [Cache-Control(String), Last-Modified(String)]
+     - parameter eventKey: (path) TBA Event Key, eg &#x60;2016nytr&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - returns: RequestBuilder<EventInsights> 
      */
-    open class func getEventInsightsWithRequestBuilder() -> RequestBuilder<EventInsights> {
-        let path = "/event/{event_key}/insights"
+    open class func getEventInsightsWithRequestBuilder(eventKey: String, ifModifiedSince: String? = nil) -> RequestBuilder<EventInsights> {
+        var path = "/event/{event_key}/insights"
+        let eventKeyPreEscape = "\(APIHelper.mapValueToPathItem(eventKey))"
+        let eventKeyPostEscape = eventKeyPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{event_key}", with: eventKeyPostEscape, options: .literal, range: nil)
         let URLString = TBAAPIv3KitAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         let url = URLComponents(string: URLString)
+        let nillableHeaders: [String: Any?] = [
+            "If-Modified-Since": ifModifiedSince
+        ]
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<EventInsights>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
 
     /**
 
+     - parameter eventKey: (path) TBA Event Key, eg &#x60;2016nytr&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getEventMatchTimeseries(completion: @escaping ((_ data: [String]?,_ error: Error?) -> Void)) {
-        getEventMatchTimeseriesWithRequestBuilder().execute { (response, error) -> Void in
+    open class func getEventMatchTimeseries(eventKey: String, ifModifiedSince: String? = nil, completion: @escaping ((_ data: [String]?,_ error: Error?) -> Void)) {
+        getEventMatchTimeseriesWithRequestBuilder(eventKey: eventKey, ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
             completion(response?.body, error)
         }
     }
@@ -282,26 +367,37 @@ open class EventAPI {
        - type: apiKey X-TBA-Auth-Key 
        - name: apiKey
      - responseHeaders: [Cache-Control(String), Last-Modified(String)]
+     - parameter eventKey: (path) TBA Event Key, eg &#x60;2016nytr&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - returns: RequestBuilder<[String]> 
      */
-    open class func getEventMatchTimeseriesWithRequestBuilder() -> RequestBuilder<[String]> {
-        let path = "/event/{event_key}/matches/timeseries"
+    open class func getEventMatchTimeseriesWithRequestBuilder(eventKey: String, ifModifiedSince: String? = nil) -> RequestBuilder<[String]> {
+        var path = "/event/{event_key}/matches/timeseries"
+        let eventKeyPreEscape = "\(APIHelper.mapValueToPathItem(eventKey))"
+        let eventKeyPostEscape = eventKeyPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{event_key}", with: eventKeyPostEscape, options: .literal, range: nil)
         let URLString = TBAAPIv3KitAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         let url = URLComponents(string: URLString)
+        let nillableHeaders: [String: Any?] = [
+            "If-Modified-Since": ifModifiedSince
+        ]
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<[String]>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
 
     /**
 
+     - parameter eventKey: (path) TBA Event Key, eg &#x60;2016nytr&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getEventMatches(completion: @escaping ((_ data: [Match]?,_ error: Error?) -> Void)) {
-        getEventMatchesWithRequestBuilder().execute { (response, error) -> Void in
+    open class func getEventMatches(eventKey: String, ifModifiedSince: String? = nil, completion: @escaping ((_ data: [Match]?,_ error: Error?) -> Void)) {
+        getEventMatchesWithRequestBuilder(eventKey: eventKey, ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
             completion(response?.body, error)
         }
     }
@@ -313,26 +409,37 @@ open class EventAPI {
        - type: apiKey X-TBA-Auth-Key 
        - name: apiKey
      - responseHeaders: [Cache-Control(String), Last-Modified(String)]
+     - parameter eventKey: (path) TBA Event Key, eg &#x60;2016nytr&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - returns: RequestBuilder<[Match]> 
      */
-    open class func getEventMatchesWithRequestBuilder() -> RequestBuilder<[Match]> {
-        let path = "/event/{event_key}/matches"
+    open class func getEventMatchesWithRequestBuilder(eventKey: String, ifModifiedSince: String? = nil) -> RequestBuilder<[Match]> {
+        var path = "/event/{event_key}/matches"
+        let eventKeyPreEscape = "\(APIHelper.mapValueToPathItem(eventKey))"
+        let eventKeyPostEscape = eventKeyPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{event_key}", with: eventKeyPostEscape, options: .literal, range: nil)
         let URLString = TBAAPIv3KitAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         let url = URLComponents(string: URLString)
+        let nillableHeaders: [String: Any?] = [
+            "If-Modified-Since": ifModifiedSince
+        ]
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<[Match]>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
 
     /**
 
+     - parameter eventKey: (path) TBA Event Key, eg &#x60;2016nytr&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getEventMatchesKeys(completion: @escaping ((_ data: [String]?,_ error: Error?) -> Void)) {
-        getEventMatchesKeysWithRequestBuilder().execute { (response, error) -> Void in
+    open class func getEventMatchesKeys(eventKey: String, ifModifiedSince: String? = nil, completion: @escaping ((_ data: [String]?,_ error: Error?) -> Void)) {
+        getEventMatchesKeysWithRequestBuilder(eventKey: eventKey, ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
             completion(response?.body, error)
         }
     }
@@ -344,26 +451,37 @@ open class EventAPI {
        - type: apiKey X-TBA-Auth-Key 
        - name: apiKey
      - responseHeaders: [Cache-Control(String), Last-Modified(String)]
+     - parameter eventKey: (path) TBA Event Key, eg &#x60;2016nytr&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - returns: RequestBuilder<[String]> 
      */
-    open class func getEventMatchesKeysWithRequestBuilder() -> RequestBuilder<[String]> {
-        let path = "/event/{event_key}/matches/keys"
+    open class func getEventMatchesKeysWithRequestBuilder(eventKey: String, ifModifiedSince: String? = nil) -> RequestBuilder<[String]> {
+        var path = "/event/{event_key}/matches/keys"
+        let eventKeyPreEscape = "\(APIHelper.mapValueToPathItem(eventKey))"
+        let eventKeyPostEscape = eventKeyPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{event_key}", with: eventKeyPostEscape, options: .literal, range: nil)
         let URLString = TBAAPIv3KitAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         let url = URLComponents(string: URLString)
+        let nillableHeaders: [String: Any?] = [
+            "If-Modified-Since": ifModifiedSince
+        ]
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<[String]>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
 
     /**
 
+     - parameter eventKey: (path) TBA Event Key, eg &#x60;2016nytr&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getEventMatchesSimple(completion: @escaping ((_ data: [MatchSimple]?,_ error: Error?) -> Void)) {
-        getEventMatchesSimpleWithRequestBuilder().execute { (response, error) -> Void in
+    open class func getEventMatchesSimple(eventKey: String, ifModifiedSince: String? = nil, completion: @escaping ((_ data: [MatchSimple]?,_ error: Error?) -> Void)) {
+        getEventMatchesSimpleWithRequestBuilder(eventKey: eventKey, ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
             completion(response?.body, error)
         }
     }
@@ -375,26 +493,37 @@ open class EventAPI {
        - type: apiKey X-TBA-Auth-Key 
        - name: apiKey
      - responseHeaders: [Cache-Control(String), Last-Modified(String)]
+     - parameter eventKey: (path) TBA Event Key, eg &#x60;2016nytr&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - returns: RequestBuilder<[MatchSimple]> 
      */
-    open class func getEventMatchesSimpleWithRequestBuilder() -> RequestBuilder<[MatchSimple]> {
-        let path = "/event/{event_key}/matches/simple"
+    open class func getEventMatchesSimpleWithRequestBuilder(eventKey: String, ifModifiedSince: String? = nil) -> RequestBuilder<[MatchSimple]> {
+        var path = "/event/{event_key}/matches/simple"
+        let eventKeyPreEscape = "\(APIHelper.mapValueToPathItem(eventKey))"
+        let eventKeyPostEscape = eventKeyPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{event_key}", with: eventKeyPostEscape, options: .literal, range: nil)
         let URLString = TBAAPIv3KitAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         let url = URLComponents(string: URLString)
+        let nillableHeaders: [String: Any?] = [
+            "If-Modified-Since": ifModifiedSince
+        ]
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<[MatchSimple]>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
 
     /**
 
+     - parameter eventKey: (path) TBA Event Key, eg &#x60;2016nytr&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getEventOPRs(completion: @escaping ((_ data: EventOPRs?,_ error: Error?) -> Void)) {
-        getEventOPRsWithRequestBuilder().execute { (response, error) -> Void in
+    open class func getEventOPRs(eventKey: String, ifModifiedSince: String? = nil, completion: @escaping ((_ data: EventOPRs?,_ error: Error?) -> Void)) {
+        getEventOPRsWithRequestBuilder(eventKey: eventKey, ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
             completion(response?.body, error)
         }
     }
@@ -406,26 +535,37 @@ open class EventAPI {
        - type: apiKey X-TBA-Auth-Key 
        - name: apiKey
      - responseHeaders: [Cache-Control(String), Last-Modified(String)]
+     - parameter eventKey: (path) TBA Event Key, eg &#x60;2016nytr&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - returns: RequestBuilder<EventOPRs> 
      */
-    open class func getEventOPRsWithRequestBuilder() -> RequestBuilder<EventOPRs> {
-        let path = "/event/{event_key}/oprs"
+    open class func getEventOPRsWithRequestBuilder(eventKey: String, ifModifiedSince: String? = nil) -> RequestBuilder<EventOPRs> {
+        var path = "/event/{event_key}/oprs"
+        let eventKeyPreEscape = "\(APIHelper.mapValueToPathItem(eventKey))"
+        let eventKeyPostEscape = eventKeyPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{event_key}", with: eventKeyPostEscape, options: .literal, range: nil)
         let URLString = TBAAPIv3KitAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         let url = URLComponents(string: URLString)
+        let nillableHeaders: [String: Any?] = [
+            "If-Modified-Since": ifModifiedSince
+        ]
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<EventOPRs>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
 
     /**
 
+     - parameter eventKey: (path) TBA Event Key, eg &#x60;2016nytr&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getEventPredictions(completion: @escaping ((_ data: Any?,_ error: Error?) -> Void)) {
-        getEventPredictionsWithRequestBuilder().execute { (response, error) -> Void in
+    open class func getEventPredictions(eventKey: String, ifModifiedSince: String? = nil, completion: @escaping ((_ data: Any?,_ error: Error?) -> Void)) {
+        getEventPredictionsWithRequestBuilder(eventKey: eventKey, ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
             completion(response?.body, error)
         }
     }
@@ -437,26 +577,37 @@ open class EventAPI {
        - type: apiKey X-TBA-Auth-Key 
        - name: apiKey
      - responseHeaders: [Cache-Control(String), Last-Modified(String)]
+     - parameter eventKey: (path) TBA Event Key, eg &#x60;2016nytr&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - returns: RequestBuilder<Any> 
      */
-    open class func getEventPredictionsWithRequestBuilder() -> RequestBuilder<Any> {
-        let path = "/event/{event_key}/predictions"
+    open class func getEventPredictionsWithRequestBuilder(eventKey: String, ifModifiedSince: String? = nil) -> RequestBuilder<Any> {
+        var path = "/event/{event_key}/predictions"
+        let eventKeyPreEscape = "\(APIHelper.mapValueToPathItem(eventKey))"
+        let eventKeyPostEscape = eventKeyPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{event_key}", with: eventKeyPostEscape, options: .literal, range: nil)
         let URLString = TBAAPIv3KitAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         let url = URLComponents(string: URLString)
+        let nillableHeaders: [String: Any?] = [
+            "If-Modified-Since": ifModifiedSince
+        ]
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<Any>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
 
     /**
 
+     - parameter eventKey: (path) TBA Event Key, eg &#x60;2016nytr&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getEventRankings(completion: @escaping ((_ data: EventRanking?,_ error: Error?) -> Void)) {
-        getEventRankingsWithRequestBuilder().execute { (response, error) -> Void in
+    open class func getEventRankings(eventKey: String, ifModifiedSince: String? = nil, completion: @escaping ((_ data: EventRanking?,_ error: Error?) -> Void)) {
+        getEventRankingsWithRequestBuilder(eventKey: eventKey, ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
             completion(response?.body, error)
         }
     }
@@ -468,26 +619,37 @@ open class EventAPI {
        - type: apiKey X-TBA-Auth-Key 
        - name: apiKey
      - responseHeaders: [Cache-Control(String), Last-Modified(String)]
+     - parameter eventKey: (path) TBA Event Key, eg &#x60;2016nytr&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - returns: RequestBuilder<EventRanking> 
      */
-    open class func getEventRankingsWithRequestBuilder() -> RequestBuilder<EventRanking> {
-        let path = "/event/{event_key}/rankings"
+    open class func getEventRankingsWithRequestBuilder(eventKey: String, ifModifiedSince: String? = nil) -> RequestBuilder<EventRanking> {
+        var path = "/event/{event_key}/rankings"
+        let eventKeyPreEscape = "\(APIHelper.mapValueToPathItem(eventKey))"
+        let eventKeyPostEscape = eventKeyPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{event_key}", with: eventKeyPostEscape, options: .literal, range: nil)
         let URLString = TBAAPIv3KitAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         let url = URLComponents(string: URLString)
+        let nillableHeaders: [String: Any?] = [
+            "If-Modified-Since": ifModifiedSince
+        ]
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<EventRanking>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
 
     /**
 
+     - parameter eventKey: (path) TBA Event Key, eg &#x60;2016nytr&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getEventSimple(completion: @escaping ((_ data: EventSimple?,_ error: Error?) -> Void)) {
-        getEventSimpleWithRequestBuilder().execute { (response, error) -> Void in
+    open class func getEventSimple(eventKey: String, ifModifiedSince: String? = nil, completion: @escaping ((_ data: EventSimple?,_ error: Error?) -> Void)) {
+        getEventSimpleWithRequestBuilder(eventKey: eventKey, ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
             completion(response?.body, error)
         }
     }
@@ -499,26 +661,37 @@ open class EventAPI {
        - type: apiKey X-TBA-Auth-Key 
        - name: apiKey
      - responseHeaders: [Cache-Control(String), Last-Modified(String)]
+     - parameter eventKey: (path) TBA Event Key, eg &#x60;2016nytr&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - returns: RequestBuilder<EventSimple> 
      */
-    open class func getEventSimpleWithRequestBuilder() -> RequestBuilder<EventSimple> {
-        let path = "/event/{event_key}/simple"
+    open class func getEventSimpleWithRequestBuilder(eventKey: String, ifModifiedSince: String? = nil) -> RequestBuilder<EventSimple> {
+        var path = "/event/{event_key}/simple"
+        let eventKeyPreEscape = "\(APIHelper.mapValueToPathItem(eventKey))"
+        let eventKeyPostEscape = eventKeyPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{event_key}", with: eventKeyPostEscape, options: .literal, range: nil)
         let URLString = TBAAPIv3KitAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         let url = URLComponents(string: URLString)
+        let nillableHeaders: [String: Any?] = [
+            "If-Modified-Since": ifModifiedSince
+        ]
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<EventSimple>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
 
     /**
 
+     - parameter eventKey: (path) TBA Event Key, eg &#x60;2016nytr&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getEventTeams(completion: @escaping ((_ data: [Team]?,_ error: Error?) -> Void)) {
-        getEventTeamsWithRequestBuilder().execute { (response, error) -> Void in
+    open class func getEventTeams(eventKey: String, ifModifiedSince: String? = nil, completion: @escaping ((_ data: [Team]?,_ error: Error?) -> Void)) {
+        getEventTeamsWithRequestBuilder(eventKey: eventKey, ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
             completion(response?.body, error)
         }
     }
@@ -530,26 +703,37 @@ open class EventAPI {
        - type: apiKey X-TBA-Auth-Key 
        - name: apiKey
      - responseHeaders: [Cache-Control(String), Last-Modified(String)]
+     - parameter eventKey: (path) TBA Event Key, eg &#x60;2016nytr&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - returns: RequestBuilder<[Team]> 
      */
-    open class func getEventTeamsWithRequestBuilder() -> RequestBuilder<[Team]> {
-        let path = "/event/{event_key}/teams"
+    open class func getEventTeamsWithRequestBuilder(eventKey: String, ifModifiedSince: String? = nil) -> RequestBuilder<[Team]> {
+        var path = "/event/{event_key}/teams"
+        let eventKeyPreEscape = "\(APIHelper.mapValueToPathItem(eventKey))"
+        let eventKeyPostEscape = eventKeyPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{event_key}", with: eventKeyPostEscape, options: .literal, range: nil)
         let URLString = TBAAPIv3KitAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         let url = URLComponents(string: URLString)
+        let nillableHeaders: [String: Any?] = [
+            "If-Modified-Since": ifModifiedSince
+        ]
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<[Team]>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
 
     /**
 
+     - parameter eventKey: (path) TBA Event Key, eg &#x60;2016nytr&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getEventTeamsKeys(completion: @escaping ((_ data: [String]?,_ error: Error?) -> Void)) {
-        getEventTeamsKeysWithRequestBuilder().execute { (response, error) -> Void in
+    open class func getEventTeamsKeys(eventKey: String, ifModifiedSince: String? = nil, completion: @escaping ((_ data: [String]?,_ error: Error?) -> Void)) {
+        getEventTeamsKeysWithRequestBuilder(eventKey: eventKey, ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
             completion(response?.body, error)
         }
     }
@@ -561,26 +745,37 @@ open class EventAPI {
        - type: apiKey X-TBA-Auth-Key 
        - name: apiKey
      - responseHeaders: [Cache-Control(String), Last-Modified(String)]
+     - parameter eventKey: (path) TBA Event Key, eg &#x60;2016nytr&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - returns: RequestBuilder<[String]> 
      */
-    open class func getEventTeamsKeysWithRequestBuilder() -> RequestBuilder<[String]> {
-        let path = "/event/{event_key}/teams/keys"
+    open class func getEventTeamsKeysWithRequestBuilder(eventKey: String, ifModifiedSince: String? = nil) -> RequestBuilder<[String]> {
+        var path = "/event/{event_key}/teams/keys"
+        let eventKeyPreEscape = "\(APIHelper.mapValueToPathItem(eventKey))"
+        let eventKeyPostEscape = eventKeyPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{event_key}", with: eventKeyPostEscape, options: .literal, range: nil)
         let URLString = TBAAPIv3KitAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         let url = URLComponents(string: URLString)
+        let nillableHeaders: [String: Any?] = [
+            "If-Modified-Since": ifModifiedSince
+        ]
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<[String]>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
 
     /**
 
+     - parameter eventKey: (path) TBA Event Key, eg &#x60;2016nytr&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getEventTeamsSimple(completion: @escaping ((_ data: [TeamSimple]?,_ error: Error?) -> Void)) {
-        getEventTeamsSimpleWithRequestBuilder().execute { (response, error) -> Void in
+    open class func getEventTeamsSimple(eventKey: String, ifModifiedSince: String? = nil, completion: @escaping ((_ data: [TeamSimple]?,_ error: Error?) -> Void)) {
+        getEventTeamsSimpleWithRequestBuilder(eventKey: eventKey, ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
             completion(response?.body, error)
         }
     }
@@ -592,26 +787,37 @@ open class EventAPI {
        - type: apiKey X-TBA-Auth-Key 
        - name: apiKey
      - responseHeaders: [Cache-Control(String), Last-Modified(String)]
+     - parameter eventKey: (path) TBA Event Key, eg &#x60;2016nytr&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - returns: RequestBuilder<[TeamSimple]> 
      */
-    open class func getEventTeamsSimpleWithRequestBuilder() -> RequestBuilder<[TeamSimple]> {
-        let path = "/event/{event_key}/teams/simple"
+    open class func getEventTeamsSimpleWithRequestBuilder(eventKey: String, ifModifiedSince: String? = nil) -> RequestBuilder<[TeamSimple]> {
+        var path = "/event/{event_key}/teams/simple"
+        let eventKeyPreEscape = "\(APIHelper.mapValueToPathItem(eventKey))"
+        let eventKeyPostEscape = eventKeyPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{event_key}", with: eventKeyPostEscape, options: .literal, range: nil)
         let URLString = TBAAPIv3KitAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         let url = URLComponents(string: URLString)
+        let nillableHeaders: [String: Any?] = [
+            "If-Modified-Since": ifModifiedSince
+        ]
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<[TeamSimple]>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
 
     /**
 
+     - parameter eventKey: (path) TBA Event Key, eg &#x60;2016nytr&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getEventTeamsStatuses(completion: @escaping ((_ data: [String:TeamEventStatus]?,_ error: Error?) -> Void)) {
-        getEventTeamsStatusesWithRequestBuilder().execute { (response, error) -> Void in
+    open class func getEventTeamsStatuses(eventKey: String, ifModifiedSince: String? = nil, completion: @escaping ((_ data: [String:TeamEventStatus]?,_ error: Error?) -> Void)) {
+        getEventTeamsStatusesWithRequestBuilder(eventKey: eventKey, ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
             completion(response?.body, error)
         }
     }
@@ -623,26 +829,37 @@ open class EventAPI {
        - type: apiKey X-TBA-Auth-Key 
        - name: apiKey
      - responseHeaders: [Cache-Control(String), Last-Modified(String)]
+     - parameter eventKey: (path) TBA Event Key, eg &#x60;2016nytr&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - returns: RequestBuilder<[String:TeamEventStatus]> 
      */
-    open class func getEventTeamsStatusesWithRequestBuilder() -> RequestBuilder<[String:TeamEventStatus]> {
-        let path = "/event/{event_key}/teams/statuses"
+    open class func getEventTeamsStatusesWithRequestBuilder(eventKey: String, ifModifiedSince: String? = nil) -> RequestBuilder<[String:TeamEventStatus]> {
+        var path = "/event/{event_key}/teams/statuses"
+        let eventKeyPreEscape = "\(APIHelper.mapValueToPathItem(eventKey))"
+        let eventKeyPostEscape = eventKeyPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{event_key}", with: eventKeyPostEscape, options: .literal, range: nil)
         let URLString = TBAAPIv3KitAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         let url = URLComponents(string: URLString)
+        let nillableHeaders: [String: Any?] = [
+            "If-Modified-Since": ifModifiedSince
+        ]
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<[String:TeamEventStatus]>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
 
     /**
 
+     - parameter year: (path) Competition Year (or Season). Must be 4 digits. 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getEventsByYear(completion: @escaping ((_ data: [Event]?,_ error: Error?) -> Void)) {
-        getEventsByYearWithRequestBuilder().execute { (response, error) -> Void in
+    open class func getEventsByYear(year: Int, ifModifiedSince: String? = nil, completion: @escaping ((_ data: [Event]?,_ error: Error?) -> Void)) {
+        getEventsByYearWithRequestBuilder(year: year, ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
             completion(response?.body, error)
         }
     }
@@ -654,26 +871,37 @@ open class EventAPI {
        - type: apiKey X-TBA-Auth-Key 
        - name: apiKey
      - responseHeaders: [Cache-Control(String), Last-Modified(String)]
+     - parameter year: (path) Competition Year (or Season). Must be 4 digits. 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - returns: RequestBuilder<[Event]> 
      */
-    open class func getEventsByYearWithRequestBuilder() -> RequestBuilder<[Event]> {
-        let path = "/events/{year}"
+    open class func getEventsByYearWithRequestBuilder(year: Int, ifModifiedSince: String? = nil) -> RequestBuilder<[Event]> {
+        var path = "/events/{year}"
+        let yearPreEscape = "\(APIHelper.mapValueToPathItem(year))"
+        let yearPostEscape = yearPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{year}", with: yearPostEscape, options: .literal, range: nil)
         let URLString = TBAAPIv3KitAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         let url = URLComponents(string: URLString)
+        let nillableHeaders: [String: Any?] = [
+            "If-Modified-Since": ifModifiedSince
+        ]
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<[Event]>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
 
     /**
 
+     - parameter year: (path) Competition Year (or Season). Must be 4 digits. 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getEventsByYearKeys(completion: @escaping ((_ data: [String]?,_ error: Error?) -> Void)) {
-        getEventsByYearKeysWithRequestBuilder().execute { (response, error) -> Void in
+    open class func getEventsByYearKeys(year: Int, ifModifiedSince: String? = nil, completion: @escaping ((_ data: [String]?,_ error: Error?) -> Void)) {
+        getEventsByYearKeysWithRequestBuilder(year: year, ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
             completion(response?.body, error)
         }
     }
@@ -685,26 +913,37 @@ open class EventAPI {
        - type: apiKey X-TBA-Auth-Key 
        - name: apiKey
      - responseHeaders: [Cache-Control(String), Last-Modified(String)]
+     - parameter year: (path) Competition Year (or Season). Must be 4 digits. 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - returns: RequestBuilder<[String]> 
      */
-    open class func getEventsByYearKeysWithRequestBuilder() -> RequestBuilder<[String]> {
-        let path = "/events/{year}/keys"
+    open class func getEventsByYearKeysWithRequestBuilder(year: Int, ifModifiedSince: String? = nil) -> RequestBuilder<[String]> {
+        var path = "/events/{year}/keys"
+        let yearPreEscape = "\(APIHelper.mapValueToPathItem(year))"
+        let yearPostEscape = yearPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{year}", with: yearPostEscape, options: .literal, range: nil)
         let URLString = TBAAPIv3KitAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         let url = URLComponents(string: URLString)
+        let nillableHeaders: [String: Any?] = [
+            "If-Modified-Since": ifModifiedSince
+        ]
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<[String]>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
 
     /**
 
+     - parameter year: (path) Competition Year (or Season). Must be 4 digits. 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getEventsByYearSimple(completion: @escaping ((_ data: [EventSimple]?,_ error: Error?) -> Void)) {
-        getEventsByYearSimpleWithRequestBuilder().execute { (response, error) -> Void in
+    open class func getEventsByYearSimple(year: Int, ifModifiedSince: String? = nil, completion: @escaping ((_ data: [EventSimple]?,_ error: Error?) -> Void)) {
+        getEventsByYearSimpleWithRequestBuilder(year: year, ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
             completion(response?.body, error)
         }
     }
@@ -716,26 +955,38 @@ open class EventAPI {
        - type: apiKey X-TBA-Auth-Key 
        - name: apiKey
      - responseHeaders: [Cache-Control(String), Last-Modified(String)]
+     - parameter year: (path) Competition Year (or Season). Must be 4 digits. 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - returns: RequestBuilder<[EventSimple]> 
      */
-    open class func getEventsByYearSimpleWithRequestBuilder() -> RequestBuilder<[EventSimple]> {
-        let path = "/events/{year}/simple"
+    open class func getEventsByYearSimpleWithRequestBuilder(year: Int, ifModifiedSince: String? = nil) -> RequestBuilder<[EventSimple]> {
+        var path = "/events/{year}/simple"
+        let yearPreEscape = "\(APIHelper.mapValueToPathItem(year))"
+        let yearPostEscape = yearPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{year}", with: yearPostEscape, options: .literal, range: nil)
         let URLString = TBAAPIv3KitAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         let url = URLComponents(string: URLString)
+        let nillableHeaders: [String: Any?] = [
+            "If-Modified-Since": ifModifiedSince
+        ]
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<[EventSimple]>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
 
     /**
 
+     - parameter teamKey: (path) TBA Team Key, eg &#x60;frc254&#x60; 
+     - parameter eventKey: (path) TBA Event Key, eg &#x60;2016nytr&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getTeamEventAwards(completion: @escaping ((_ data: [Award]?,_ error: Error?) -> Void)) {
-        getTeamEventAwardsWithRequestBuilder().execute { (response, error) -> Void in
+    open class func getTeamEventAwards(teamKey: String, eventKey: String, ifModifiedSince: String? = nil, completion: @escaping ((_ data: [Award]?,_ error: Error?) -> Void)) {
+        getTeamEventAwardsWithRequestBuilder(teamKey: teamKey, eventKey: eventKey, ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
             completion(response?.body, error)
         }
     }
@@ -747,26 +998,42 @@ open class EventAPI {
        - type: apiKey X-TBA-Auth-Key 
        - name: apiKey
      - responseHeaders: [Cache-Control(String), Last-Modified(String)]
+     - parameter teamKey: (path) TBA Team Key, eg &#x60;frc254&#x60; 
+     - parameter eventKey: (path) TBA Event Key, eg &#x60;2016nytr&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - returns: RequestBuilder<[Award]> 
      */
-    open class func getTeamEventAwardsWithRequestBuilder() -> RequestBuilder<[Award]> {
-        let path = "/team/{team_key}/event/{event_key}/awards"
+    open class func getTeamEventAwardsWithRequestBuilder(teamKey: String, eventKey: String, ifModifiedSince: String? = nil) -> RequestBuilder<[Award]> {
+        var path = "/team/{team_key}/event/{event_key}/awards"
+        let teamKeyPreEscape = "\(APIHelper.mapValueToPathItem(teamKey))"
+        let teamKeyPostEscape = teamKeyPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{team_key}", with: teamKeyPostEscape, options: .literal, range: nil)
+        let eventKeyPreEscape = "\(APIHelper.mapValueToPathItem(eventKey))"
+        let eventKeyPostEscape = eventKeyPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{event_key}", with: eventKeyPostEscape, options: .literal, range: nil)
         let URLString = TBAAPIv3KitAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         let url = URLComponents(string: URLString)
+        let nillableHeaders: [String: Any?] = [
+            "If-Modified-Since": ifModifiedSince
+        ]
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<[Award]>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
 
     /**
 
+     - parameter teamKey: (path) TBA Team Key, eg &#x60;frc254&#x60; 
+     - parameter eventKey: (path) TBA Event Key, eg &#x60;2016nytr&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getTeamEventMatches(completion: @escaping ((_ data: [Match]?,_ error: Error?) -> Void)) {
-        getTeamEventMatchesWithRequestBuilder().execute { (response, error) -> Void in
+    open class func getTeamEventMatches(teamKey: String, eventKey: String, ifModifiedSince: String? = nil, completion: @escaping ((_ data: [Match]?,_ error: Error?) -> Void)) {
+        getTeamEventMatchesWithRequestBuilder(teamKey: teamKey, eventKey: eventKey, ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
             completion(response?.body, error)
         }
     }
@@ -778,26 +1045,42 @@ open class EventAPI {
        - type: apiKey X-TBA-Auth-Key 
        - name: apiKey
      - responseHeaders: [Cache-Control(String), Last-Modified(String)]
+     - parameter teamKey: (path) TBA Team Key, eg &#x60;frc254&#x60; 
+     - parameter eventKey: (path) TBA Event Key, eg &#x60;2016nytr&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - returns: RequestBuilder<[Match]> 
      */
-    open class func getTeamEventMatchesWithRequestBuilder() -> RequestBuilder<[Match]> {
-        let path = "/team/{team_key}/event/{event_key}/matches"
+    open class func getTeamEventMatchesWithRequestBuilder(teamKey: String, eventKey: String, ifModifiedSince: String? = nil) -> RequestBuilder<[Match]> {
+        var path = "/team/{team_key}/event/{event_key}/matches"
+        let teamKeyPreEscape = "\(APIHelper.mapValueToPathItem(teamKey))"
+        let teamKeyPostEscape = teamKeyPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{team_key}", with: teamKeyPostEscape, options: .literal, range: nil)
+        let eventKeyPreEscape = "\(APIHelper.mapValueToPathItem(eventKey))"
+        let eventKeyPostEscape = eventKeyPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{event_key}", with: eventKeyPostEscape, options: .literal, range: nil)
         let URLString = TBAAPIv3KitAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         let url = URLComponents(string: URLString)
+        let nillableHeaders: [String: Any?] = [
+            "If-Modified-Since": ifModifiedSince
+        ]
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<[Match]>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
 
     /**
 
+     - parameter teamKey: (path) TBA Team Key, eg &#x60;frc254&#x60; 
+     - parameter eventKey: (path) TBA Event Key, eg &#x60;2016nytr&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getTeamEventMatchesKeys(completion: @escaping ((_ data: [String]?,_ error: Error?) -> Void)) {
-        getTeamEventMatchesKeysWithRequestBuilder().execute { (response, error) -> Void in
+    open class func getTeamEventMatchesKeys(teamKey: String, eventKey: String, ifModifiedSince: String? = nil, completion: @escaping ((_ data: [String]?,_ error: Error?) -> Void)) {
+        getTeamEventMatchesKeysWithRequestBuilder(teamKey: teamKey, eventKey: eventKey, ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
             completion(response?.body, error)
         }
     }
@@ -809,26 +1092,42 @@ open class EventAPI {
        - type: apiKey X-TBA-Auth-Key 
        - name: apiKey
      - responseHeaders: [Cache-Control(String), Last-Modified(String)]
+     - parameter teamKey: (path) TBA Team Key, eg &#x60;frc254&#x60; 
+     - parameter eventKey: (path) TBA Event Key, eg &#x60;2016nytr&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - returns: RequestBuilder<[String]> 
      */
-    open class func getTeamEventMatchesKeysWithRequestBuilder() -> RequestBuilder<[String]> {
-        let path = "/team/{team_key}/event/{event_key}/matches/keys"
+    open class func getTeamEventMatchesKeysWithRequestBuilder(teamKey: String, eventKey: String, ifModifiedSince: String? = nil) -> RequestBuilder<[String]> {
+        var path = "/team/{team_key}/event/{event_key}/matches/keys"
+        let teamKeyPreEscape = "\(APIHelper.mapValueToPathItem(teamKey))"
+        let teamKeyPostEscape = teamKeyPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{team_key}", with: teamKeyPostEscape, options: .literal, range: nil)
+        let eventKeyPreEscape = "\(APIHelper.mapValueToPathItem(eventKey))"
+        let eventKeyPostEscape = eventKeyPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{event_key}", with: eventKeyPostEscape, options: .literal, range: nil)
         let URLString = TBAAPIv3KitAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         let url = URLComponents(string: URLString)
+        let nillableHeaders: [String: Any?] = [
+            "If-Modified-Since": ifModifiedSince
+        ]
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<[String]>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
 
     /**
 
+     - parameter teamKey: (path) TBA Team Key, eg &#x60;frc254&#x60; 
+     - parameter eventKey: (path) TBA Event Key, eg &#x60;2016nytr&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getTeamEventMatchesSimple(completion: @escaping ((_ data: [Match]?,_ error: Error?) -> Void)) {
-        getTeamEventMatchesSimpleWithRequestBuilder().execute { (response, error) -> Void in
+    open class func getTeamEventMatchesSimple(teamKey: String, eventKey: String, ifModifiedSince: String? = nil, completion: @escaping ((_ data: [Match]?,_ error: Error?) -> Void)) {
+        getTeamEventMatchesSimpleWithRequestBuilder(teamKey: teamKey, eventKey: eventKey, ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
             completion(response?.body, error)
         }
     }
@@ -840,26 +1139,42 @@ open class EventAPI {
        - type: apiKey X-TBA-Auth-Key 
        - name: apiKey
      - responseHeaders: [Cache-Control(String), Last-Modified(String)]
+     - parameter teamKey: (path) TBA Team Key, eg &#x60;frc254&#x60; 
+     - parameter eventKey: (path) TBA Event Key, eg &#x60;2016nytr&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - returns: RequestBuilder<[Match]> 
      */
-    open class func getTeamEventMatchesSimpleWithRequestBuilder() -> RequestBuilder<[Match]> {
-        let path = "/team/{team_key}/event/{event_key}/matches/simple"
+    open class func getTeamEventMatchesSimpleWithRequestBuilder(teamKey: String, eventKey: String, ifModifiedSince: String? = nil) -> RequestBuilder<[Match]> {
+        var path = "/team/{team_key}/event/{event_key}/matches/simple"
+        let teamKeyPreEscape = "\(APIHelper.mapValueToPathItem(teamKey))"
+        let teamKeyPostEscape = teamKeyPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{team_key}", with: teamKeyPostEscape, options: .literal, range: nil)
+        let eventKeyPreEscape = "\(APIHelper.mapValueToPathItem(eventKey))"
+        let eventKeyPostEscape = eventKeyPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{event_key}", with: eventKeyPostEscape, options: .literal, range: nil)
         let URLString = TBAAPIv3KitAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         let url = URLComponents(string: URLString)
+        let nillableHeaders: [String: Any?] = [
+            "If-Modified-Since": ifModifiedSince
+        ]
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<[Match]>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
 
     /**
 
+     - parameter teamKey: (path) TBA Team Key, eg &#x60;frc254&#x60; 
+     - parameter eventKey: (path) TBA Event Key, eg &#x60;2016nytr&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getTeamEventStatus(completion: @escaping ((_ data: TeamEventStatus?,_ error: Error?) -> Void)) {
-        getTeamEventStatusWithRequestBuilder().execute { (response, error) -> Void in
+    open class func getTeamEventStatus(teamKey: String, eventKey: String, ifModifiedSince: String? = nil, completion: @escaping ((_ data: TeamEventStatus?,_ error: Error?) -> Void)) {
+        getTeamEventStatusWithRequestBuilder(teamKey: teamKey, eventKey: eventKey, ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
             completion(response?.body, error)
         }
     }
@@ -871,26 +1186,41 @@ open class EventAPI {
        - type: apiKey X-TBA-Auth-Key 
        - name: apiKey
      - responseHeaders: [Cache-Control(String), Last-Modified(String)]
+     - parameter teamKey: (path) TBA Team Key, eg &#x60;frc254&#x60; 
+     - parameter eventKey: (path) TBA Event Key, eg &#x60;2016nytr&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - returns: RequestBuilder<TeamEventStatus> 
      */
-    open class func getTeamEventStatusWithRequestBuilder() -> RequestBuilder<TeamEventStatus> {
-        let path = "/team/{team_key}/event/{event_key}/status"
+    open class func getTeamEventStatusWithRequestBuilder(teamKey: String, eventKey: String, ifModifiedSince: String? = nil) -> RequestBuilder<TeamEventStatus> {
+        var path = "/team/{team_key}/event/{event_key}/status"
+        let teamKeyPreEscape = "\(APIHelper.mapValueToPathItem(teamKey))"
+        let teamKeyPostEscape = teamKeyPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{team_key}", with: teamKeyPostEscape, options: .literal, range: nil)
+        let eventKeyPreEscape = "\(APIHelper.mapValueToPathItem(eventKey))"
+        let eventKeyPostEscape = eventKeyPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{event_key}", with: eventKeyPostEscape, options: .literal, range: nil)
         let URLString = TBAAPIv3KitAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         let url = URLComponents(string: URLString)
+        let nillableHeaders: [String: Any?] = [
+            "If-Modified-Since": ifModifiedSince
+        ]
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<TeamEventStatus>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
 
     /**
 
+     - parameter teamKey: (path) TBA Team Key, eg &#x60;frc254&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getTeamEvents(completion: @escaping ((_ data: [Event]?,_ error: Error?) -> Void)) {
-        getTeamEventsWithRequestBuilder().execute { (response, error) -> Void in
+    open class func getTeamEvents(teamKey: String, ifModifiedSince: String? = nil, completion: @escaping ((_ data: [Event]?,_ error: Error?) -> Void)) {
+        getTeamEventsWithRequestBuilder(teamKey: teamKey, ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
             completion(response?.body, error)
         }
     }
@@ -902,26 +1232,38 @@ open class EventAPI {
        - type: apiKey X-TBA-Auth-Key 
        - name: apiKey
      - responseHeaders: [Cache-Control(String), Last-Modified(String)]
+     - parameter teamKey: (path) TBA Team Key, eg &#x60;frc254&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - returns: RequestBuilder<[Event]> 
      */
-    open class func getTeamEventsWithRequestBuilder() -> RequestBuilder<[Event]> {
-        let path = "/team/{team_key}/events"
+    open class func getTeamEventsWithRequestBuilder(teamKey: String, ifModifiedSince: String? = nil) -> RequestBuilder<[Event]> {
+        var path = "/team/{team_key}/events"
+        let teamKeyPreEscape = "\(APIHelper.mapValueToPathItem(teamKey))"
+        let teamKeyPostEscape = teamKeyPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{team_key}", with: teamKeyPostEscape, options: .literal, range: nil)
         let URLString = TBAAPIv3KitAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         let url = URLComponents(string: URLString)
+        let nillableHeaders: [String: Any?] = [
+            "If-Modified-Since": ifModifiedSince
+        ]
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<[Event]>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
 
     /**
 
+     - parameter teamKey: (path) TBA Team Key, eg &#x60;frc254&#x60; 
+     - parameter year: (path) Competition Year (or Season). Must be 4 digits. 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getTeamEventsByYear(completion: @escaping ((_ data: [Event]?,_ error: Error?) -> Void)) {
-        getTeamEventsByYearWithRequestBuilder().execute { (response, error) -> Void in
+    open class func getTeamEventsByYear(teamKey: String, year: Int, ifModifiedSince: String? = nil, completion: @escaping ((_ data: [Event]?,_ error: Error?) -> Void)) {
+        getTeamEventsByYearWithRequestBuilder(teamKey: teamKey, year: year, ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
             completion(response?.body, error)
         }
     }
@@ -933,26 +1275,42 @@ open class EventAPI {
        - type: apiKey X-TBA-Auth-Key 
        - name: apiKey
      - responseHeaders: [Cache-Control(String), Last-Modified(String)]
+     - parameter teamKey: (path) TBA Team Key, eg &#x60;frc254&#x60; 
+     - parameter year: (path) Competition Year (or Season). Must be 4 digits. 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - returns: RequestBuilder<[Event]> 
      */
-    open class func getTeamEventsByYearWithRequestBuilder() -> RequestBuilder<[Event]> {
-        let path = "/team/{team_key}/events/{year}"
+    open class func getTeamEventsByYearWithRequestBuilder(teamKey: String, year: Int, ifModifiedSince: String? = nil) -> RequestBuilder<[Event]> {
+        var path = "/team/{team_key}/events/{year}"
+        let teamKeyPreEscape = "\(APIHelper.mapValueToPathItem(teamKey))"
+        let teamKeyPostEscape = teamKeyPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{team_key}", with: teamKeyPostEscape, options: .literal, range: nil)
+        let yearPreEscape = "\(APIHelper.mapValueToPathItem(year))"
+        let yearPostEscape = yearPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{year}", with: yearPostEscape, options: .literal, range: nil)
         let URLString = TBAAPIv3KitAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         let url = URLComponents(string: URLString)
+        let nillableHeaders: [String: Any?] = [
+            "If-Modified-Since": ifModifiedSince
+        ]
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<[Event]>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
 
     /**
 
+     - parameter teamKey: (path) TBA Team Key, eg &#x60;frc254&#x60; 
+     - parameter year: (path) Competition Year (or Season). Must be 4 digits. 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getTeamEventsByYearKeys(completion: @escaping ((_ data: [String]?,_ error: Error?) -> Void)) {
-        getTeamEventsByYearKeysWithRequestBuilder().execute { (response, error) -> Void in
+    open class func getTeamEventsByYearKeys(teamKey: String, year: Int, ifModifiedSince: String? = nil, completion: @escaping ((_ data: [String]?,_ error: Error?) -> Void)) {
+        getTeamEventsByYearKeysWithRequestBuilder(teamKey: teamKey, year: year, ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
             completion(response?.body, error)
         }
     }
@@ -964,26 +1322,42 @@ open class EventAPI {
        - type: apiKey X-TBA-Auth-Key 
        - name: apiKey
      - responseHeaders: [Cache-Control(String), Last-Modified(String)]
+     - parameter teamKey: (path) TBA Team Key, eg &#x60;frc254&#x60; 
+     - parameter year: (path) Competition Year (or Season). Must be 4 digits. 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - returns: RequestBuilder<[String]> 
      */
-    open class func getTeamEventsByYearKeysWithRequestBuilder() -> RequestBuilder<[String]> {
-        let path = "/team/{team_key}/events/{year}/keys"
+    open class func getTeamEventsByYearKeysWithRequestBuilder(teamKey: String, year: Int, ifModifiedSince: String? = nil) -> RequestBuilder<[String]> {
+        var path = "/team/{team_key}/events/{year}/keys"
+        let teamKeyPreEscape = "\(APIHelper.mapValueToPathItem(teamKey))"
+        let teamKeyPostEscape = teamKeyPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{team_key}", with: teamKeyPostEscape, options: .literal, range: nil)
+        let yearPreEscape = "\(APIHelper.mapValueToPathItem(year))"
+        let yearPostEscape = yearPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{year}", with: yearPostEscape, options: .literal, range: nil)
         let URLString = TBAAPIv3KitAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         let url = URLComponents(string: URLString)
+        let nillableHeaders: [String: Any?] = [
+            "If-Modified-Since": ifModifiedSince
+        ]
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<[String]>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
 
     /**
 
+     - parameter teamKey: (path) TBA Team Key, eg &#x60;frc254&#x60; 
+     - parameter year: (path) Competition Year (or Season). Must be 4 digits. 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getTeamEventsByYearSimple(completion: @escaping ((_ data: [EventSimple]?,_ error: Error?) -> Void)) {
-        getTeamEventsByYearSimpleWithRequestBuilder().execute { (response, error) -> Void in
+    open class func getTeamEventsByYearSimple(teamKey: String, year: Int, ifModifiedSince: String? = nil, completion: @escaping ((_ data: [EventSimple]?,_ error: Error?) -> Void)) {
+        getTeamEventsByYearSimpleWithRequestBuilder(teamKey: teamKey, year: year, ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
             completion(response?.body, error)
         }
     }
@@ -995,26 +1369,41 @@ open class EventAPI {
        - type: apiKey X-TBA-Auth-Key 
        - name: apiKey
      - responseHeaders: [Cache-Control(String), Last-Modified(String)]
+     - parameter teamKey: (path) TBA Team Key, eg &#x60;frc254&#x60; 
+     - parameter year: (path) Competition Year (or Season). Must be 4 digits. 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - returns: RequestBuilder<[EventSimple]> 
      */
-    open class func getTeamEventsByYearSimpleWithRequestBuilder() -> RequestBuilder<[EventSimple]> {
-        let path = "/team/{team_key}/events/{year}/simple"
+    open class func getTeamEventsByYearSimpleWithRequestBuilder(teamKey: String, year: Int, ifModifiedSince: String? = nil) -> RequestBuilder<[EventSimple]> {
+        var path = "/team/{team_key}/events/{year}/simple"
+        let teamKeyPreEscape = "\(APIHelper.mapValueToPathItem(teamKey))"
+        let teamKeyPostEscape = teamKeyPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{team_key}", with: teamKeyPostEscape, options: .literal, range: nil)
+        let yearPreEscape = "\(APIHelper.mapValueToPathItem(year))"
+        let yearPostEscape = yearPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{year}", with: yearPostEscape, options: .literal, range: nil)
         let URLString = TBAAPIv3KitAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         let url = URLComponents(string: URLString)
+        let nillableHeaders: [String: Any?] = [
+            "If-Modified-Since": ifModifiedSince
+        ]
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<[EventSimple]>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
 
     /**
 
+     - parameter teamKey: (path) TBA Team Key, eg &#x60;frc254&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getTeamEventsKeys(completion: @escaping ((_ data: [String]?,_ error: Error?) -> Void)) {
-        getTeamEventsKeysWithRequestBuilder().execute { (response, error) -> Void in
+    open class func getTeamEventsKeys(teamKey: String, ifModifiedSince: String? = nil, completion: @escaping ((_ data: [String]?,_ error: Error?) -> Void)) {
+        getTeamEventsKeysWithRequestBuilder(teamKey: teamKey, ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
             completion(response?.body, error)
         }
     }
@@ -1026,26 +1415,37 @@ open class EventAPI {
        - type: apiKey X-TBA-Auth-Key 
        - name: apiKey
      - responseHeaders: [Cache-Control(String), Last-Modified(String)]
+     - parameter teamKey: (path) TBA Team Key, eg &#x60;frc254&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - returns: RequestBuilder<[String]> 
      */
-    open class func getTeamEventsKeysWithRequestBuilder() -> RequestBuilder<[String]> {
-        let path = "/team/{team_key}/events/keys"
+    open class func getTeamEventsKeysWithRequestBuilder(teamKey: String, ifModifiedSince: String? = nil) -> RequestBuilder<[String]> {
+        var path = "/team/{team_key}/events/keys"
+        let teamKeyPreEscape = "\(APIHelper.mapValueToPathItem(teamKey))"
+        let teamKeyPostEscape = teamKeyPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{team_key}", with: teamKeyPostEscape, options: .literal, range: nil)
         let URLString = TBAAPIv3KitAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         let url = URLComponents(string: URLString)
+        let nillableHeaders: [String: Any?] = [
+            "If-Modified-Since": ifModifiedSince
+        ]
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<[String]>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
 
     /**
 
+     - parameter teamKey: (path) TBA Team Key, eg &#x60;frc254&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getTeamEventsSimple(completion: @escaping ((_ data: [EventSimple]?,_ error: Error?) -> Void)) {
-        getTeamEventsSimpleWithRequestBuilder().execute { (response, error) -> Void in
+    open class func getTeamEventsSimple(teamKey: String, ifModifiedSince: String? = nil, completion: @escaping ((_ data: [EventSimple]?,_ error: Error?) -> Void)) {
+        getTeamEventsSimpleWithRequestBuilder(teamKey: teamKey, ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
             completion(response?.body, error)
         }
     }
@@ -1057,26 +1457,38 @@ open class EventAPI {
        - type: apiKey X-TBA-Auth-Key 
        - name: apiKey
      - responseHeaders: [Cache-Control(String), Last-Modified(String)]
+     - parameter teamKey: (path) TBA Team Key, eg &#x60;frc254&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - returns: RequestBuilder<[EventSimple]> 
      */
-    open class func getTeamEventsSimpleWithRequestBuilder() -> RequestBuilder<[EventSimple]> {
-        let path = "/team/{team_key}/events/simple"
+    open class func getTeamEventsSimpleWithRequestBuilder(teamKey: String, ifModifiedSince: String? = nil) -> RequestBuilder<[EventSimple]> {
+        var path = "/team/{team_key}/events/simple"
+        let teamKeyPreEscape = "\(APIHelper.mapValueToPathItem(teamKey))"
+        let teamKeyPostEscape = teamKeyPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{team_key}", with: teamKeyPostEscape, options: .literal, range: nil)
         let URLString = TBAAPIv3KitAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         let url = URLComponents(string: URLString)
+        let nillableHeaders: [String: Any?] = [
+            "If-Modified-Since": ifModifiedSince
+        ]
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<[EventSimple]>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
 
     /**
 
+     - parameter teamKey: (path) TBA Team Key, eg &#x60;frc254&#x60; 
+     - parameter year: (path) Competition Year (or Season). Must be 4 digits. 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getTeamEventsStatusesByYear(completion: @escaping ((_ data: [String:TeamEventStatus]?,_ error: Error?) -> Void)) {
-        getTeamEventsStatusesByYearWithRequestBuilder().execute { (response, error) -> Void in
+    open class func getTeamEventsStatusesByYear(teamKey: String, year: Int, ifModifiedSince: String? = nil, completion: @escaping ((_ data: [String:TeamEventStatus]?,_ error: Error?) -> Void)) {
+        getTeamEventsStatusesByYearWithRequestBuilder(teamKey: teamKey, year: year, ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
             completion(response?.body, error)
         }
     }
@@ -1088,18 +1500,31 @@ open class EventAPI {
        - type: apiKey X-TBA-Auth-Key 
        - name: apiKey
      - responseHeaders: [Cache-Control(String), Last-Modified(String)]
+     - parameter teamKey: (path) TBA Team Key, eg &#x60;frc254&#x60; 
+     - parameter year: (path) Competition Year (or Season). Must be 4 digits. 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
      - returns: RequestBuilder<[String:TeamEventStatus]> 
      */
-    open class func getTeamEventsStatusesByYearWithRequestBuilder() -> RequestBuilder<[String:TeamEventStatus]> {
-        let path = "/team/{team_key}/events/{year}/statuses"
+    open class func getTeamEventsStatusesByYearWithRequestBuilder(teamKey: String, year: Int, ifModifiedSince: String? = nil) -> RequestBuilder<[String:TeamEventStatus]> {
+        var path = "/team/{team_key}/events/{year}/statuses"
+        let teamKeyPreEscape = "\(APIHelper.mapValueToPathItem(teamKey))"
+        let teamKeyPostEscape = teamKeyPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{team_key}", with: teamKeyPostEscape, options: .literal, range: nil)
+        let yearPreEscape = "\(APIHelper.mapValueToPathItem(year))"
+        let yearPostEscape = yearPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{year}", with: yearPostEscape, options: .literal, range: nil)
         let URLString = TBAAPIv3KitAPI.basePath + path
         let parameters: [String:Any]? = nil
         
         let url = URLComponents(string: URLString)
+        let nillableHeaders: [String: Any?] = [
+            "If-Modified-Since": ifModifiedSince
+        ]
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<[String:TeamEventStatus]>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
 
 }

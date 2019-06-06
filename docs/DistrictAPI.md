@@ -18,7 +18,7 @@ Method | HTTP request | Description
 
 # **getDistrictEvents**
 ```swift
-    open class func getDistrictEvents(completion: @escaping (_ data: [Event]?, _ error: Error?) -> Void)
+    open class func getDistrictEvents(districtKey: String, ifModifiedSince: String? = nil, completion: @escaping (_ data: [Event]?, _ error: Error?) -> Void)
 ```
 
 
@@ -30,8 +30,10 @@ Gets a list of events in the given district.
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TBAAPIv3Kit
 
+let districtKey = "districtKey_example" // String | TBA District Key, eg `2016fim`
+let ifModifiedSince = "ifModifiedSince_example" // String | Value of the `Last-Modified` header in the most recently cached response by the client. (optional)
 
-DistrictAPI.getDistrictEvents() { (response, error) in
+DistrictAPI.getDistrictEvents(districtKey: districtKey, ifModifiedSince: ifModifiedSince) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -44,7 +46,11 @@ DistrictAPI.getDistrictEvents() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **districtKey** | **String** | TBA District Key, eg &#x60;2016fim&#x60; | 
+ **ifModifiedSince** | **String** | Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. | [optional] 
 
 ### Return type
 
@@ -63,7 +69,7 @@ This endpoint does not need any parameter.
 
 # **getDistrictEventsKeys**
 ```swift
-    open class func getDistrictEventsKeys(completion: @escaping (_ data: [String]?, _ error: Error?) -> Void)
+    open class func getDistrictEventsKeys(districtKey: String, ifModifiedSince: String? = nil, completion: @escaping (_ data: [String]?, _ error: Error?) -> Void)
 ```
 
 
@@ -75,8 +81,10 @@ Gets a list of event keys for events in the given district.
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TBAAPIv3Kit
 
+let districtKey = "districtKey_example" // String | TBA District Key, eg `2016fim`
+let ifModifiedSince = "ifModifiedSince_example" // String | Value of the `Last-Modified` header in the most recently cached response by the client. (optional)
 
-DistrictAPI.getDistrictEventsKeys() { (response, error) in
+DistrictAPI.getDistrictEventsKeys(districtKey: districtKey, ifModifiedSince: ifModifiedSince) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -89,7 +97,11 @@ DistrictAPI.getDistrictEventsKeys() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **districtKey** | **String** | TBA District Key, eg &#x60;2016fim&#x60; | 
+ **ifModifiedSince** | **String** | Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. | [optional] 
 
 ### Return type
 
@@ -108,7 +120,7 @@ This endpoint does not need any parameter.
 
 # **getDistrictEventsSimple**
 ```swift
-    open class func getDistrictEventsSimple(districtKey: String, completion: @escaping (_ data: [EventSimple]?, _ error: Error?) -> Void)
+    open class func getDistrictEventsSimple(districtKey: String, ifModifiedSince: String? = nil, completion: @escaping (_ data: [EventSimple]?, _ error: Error?) -> Void)
 ```
 
 
@@ -121,8 +133,9 @@ Gets a short-form list of events in the given district.
 import TBAAPIv3Kit
 
 let districtKey = "districtKey_example" // String | TBA District Key, eg `2016fim`
+let ifModifiedSince = "ifModifiedSince_example" // String | Value of the `Last-Modified` header in the most recently cached response by the client. (optional)
 
-DistrictAPI.getDistrictEventsSimple(districtKey: districtKey) { (response, error) in
+DistrictAPI.getDistrictEventsSimple(districtKey: districtKey, ifModifiedSince: ifModifiedSince) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -139,6 +152,7 @@ DistrictAPI.getDistrictEventsSimple(districtKey: districtKey) { (response, error
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **districtKey** | **String** | TBA District Key, eg &#x60;2016fim&#x60; | 
+ **ifModifiedSince** | **String** | Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. | [optional] 
 
 ### Return type
 
@@ -157,7 +171,7 @@ Name | Type | Description  | Notes
 
 # **getDistrictRankings**
 ```swift
-    open class func getDistrictRankings(completion: @escaping (_ data: [DistrictRanking]?, _ error: Error?) -> Void)
+    open class func getDistrictRankings(districtKey: String, ifModifiedSince: String? = nil, completion: @escaping (_ data: [DistrictRanking]?, _ error: Error?) -> Void)
 ```
 
 
@@ -169,8 +183,10 @@ Gets a list of team district rankings for the given district.
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TBAAPIv3Kit
 
+let districtKey = "districtKey_example" // String | TBA District Key, eg `2016fim`
+let ifModifiedSince = "ifModifiedSince_example" // String | Value of the `Last-Modified` header in the most recently cached response by the client. (optional)
 
-DistrictAPI.getDistrictRankings() { (response, error) in
+DistrictAPI.getDistrictRankings(districtKey: districtKey, ifModifiedSince: ifModifiedSince) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -183,7 +199,11 @@ DistrictAPI.getDistrictRankings() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **districtKey** | **String** | TBA District Key, eg &#x60;2016fim&#x60; | 
+ **ifModifiedSince** | **String** | Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. | [optional] 
 
 ### Return type
 
@@ -202,7 +222,7 @@ This endpoint does not need any parameter.
 
 # **getDistrictTeams**
 ```swift
-    open class func getDistrictTeams(completion: @escaping (_ data: [Team]?, _ error: Error?) -> Void)
+    open class func getDistrictTeams(districtKey: String, ifModifiedSince: String? = nil, completion: @escaping (_ data: [Team]?, _ error: Error?) -> Void)
 ```
 
 
@@ -214,8 +234,10 @@ Gets a list of `Team` objects that competed in events in the given district.
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TBAAPIv3Kit
 
+let districtKey = "districtKey_example" // String | TBA District Key, eg `2016fim`
+let ifModifiedSince = "ifModifiedSince_example" // String | Value of the `Last-Modified` header in the most recently cached response by the client. (optional)
 
-DistrictAPI.getDistrictTeams() { (response, error) in
+DistrictAPI.getDistrictTeams(districtKey: districtKey, ifModifiedSince: ifModifiedSince) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -228,7 +250,11 @@ DistrictAPI.getDistrictTeams() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **districtKey** | **String** | TBA District Key, eg &#x60;2016fim&#x60; | 
+ **ifModifiedSince** | **String** | Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. | [optional] 
 
 ### Return type
 
@@ -247,7 +273,7 @@ This endpoint does not need any parameter.
 
 # **getDistrictTeamsKeys**
 ```swift
-    open class func getDistrictTeamsKeys(completion: @escaping (_ data: [String]?, _ error: Error?) -> Void)
+    open class func getDistrictTeamsKeys(districtKey: String, ifModifiedSince: String? = nil, completion: @escaping (_ data: [String]?, _ error: Error?) -> Void)
 ```
 
 
@@ -259,8 +285,10 @@ Gets a list of `Team` objects that competed in events in the given district.
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TBAAPIv3Kit
 
+let districtKey = "districtKey_example" // String | TBA District Key, eg `2016fim`
+let ifModifiedSince = "ifModifiedSince_example" // String | Value of the `Last-Modified` header in the most recently cached response by the client. (optional)
 
-DistrictAPI.getDistrictTeamsKeys() { (response, error) in
+DistrictAPI.getDistrictTeamsKeys(districtKey: districtKey, ifModifiedSince: ifModifiedSince) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -273,7 +301,11 @@ DistrictAPI.getDistrictTeamsKeys() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **districtKey** | **String** | TBA District Key, eg &#x60;2016fim&#x60; | 
+ **ifModifiedSince** | **String** | Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. | [optional] 
 
 ### Return type
 
@@ -292,7 +324,7 @@ This endpoint does not need any parameter.
 
 # **getDistrictTeamsSimple**
 ```swift
-    open class func getDistrictTeamsSimple(completion: @escaping (_ data: [TeamSimple]?, _ error: Error?) -> Void)
+    open class func getDistrictTeamsSimple(districtKey: String, ifModifiedSince: String? = nil, completion: @escaping (_ data: [TeamSimple]?, _ error: Error?) -> Void)
 ```
 
 
@@ -304,8 +336,10 @@ Gets a short-form list of `Team` objects that competed in events in the given di
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TBAAPIv3Kit
 
+let districtKey = "districtKey_example" // String | TBA District Key, eg `2016fim`
+let ifModifiedSince = "ifModifiedSince_example" // String | Value of the `Last-Modified` header in the most recently cached response by the client. (optional)
 
-DistrictAPI.getDistrictTeamsSimple() { (response, error) in
+DistrictAPI.getDistrictTeamsSimple(districtKey: districtKey, ifModifiedSince: ifModifiedSince) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -318,7 +352,11 @@ DistrictAPI.getDistrictTeamsSimple() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **districtKey** | **String** | TBA District Key, eg &#x60;2016fim&#x60; | 
+ **ifModifiedSince** | **String** | Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. | [optional] 
 
 ### Return type
 
@@ -337,7 +375,7 @@ This endpoint does not need any parameter.
 
 # **getDistrictsByYear**
 ```swift
-    open class func getDistrictsByYear(completion: @escaping (_ data: [DistrictList]?, _ error: Error?) -> Void)
+    open class func getDistrictsByYear(year: Int, ifModifiedSince: String? = nil, completion: @escaping (_ data: [DistrictList]?, _ error: Error?) -> Void)
 ```
 
 
@@ -349,8 +387,10 @@ Gets a list of districts and their corresponding district key, for the given yea
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TBAAPIv3Kit
 
+let year = 987 // Int | Competition Year (or Season). Must be 4 digits.
+let ifModifiedSince = "ifModifiedSince_example" // String | Value of the `Last-Modified` header in the most recently cached response by the client. (optional)
 
-DistrictAPI.getDistrictsByYear() { (response, error) in
+DistrictAPI.getDistrictsByYear(year: year, ifModifiedSince: ifModifiedSince) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -363,7 +403,11 @@ DistrictAPI.getDistrictsByYear() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **year** | **Int** | Competition Year (or Season). Must be 4 digits. | 
+ **ifModifiedSince** | **String** | Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. | [optional] 
 
 ### Return type
 
@@ -382,7 +426,7 @@ This endpoint does not need any parameter.
 
 # **getEventDistrictPoints**
 ```swift
-    open class func getEventDistrictPoints(completion: @escaping (_ data: EventDistrictPoints?, _ error: Error?) -> Void)
+    open class func getEventDistrictPoints(eventKey: String, ifModifiedSince: String? = nil, completion: @escaping (_ data: EventDistrictPoints?, _ error: Error?) -> Void)
 ```
 
 
@@ -394,8 +438,10 @@ Gets a list of team rankings for the Event.
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TBAAPIv3Kit
 
+let eventKey = "eventKey_example" // String | TBA Event Key, eg `2016nytr`
+let ifModifiedSince = "ifModifiedSince_example" // String | Value of the `Last-Modified` header in the most recently cached response by the client. (optional)
 
-DistrictAPI.getEventDistrictPoints() { (response, error) in
+DistrictAPI.getEventDistrictPoints(eventKey: eventKey, ifModifiedSince: ifModifiedSince) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -408,7 +454,11 @@ DistrictAPI.getEventDistrictPoints() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **eventKey** | **String** | TBA Event Key, eg &#x60;2016nytr&#x60; | 
+ **ifModifiedSince** | **String** | Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. | [optional] 
 
 ### Return type
 
@@ -427,7 +477,7 @@ This endpoint does not need any parameter.
 
 # **getTeamDistricts**
 ```swift
-    open class func getTeamDistricts(completion: @escaping (_ data: [DistrictList]?, _ error: Error?) -> Void)
+    open class func getTeamDistricts(teamKey: String, ifModifiedSince: String? = nil, completion: @escaping (_ data: [DistrictList]?, _ error: Error?) -> Void)
 ```
 
 
@@ -439,8 +489,10 @@ Gets an array of districts representing each year the team was in a district. Wi
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TBAAPIv3Kit
 
+let teamKey = "teamKey_example" // String | TBA Team Key, eg `frc254`
+let ifModifiedSince = "ifModifiedSince_example" // String | Value of the `Last-Modified` header in the most recently cached response by the client. (optional)
 
-DistrictAPI.getTeamDistricts() { (response, error) in
+DistrictAPI.getTeamDistricts(teamKey: teamKey, ifModifiedSince: ifModifiedSince) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -453,7 +505,11 @@ DistrictAPI.getTeamDistricts() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **teamKey** | **String** | TBA Team Key, eg &#x60;frc254&#x60; | 
+ **ifModifiedSince** | **String** | Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. | [optional] 
 
 ### Return type
 

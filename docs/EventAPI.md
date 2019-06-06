@@ -43,7 +43,7 @@ Method | HTTP request | Description
 
 # **getDistrictEvents**
 ```swift
-    open class func getDistrictEvents(completion: @escaping (_ data: [Event]?, _ error: Error?) -> Void)
+    open class func getDistrictEvents(districtKey: String, ifModifiedSince: String? = nil, completion: @escaping (_ data: [Event]?, _ error: Error?) -> Void)
 ```
 
 
@@ -55,8 +55,10 @@ Gets a list of events in the given district.
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TBAAPIv3Kit
 
+let districtKey = "districtKey_example" // String | TBA District Key, eg `2016fim`
+let ifModifiedSince = "ifModifiedSince_example" // String | Value of the `Last-Modified` header in the most recently cached response by the client. (optional)
 
-EventAPI.getDistrictEvents() { (response, error) in
+EventAPI.getDistrictEvents(districtKey: districtKey, ifModifiedSince: ifModifiedSince) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -69,7 +71,11 @@ EventAPI.getDistrictEvents() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **districtKey** | **String** | TBA District Key, eg &#x60;2016fim&#x60; | 
+ **ifModifiedSince** | **String** | Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. | [optional] 
 
 ### Return type
 
@@ -88,7 +94,7 @@ This endpoint does not need any parameter.
 
 # **getDistrictEventsKeys**
 ```swift
-    open class func getDistrictEventsKeys(completion: @escaping (_ data: [String]?, _ error: Error?) -> Void)
+    open class func getDistrictEventsKeys(districtKey: String, ifModifiedSince: String? = nil, completion: @escaping (_ data: [String]?, _ error: Error?) -> Void)
 ```
 
 
@@ -100,8 +106,10 @@ Gets a list of event keys for events in the given district.
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TBAAPIv3Kit
 
+let districtKey = "districtKey_example" // String | TBA District Key, eg `2016fim`
+let ifModifiedSince = "ifModifiedSince_example" // String | Value of the `Last-Modified` header in the most recently cached response by the client. (optional)
 
-EventAPI.getDistrictEventsKeys() { (response, error) in
+EventAPI.getDistrictEventsKeys(districtKey: districtKey, ifModifiedSince: ifModifiedSince) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -114,7 +122,11 @@ EventAPI.getDistrictEventsKeys() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **districtKey** | **String** | TBA District Key, eg &#x60;2016fim&#x60; | 
+ **ifModifiedSince** | **String** | Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. | [optional] 
 
 ### Return type
 
@@ -133,7 +145,7 @@ This endpoint does not need any parameter.
 
 # **getDistrictEventsSimple**
 ```swift
-    open class func getDistrictEventsSimple(districtKey: String, completion: @escaping (_ data: [EventSimple]?, _ error: Error?) -> Void)
+    open class func getDistrictEventsSimple(districtKey: String, ifModifiedSince: String? = nil, completion: @escaping (_ data: [EventSimple]?, _ error: Error?) -> Void)
 ```
 
 
@@ -146,8 +158,9 @@ Gets a short-form list of events in the given district.
 import TBAAPIv3Kit
 
 let districtKey = "districtKey_example" // String | TBA District Key, eg `2016fim`
+let ifModifiedSince = "ifModifiedSince_example" // String | Value of the `Last-Modified` header in the most recently cached response by the client. (optional)
 
-EventAPI.getDistrictEventsSimple(districtKey: districtKey) { (response, error) in
+EventAPI.getDistrictEventsSimple(districtKey: districtKey, ifModifiedSince: ifModifiedSince) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -164,6 +177,7 @@ EventAPI.getDistrictEventsSimple(districtKey: districtKey) { (response, error) i
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **districtKey** | **String** | TBA District Key, eg &#x60;2016fim&#x60; | 
+ **ifModifiedSince** | **String** | Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. | [optional] 
 
 ### Return type
 
@@ -182,7 +196,7 @@ Name | Type | Description  | Notes
 
 # **getEvent**
 ```swift
-    open class func getEvent(completion: @escaping (_ data: Event?, _ error: Error?) -> Void)
+    open class func getEvent(eventKey: String, ifModifiedSince: String? = nil, completion: @escaping (_ data: Event?, _ error: Error?) -> Void)
 ```
 
 
@@ -194,8 +208,10 @@ Gets an Event.
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TBAAPIv3Kit
 
+let eventKey = "eventKey_example" // String | TBA Event Key, eg `2016nytr`
+let ifModifiedSince = "ifModifiedSince_example" // String | Value of the `Last-Modified` header in the most recently cached response by the client. (optional)
 
-EventAPI.getEvent() { (response, error) in
+EventAPI.getEvent(eventKey: eventKey, ifModifiedSince: ifModifiedSince) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -208,7 +224,11 @@ EventAPI.getEvent() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **eventKey** | **String** | TBA Event Key, eg &#x60;2016nytr&#x60; | 
+ **ifModifiedSince** | **String** | Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. | [optional] 
 
 ### Return type
 
@@ -227,7 +247,7 @@ This endpoint does not need any parameter.
 
 # **getEventAlliances**
 ```swift
-    open class func getEventAlliances(completion: @escaping (_ data: [EliminationAlliance]?, _ error: Error?) -> Void)
+    open class func getEventAlliances(eventKey: String, ifModifiedSince: String? = nil, completion: @escaping (_ data: [EliminationAlliance]?, _ error: Error?) -> Void)
 ```
 
 
@@ -239,8 +259,10 @@ Gets a list of Elimination Alliances for the given Event.
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TBAAPIv3Kit
 
+let eventKey = "eventKey_example" // String | TBA Event Key, eg `2016nytr`
+let ifModifiedSince = "ifModifiedSince_example" // String | Value of the `Last-Modified` header in the most recently cached response by the client. (optional)
 
-EventAPI.getEventAlliances() { (response, error) in
+EventAPI.getEventAlliances(eventKey: eventKey, ifModifiedSince: ifModifiedSince) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -253,7 +275,11 @@ EventAPI.getEventAlliances() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **eventKey** | **String** | TBA Event Key, eg &#x60;2016nytr&#x60; | 
+ **ifModifiedSince** | **String** | Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. | [optional] 
 
 ### Return type
 
@@ -272,7 +298,7 @@ This endpoint does not need any parameter.
 
 # **getEventAwards**
 ```swift
-    open class func getEventAwards(completion: @escaping (_ data: [Award]?, _ error: Error?) -> Void)
+    open class func getEventAwards(eventKey: String, ifModifiedSince: String? = nil, completion: @escaping (_ data: [Award]?, _ error: Error?) -> Void)
 ```
 
 
@@ -284,8 +310,10 @@ Gets a list of awards from the given event.
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TBAAPIv3Kit
 
+let eventKey = "eventKey_example" // String | TBA Event Key, eg `2016nytr`
+let ifModifiedSince = "ifModifiedSince_example" // String | Value of the `Last-Modified` header in the most recently cached response by the client. (optional)
 
-EventAPI.getEventAwards() { (response, error) in
+EventAPI.getEventAwards(eventKey: eventKey, ifModifiedSince: ifModifiedSince) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -298,7 +326,11 @@ EventAPI.getEventAwards() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **eventKey** | **String** | TBA Event Key, eg &#x60;2016nytr&#x60; | 
+ **ifModifiedSince** | **String** | Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. | [optional] 
 
 ### Return type
 
@@ -317,7 +349,7 @@ This endpoint does not need any parameter.
 
 # **getEventDistrictPoints**
 ```swift
-    open class func getEventDistrictPoints(completion: @escaping (_ data: EventDistrictPoints?, _ error: Error?) -> Void)
+    open class func getEventDistrictPoints(eventKey: String, ifModifiedSince: String? = nil, completion: @escaping (_ data: EventDistrictPoints?, _ error: Error?) -> Void)
 ```
 
 
@@ -329,8 +361,10 @@ Gets a list of team rankings for the Event.
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TBAAPIv3Kit
 
+let eventKey = "eventKey_example" // String | TBA Event Key, eg `2016nytr`
+let ifModifiedSince = "ifModifiedSince_example" // String | Value of the `Last-Modified` header in the most recently cached response by the client. (optional)
 
-EventAPI.getEventDistrictPoints() { (response, error) in
+EventAPI.getEventDistrictPoints(eventKey: eventKey, ifModifiedSince: ifModifiedSince) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -343,7 +377,11 @@ EventAPI.getEventDistrictPoints() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **eventKey** | **String** | TBA Event Key, eg &#x60;2016nytr&#x60; | 
+ **ifModifiedSince** | **String** | Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. | [optional] 
 
 ### Return type
 
@@ -362,7 +400,7 @@ This endpoint does not need any parameter.
 
 # **getEventInsights**
 ```swift
-    open class func getEventInsights(completion: @escaping (_ data: EventInsights?, _ error: Error?) -> Void)
+    open class func getEventInsights(eventKey: String, ifModifiedSince: String? = nil, completion: @escaping (_ data: EventInsights?, _ error: Error?) -> Void)
 ```
 
 
@@ -374,8 +412,10 @@ Gets a set of Event-specific insights for the given Event.
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TBAAPIv3Kit
 
+let eventKey = "eventKey_example" // String | TBA Event Key, eg `2016nytr`
+let ifModifiedSince = "ifModifiedSince_example" // String | Value of the `Last-Modified` header in the most recently cached response by the client. (optional)
 
-EventAPI.getEventInsights() { (response, error) in
+EventAPI.getEventInsights(eventKey: eventKey, ifModifiedSince: ifModifiedSince) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -388,7 +428,11 @@ EventAPI.getEventInsights() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **eventKey** | **String** | TBA Event Key, eg &#x60;2016nytr&#x60; | 
+ **ifModifiedSince** | **String** | Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. | [optional] 
 
 ### Return type
 
@@ -407,7 +451,7 @@ This endpoint does not need any parameter.
 
 # **getEventMatchTimeseries**
 ```swift
-    open class func getEventMatchTimeseries(completion: @escaping (_ data: [String]?, _ error: Error?) -> Void)
+    open class func getEventMatchTimeseries(eventKey: String, ifModifiedSince: String? = nil, completion: @escaping (_ data: [String]?, _ error: Error?) -> Void)
 ```
 
 
@@ -419,8 +463,10 @@ Gets an array of Match Keys for the given event key that have timeseries data. R
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TBAAPIv3Kit
 
+let eventKey = "eventKey_example" // String | TBA Event Key, eg `2016nytr`
+let ifModifiedSince = "ifModifiedSince_example" // String | Value of the `Last-Modified` header in the most recently cached response by the client. (optional)
 
-EventAPI.getEventMatchTimeseries() { (response, error) in
+EventAPI.getEventMatchTimeseries(eventKey: eventKey, ifModifiedSince: ifModifiedSince) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -433,7 +479,11 @@ EventAPI.getEventMatchTimeseries() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **eventKey** | **String** | TBA Event Key, eg &#x60;2016nytr&#x60; | 
+ **ifModifiedSince** | **String** | Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. | [optional] 
 
 ### Return type
 
@@ -452,7 +502,7 @@ This endpoint does not need any parameter.
 
 # **getEventMatches**
 ```swift
-    open class func getEventMatches(completion: @escaping (_ data: [Match]?, _ error: Error?) -> Void)
+    open class func getEventMatches(eventKey: String, ifModifiedSince: String? = nil, completion: @escaping (_ data: [Match]?, _ error: Error?) -> Void)
 ```
 
 
@@ -464,8 +514,10 @@ Gets a list of matches for the given event.
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TBAAPIv3Kit
 
+let eventKey = "eventKey_example" // String | TBA Event Key, eg `2016nytr`
+let ifModifiedSince = "ifModifiedSince_example" // String | Value of the `Last-Modified` header in the most recently cached response by the client. (optional)
 
-EventAPI.getEventMatches() { (response, error) in
+EventAPI.getEventMatches(eventKey: eventKey, ifModifiedSince: ifModifiedSince) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -478,7 +530,11 @@ EventAPI.getEventMatches() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **eventKey** | **String** | TBA Event Key, eg &#x60;2016nytr&#x60; | 
+ **ifModifiedSince** | **String** | Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. | [optional] 
 
 ### Return type
 
@@ -497,7 +553,7 @@ This endpoint does not need any parameter.
 
 # **getEventMatchesKeys**
 ```swift
-    open class func getEventMatchesKeys(completion: @escaping (_ data: [String]?, _ error: Error?) -> Void)
+    open class func getEventMatchesKeys(eventKey: String, ifModifiedSince: String? = nil, completion: @escaping (_ data: [String]?, _ error: Error?) -> Void)
 ```
 
 
@@ -509,8 +565,10 @@ Gets a list of match keys for the given event.
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TBAAPIv3Kit
 
+let eventKey = "eventKey_example" // String | TBA Event Key, eg `2016nytr`
+let ifModifiedSince = "ifModifiedSince_example" // String | Value of the `Last-Modified` header in the most recently cached response by the client. (optional)
 
-EventAPI.getEventMatchesKeys() { (response, error) in
+EventAPI.getEventMatchesKeys(eventKey: eventKey, ifModifiedSince: ifModifiedSince) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -523,7 +581,11 @@ EventAPI.getEventMatchesKeys() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **eventKey** | **String** | TBA Event Key, eg &#x60;2016nytr&#x60; | 
+ **ifModifiedSince** | **String** | Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. | [optional] 
 
 ### Return type
 
@@ -542,7 +604,7 @@ This endpoint does not need any parameter.
 
 # **getEventMatchesSimple**
 ```swift
-    open class func getEventMatchesSimple(completion: @escaping (_ data: [MatchSimple]?, _ error: Error?) -> Void)
+    open class func getEventMatchesSimple(eventKey: String, ifModifiedSince: String? = nil, completion: @escaping (_ data: [MatchSimple]?, _ error: Error?) -> Void)
 ```
 
 
@@ -554,8 +616,10 @@ Gets a short-form list of matches for the given event.
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TBAAPIv3Kit
 
+let eventKey = "eventKey_example" // String | TBA Event Key, eg `2016nytr`
+let ifModifiedSince = "ifModifiedSince_example" // String | Value of the `Last-Modified` header in the most recently cached response by the client. (optional)
 
-EventAPI.getEventMatchesSimple() { (response, error) in
+EventAPI.getEventMatchesSimple(eventKey: eventKey, ifModifiedSince: ifModifiedSince) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -568,7 +632,11 @@ EventAPI.getEventMatchesSimple() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **eventKey** | **String** | TBA Event Key, eg &#x60;2016nytr&#x60; | 
+ **ifModifiedSince** | **String** | Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. | [optional] 
 
 ### Return type
 
@@ -587,7 +655,7 @@ This endpoint does not need any parameter.
 
 # **getEventOPRs**
 ```swift
-    open class func getEventOPRs(completion: @escaping (_ data: EventOPRs?, _ error: Error?) -> Void)
+    open class func getEventOPRs(eventKey: String, ifModifiedSince: String? = nil, completion: @escaping (_ data: EventOPRs?, _ error: Error?) -> Void)
 ```
 
 
@@ -599,8 +667,10 @@ Gets a set of Event OPRs (including OPR, DPR, and CCWM) for the given Event.
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TBAAPIv3Kit
 
+let eventKey = "eventKey_example" // String | TBA Event Key, eg `2016nytr`
+let ifModifiedSince = "ifModifiedSince_example" // String | Value of the `Last-Modified` header in the most recently cached response by the client. (optional)
 
-EventAPI.getEventOPRs() { (response, error) in
+EventAPI.getEventOPRs(eventKey: eventKey, ifModifiedSince: ifModifiedSince) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -613,7 +683,11 @@ EventAPI.getEventOPRs() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **eventKey** | **String** | TBA Event Key, eg &#x60;2016nytr&#x60; | 
+ **ifModifiedSince** | **String** | Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. | [optional] 
 
 ### Return type
 
@@ -632,7 +706,7 @@ This endpoint does not need any parameter.
 
 # **getEventPredictions**
 ```swift
-    open class func getEventPredictions(completion: @escaping (_ data: Any?, _ error: Error?) -> Void)
+    open class func getEventPredictions(eventKey: String, ifModifiedSince: String? = nil, completion: @escaping (_ data: Any?, _ error: Error?) -> Void)
 ```
 
 
@@ -644,8 +718,10 @@ Gets information on TBA-generated predictions for the given Event. Contains year
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TBAAPIv3Kit
 
+let eventKey = "eventKey_example" // String | TBA Event Key, eg `2016nytr`
+let ifModifiedSince = "ifModifiedSince_example" // String | Value of the `Last-Modified` header in the most recently cached response by the client. (optional)
 
-EventAPI.getEventPredictions() { (response, error) in
+EventAPI.getEventPredictions(eventKey: eventKey, ifModifiedSince: ifModifiedSince) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -658,7 +734,11 @@ EventAPI.getEventPredictions() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **eventKey** | **String** | TBA Event Key, eg &#x60;2016nytr&#x60; | 
+ **ifModifiedSince** | **String** | Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. | [optional] 
 
 ### Return type
 
@@ -677,7 +757,7 @@ This endpoint does not need any parameter.
 
 # **getEventRankings**
 ```swift
-    open class func getEventRankings(completion: @escaping (_ data: EventRanking?, _ error: Error?) -> Void)
+    open class func getEventRankings(eventKey: String, ifModifiedSince: String? = nil, completion: @escaping (_ data: EventRanking?, _ error: Error?) -> Void)
 ```
 
 
@@ -689,8 +769,10 @@ Gets a list of team rankings for the Event.
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TBAAPIv3Kit
 
+let eventKey = "eventKey_example" // String | TBA Event Key, eg `2016nytr`
+let ifModifiedSince = "ifModifiedSince_example" // String | Value of the `Last-Modified` header in the most recently cached response by the client. (optional)
 
-EventAPI.getEventRankings() { (response, error) in
+EventAPI.getEventRankings(eventKey: eventKey, ifModifiedSince: ifModifiedSince) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -703,7 +785,11 @@ EventAPI.getEventRankings() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **eventKey** | **String** | TBA Event Key, eg &#x60;2016nytr&#x60; | 
+ **ifModifiedSince** | **String** | Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. | [optional] 
 
 ### Return type
 
@@ -722,7 +808,7 @@ This endpoint does not need any parameter.
 
 # **getEventSimple**
 ```swift
-    open class func getEventSimple(completion: @escaping (_ data: EventSimple?, _ error: Error?) -> Void)
+    open class func getEventSimple(eventKey: String, ifModifiedSince: String? = nil, completion: @escaping (_ data: EventSimple?, _ error: Error?) -> Void)
 ```
 
 
@@ -734,8 +820,10 @@ Gets a short-form Event.
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TBAAPIv3Kit
 
+let eventKey = "eventKey_example" // String | TBA Event Key, eg `2016nytr`
+let ifModifiedSince = "ifModifiedSince_example" // String | Value of the `Last-Modified` header in the most recently cached response by the client. (optional)
 
-EventAPI.getEventSimple() { (response, error) in
+EventAPI.getEventSimple(eventKey: eventKey, ifModifiedSince: ifModifiedSince) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -748,7 +836,11 @@ EventAPI.getEventSimple() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **eventKey** | **String** | TBA Event Key, eg &#x60;2016nytr&#x60; | 
+ **ifModifiedSince** | **String** | Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. | [optional] 
 
 ### Return type
 
@@ -767,7 +859,7 @@ This endpoint does not need any parameter.
 
 # **getEventTeams**
 ```swift
-    open class func getEventTeams(completion: @escaping (_ data: [Team]?, _ error: Error?) -> Void)
+    open class func getEventTeams(eventKey: String, ifModifiedSince: String? = nil, completion: @escaping (_ data: [Team]?, _ error: Error?) -> Void)
 ```
 
 
@@ -779,8 +871,10 @@ Gets a list of `Team` objects that competed in the given event.
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TBAAPIv3Kit
 
+let eventKey = "eventKey_example" // String | TBA Event Key, eg `2016nytr`
+let ifModifiedSince = "ifModifiedSince_example" // String | Value of the `Last-Modified` header in the most recently cached response by the client. (optional)
 
-EventAPI.getEventTeams() { (response, error) in
+EventAPI.getEventTeams(eventKey: eventKey, ifModifiedSince: ifModifiedSince) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -793,7 +887,11 @@ EventAPI.getEventTeams() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **eventKey** | **String** | TBA Event Key, eg &#x60;2016nytr&#x60; | 
+ **ifModifiedSince** | **String** | Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. | [optional] 
 
 ### Return type
 
@@ -812,7 +910,7 @@ This endpoint does not need any parameter.
 
 # **getEventTeamsKeys**
 ```swift
-    open class func getEventTeamsKeys(completion: @escaping (_ data: [String]?, _ error: Error?) -> Void)
+    open class func getEventTeamsKeys(eventKey: String, ifModifiedSince: String? = nil, completion: @escaping (_ data: [String]?, _ error: Error?) -> Void)
 ```
 
 
@@ -824,8 +922,10 @@ Gets a list of `Team` keys that competed in the given event.
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TBAAPIv3Kit
 
+let eventKey = "eventKey_example" // String | TBA Event Key, eg `2016nytr`
+let ifModifiedSince = "ifModifiedSince_example" // String | Value of the `Last-Modified` header in the most recently cached response by the client. (optional)
 
-EventAPI.getEventTeamsKeys() { (response, error) in
+EventAPI.getEventTeamsKeys(eventKey: eventKey, ifModifiedSince: ifModifiedSince) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -838,7 +938,11 @@ EventAPI.getEventTeamsKeys() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **eventKey** | **String** | TBA Event Key, eg &#x60;2016nytr&#x60; | 
+ **ifModifiedSince** | **String** | Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. | [optional] 
 
 ### Return type
 
@@ -857,7 +961,7 @@ This endpoint does not need any parameter.
 
 # **getEventTeamsSimple**
 ```swift
-    open class func getEventTeamsSimple(completion: @escaping (_ data: [TeamSimple]?, _ error: Error?) -> Void)
+    open class func getEventTeamsSimple(eventKey: String, ifModifiedSince: String? = nil, completion: @escaping (_ data: [TeamSimple]?, _ error: Error?) -> Void)
 ```
 
 
@@ -869,8 +973,10 @@ Gets a short-form list of `Team` objects that competed in the given event.
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TBAAPIv3Kit
 
+let eventKey = "eventKey_example" // String | TBA Event Key, eg `2016nytr`
+let ifModifiedSince = "ifModifiedSince_example" // String | Value of the `Last-Modified` header in the most recently cached response by the client. (optional)
 
-EventAPI.getEventTeamsSimple() { (response, error) in
+EventAPI.getEventTeamsSimple(eventKey: eventKey, ifModifiedSince: ifModifiedSince) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -883,7 +989,11 @@ EventAPI.getEventTeamsSimple() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **eventKey** | **String** | TBA Event Key, eg &#x60;2016nytr&#x60; | 
+ **ifModifiedSince** | **String** | Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. | [optional] 
 
 ### Return type
 
@@ -902,7 +1012,7 @@ This endpoint does not need any parameter.
 
 # **getEventTeamsStatuses**
 ```swift
-    open class func getEventTeamsStatuses(completion: @escaping (_ data: [String:TeamEventStatus]?, _ error: Error?) -> Void)
+    open class func getEventTeamsStatuses(eventKey: String, ifModifiedSince: String? = nil, completion: @escaping (_ data: [String:TeamEventStatus]?, _ error: Error?) -> Void)
 ```
 
 
@@ -914,8 +1024,10 @@ Gets a key-value list of the event statuses for teams competing at the given eve
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TBAAPIv3Kit
 
+let eventKey = "eventKey_example" // String | TBA Event Key, eg `2016nytr`
+let ifModifiedSince = "ifModifiedSince_example" // String | Value of the `Last-Modified` header in the most recently cached response by the client. (optional)
 
-EventAPI.getEventTeamsStatuses() { (response, error) in
+EventAPI.getEventTeamsStatuses(eventKey: eventKey, ifModifiedSince: ifModifiedSince) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -928,7 +1040,11 @@ EventAPI.getEventTeamsStatuses() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **eventKey** | **String** | TBA Event Key, eg &#x60;2016nytr&#x60; | 
+ **ifModifiedSince** | **String** | Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. | [optional] 
 
 ### Return type
 
@@ -947,7 +1063,7 @@ This endpoint does not need any parameter.
 
 # **getEventsByYear**
 ```swift
-    open class func getEventsByYear(completion: @escaping (_ data: [Event]?, _ error: Error?) -> Void)
+    open class func getEventsByYear(year: Int, ifModifiedSince: String? = nil, completion: @escaping (_ data: [Event]?, _ error: Error?) -> Void)
 ```
 
 
@@ -959,8 +1075,10 @@ Gets a list of events in the given year.
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TBAAPIv3Kit
 
+let year = 987 // Int | Competition Year (or Season). Must be 4 digits.
+let ifModifiedSince = "ifModifiedSince_example" // String | Value of the `Last-Modified` header in the most recently cached response by the client. (optional)
 
-EventAPI.getEventsByYear() { (response, error) in
+EventAPI.getEventsByYear(year: year, ifModifiedSince: ifModifiedSince) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -973,7 +1091,11 @@ EventAPI.getEventsByYear() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **year** | **Int** | Competition Year (or Season). Must be 4 digits. | 
+ **ifModifiedSince** | **String** | Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. | [optional] 
 
 ### Return type
 
@@ -992,7 +1114,7 @@ This endpoint does not need any parameter.
 
 # **getEventsByYearKeys**
 ```swift
-    open class func getEventsByYearKeys(completion: @escaping (_ data: [String]?, _ error: Error?) -> Void)
+    open class func getEventsByYearKeys(year: Int, ifModifiedSince: String? = nil, completion: @escaping (_ data: [String]?, _ error: Error?) -> Void)
 ```
 
 
@@ -1004,8 +1126,10 @@ Gets a list of event keys in the given year.
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TBAAPIv3Kit
 
+let year = 987 // Int | Competition Year (or Season). Must be 4 digits.
+let ifModifiedSince = "ifModifiedSince_example" // String | Value of the `Last-Modified` header in the most recently cached response by the client. (optional)
 
-EventAPI.getEventsByYearKeys() { (response, error) in
+EventAPI.getEventsByYearKeys(year: year, ifModifiedSince: ifModifiedSince) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -1018,7 +1142,11 @@ EventAPI.getEventsByYearKeys() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **year** | **Int** | Competition Year (or Season). Must be 4 digits. | 
+ **ifModifiedSince** | **String** | Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. | [optional] 
 
 ### Return type
 
@@ -1037,7 +1165,7 @@ This endpoint does not need any parameter.
 
 # **getEventsByYearSimple**
 ```swift
-    open class func getEventsByYearSimple(completion: @escaping (_ data: [EventSimple]?, _ error: Error?) -> Void)
+    open class func getEventsByYearSimple(year: Int, ifModifiedSince: String? = nil, completion: @escaping (_ data: [EventSimple]?, _ error: Error?) -> Void)
 ```
 
 
@@ -1049,8 +1177,10 @@ Gets a short-form list of events in the given year.
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TBAAPIv3Kit
 
+let year = 987 // Int | Competition Year (or Season). Must be 4 digits.
+let ifModifiedSince = "ifModifiedSince_example" // String | Value of the `Last-Modified` header in the most recently cached response by the client. (optional)
 
-EventAPI.getEventsByYearSimple() { (response, error) in
+EventAPI.getEventsByYearSimple(year: year, ifModifiedSince: ifModifiedSince) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -1063,7 +1193,11 @@ EventAPI.getEventsByYearSimple() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **year** | **Int** | Competition Year (or Season). Must be 4 digits. | 
+ **ifModifiedSince** | **String** | Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. | [optional] 
 
 ### Return type
 
@@ -1082,7 +1216,7 @@ This endpoint does not need any parameter.
 
 # **getTeamEventAwards**
 ```swift
-    open class func getTeamEventAwards(completion: @escaping (_ data: [Award]?, _ error: Error?) -> Void)
+    open class func getTeamEventAwards(teamKey: String, eventKey: String, ifModifiedSince: String? = nil, completion: @escaping (_ data: [Award]?, _ error: Error?) -> Void)
 ```
 
 
@@ -1094,8 +1228,11 @@ Gets a list of awards the given team won at the given event.
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TBAAPIv3Kit
 
+let teamKey = "teamKey_example" // String | TBA Team Key, eg `frc254`
+let eventKey = "eventKey_example" // String | TBA Event Key, eg `2016nytr`
+let ifModifiedSince = "ifModifiedSince_example" // String | Value of the `Last-Modified` header in the most recently cached response by the client. (optional)
 
-EventAPI.getTeamEventAwards() { (response, error) in
+EventAPI.getTeamEventAwards(teamKey: teamKey, eventKey: eventKey, ifModifiedSince: ifModifiedSince) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -1108,7 +1245,12 @@ EventAPI.getTeamEventAwards() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **teamKey** | **String** | TBA Team Key, eg &#x60;frc254&#x60; | 
+ **eventKey** | **String** | TBA Event Key, eg &#x60;2016nytr&#x60; | 
+ **ifModifiedSince** | **String** | Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. | [optional] 
 
 ### Return type
 
@@ -1127,7 +1269,7 @@ This endpoint does not need any parameter.
 
 # **getTeamEventMatches**
 ```swift
-    open class func getTeamEventMatches(completion: @escaping (_ data: [Match]?, _ error: Error?) -> Void)
+    open class func getTeamEventMatches(teamKey: String, eventKey: String, ifModifiedSince: String? = nil, completion: @escaping (_ data: [Match]?, _ error: Error?) -> Void)
 ```
 
 
@@ -1139,8 +1281,11 @@ Gets a list of matches for the given team and event.
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TBAAPIv3Kit
 
+let teamKey = "teamKey_example" // String | TBA Team Key, eg `frc254`
+let eventKey = "eventKey_example" // String | TBA Event Key, eg `2016nytr`
+let ifModifiedSince = "ifModifiedSince_example" // String | Value of the `Last-Modified` header in the most recently cached response by the client. (optional)
 
-EventAPI.getTeamEventMatches() { (response, error) in
+EventAPI.getTeamEventMatches(teamKey: teamKey, eventKey: eventKey, ifModifiedSince: ifModifiedSince) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -1153,7 +1298,12 @@ EventAPI.getTeamEventMatches() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **teamKey** | **String** | TBA Team Key, eg &#x60;frc254&#x60; | 
+ **eventKey** | **String** | TBA Event Key, eg &#x60;2016nytr&#x60; | 
+ **ifModifiedSince** | **String** | Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. | [optional] 
 
 ### Return type
 
@@ -1172,7 +1322,7 @@ This endpoint does not need any parameter.
 
 # **getTeamEventMatchesKeys**
 ```swift
-    open class func getTeamEventMatchesKeys(completion: @escaping (_ data: [String]?, _ error: Error?) -> Void)
+    open class func getTeamEventMatchesKeys(teamKey: String, eventKey: String, ifModifiedSince: String? = nil, completion: @escaping (_ data: [String]?, _ error: Error?) -> Void)
 ```
 
 
@@ -1184,8 +1334,11 @@ Gets a list of match keys for matches for the given team and event.
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TBAAPIv3Kit
 
+let teamKey = "teamKey_example" // String | TBA Team Key, eg `frc254`
+let eventKey = "eventKey_example" // String | TBA Event Key, eg `2016nytr`
+let ifModifiedSince = "ifModifiedSince_example" // String | Value of the `Last-Modified` header in the most recently cached response by the client. (optional)
 
-EventAPI.getTeamEventMatchesKeys() { (response, error) in
+EventAPI.getTeamEventMatchesKeys(teamKey: teamKey, eventKey: eventKey, ifModifiedSince: ifModifiedSince) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -1198,7 +1351,12 @@ EventAPI.getTeamEventMatchesKeys() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **teamKey** | **String** | TBA Team Key, eg &#x60;frc254&#x60; | 
+ **eventKey** | **String** | TBA Event Key, eg &#x60;2016nytr&#x60; | 
+ **ifModifiedSince** | **String** | Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. | [optional] 
 
 ### Return type
 
@@ -1217,7 +1375,7 @@ This endpoint does not need any parameter.
 
 # **getTeamEventMatchesSimple**
 ```swift
-    open class func getTeamEventMatchesSimple(completion: @escaping (_ data: [Match]?, _ error: Error?) -> Void)
+    open class func getTeamEventMatchesSimple(teamKey: String, eventKey: String, ifModifiedSince: String? = nil, completion: @escaping (_ data: [Match]?, _ error: Error?) -> Void)
 ```
 
 
@@ -1229,8 +1387,11 @@ Gets a short-form list of matches for the given team and event.
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TBAAPIv3Kit
 
+let teamKey = "teamKey_example" // String | TBA Team Key, eg `frc254`
+let eventKey = "eventKey_example" // String | TBA Event Key, eg `2016nytr`
+let ifModifiedSince = "ifModifiedSince_example" // String | Value of the `Last-Modified` header in the most recently cached response by the client. (optional)
 
-EventAPI.getTeamEventMatchesSimple() { (response, error) in
+EventAPI.getTeamEventMatchesSimple(teamKey: teamKey, eventKey: eventKey, ifModifiedSince: ifModifiedSince) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -1243,7 +1404,12 @@ EventAPI.getTeamEventMatchesSimple() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **teamKey** | **String** | TBA Team Key, eg &#x60;frc254&#x60; | 
+ **eventKey** | **String** | TBA Event Key, eg &#x60;2016nytr&#x60; | 
+ **ifModifiedSince** | **String** | Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. | [optional] 
 
 ### Return type
 
@@ -1262,7 +1428,7 @@ This endpoint does not need any parameter.
 
 # **getTeamEventStatus**
 ```swift
-    open class func getTeamEventStatus(completion: @escaping (_ data: TeamEventStatus?, _ error: Error?) -> Void)
+    open class func getTeamEventStatus(teamKey: String, eventKey: String, ifModifiedSince: String? = nil, completion: @escaping (_ data: TeamEventStatus?, _ error: Error?) -> Void)
 ```
 
 
@@ -1274,8 +1440,11 @@ Gets the competition rank and status of the team at the given event.
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TBAAPIv3Kit
 
+let teamKey = "teamKey_example" // String | TBA Team Key, eg `frc254`
+let eventKey = "eventKey_example" // String | TBA Event Key, eg `2016nytr`
+let ifModifiedSince = "ifModifiedSince_example" // String | Value of the `Last-Modified` header in the most recently cached response by the client. (optional)
 
-EventAPI.getTeamEventStatus() { (response, error) in
+EventAPI.getTeamEventStatus(teamKey: teamKey, eventKey: eventKey, ifModifiedSince: ifModifiedSince) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -1288,7 +1457,12 @@ EventAPI.getTeamEventStatus() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **teamKey** | **String** | TBA Team Key, eg &#x60;frc254&#x60; | 
+ **eventKey** | **String** | TBA Event Key, eg &#x60;2016nytr&#x60; | 
+ **ifModifiedSince** | **String** | Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. | [optional] 
 
 ### Return type
 
@@ -1307,7 +1481,7 @@ This endpoint does not need any parameter.
 
 # **getTeamEvents**
 ```swift
-    open class func getTeamEvents(completion: @escaping (_ data: [Event]?, _ error: Error?) -> Void)
+    open class func getTeamEvents(teamKey: String, ifModifiedSince: String? = nil, completion: @escaping (_ data: [Event]?, _ error: Error?) -> Void)
 ```
 
 
@@ -1319,8 +1493,10 @@ Gets a list of all events this team has competed at.
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TBAAPIv3Kit
 
+let teamKey = "teamKey_example" // String | TBA Team Key, eg `frc254`
+let ifModifiedSince = "ifModifiedSince_example" // String | Value of the `Last-Modified` header in the most recently cached response by the client. (optional)
 
-EventAPI.getTeamEvents() { (response, error) in
+EventAPI.getTeamEvents(teamKey: teamKey, ifModifiedSince: ifModifiedSince) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -1333,7 +1509,11 @@ EventAPI.getTeamEvents() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **teamKey** | **String** | TBA Team Key, eg &#x60;frc254&#x60; | 
+ **ifModifiedSince** | **String** | Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. | [optional] 
 
 ### Return type
 
@@ -1352,7 +1532,7 @@ This endpoint does not need any parameter.
 
 # **getTeamEventsByYear**
 ```swift
-    open class func getTeamEventsByYear(completion: @escaping (_ data: [Event]?, _ error: Error?) -> Void)
+    open class func getTeamEventsByYear(teamKey: String, year: Int, ifModifiedSince: String? = nil, completion: @escaping (_ data: [Event]?, _ error: Error?) -> Void)
 ```
 
 
@@ -1364,8 +1544,11 @@ Gets a list of events this team has competed at in the given year.
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TBAAPIv3Kit
 
+let teamKey = "teamKey_example" // String | TBA Team Key, eg `frc254`
+let year = 987 // Int | Competition Year (or Season). Must be 4 digits.
+let ifModifiedSince = "ifModifiedSince_example" // String | Value of the `Last-Modified` header in the most recently cached response by the client. (optional)
 
-EventAPI.getTeamEventsByYear() { (response, error) in
+EventAPI.getTeamEventsByYear(teamKey: teamKey, year: year, ifModifiedSince: ifModifiedSince) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -1378,7 +1561,12 @@ EventAPI.getTeamEventsByYear() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **teamKey** | **String** | TBA Team Key, eg &#x60;frc254&#x60; | 
+ **year** | **Int** | Competition Year (or Season). Must be 4 digits. | 
+ **ifModifiedSince** | **String** | Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. | [optional] 
 
 ### Return type
 
@@ -1397,7 +1585,7 @@ This endpoint does not need any parameter.
 
 # **getTeamEventsByYearKeys**
 ```swift
-    open class func getTeamEventsByYearKeys(completion: @escaping (_ data: [String]?, _ error: Error?) -> Void)
+    open class func getTeamEventsByYearKeys(teamKey: String, year: Int, ifModifiedSince: String? = nil, completion: @escaping (_ data: [String]?, _ error: Error?) -> Void)
 ```
 
 
@@ -1409,8 +1597,11 @@ Gets a list of the event keys for events this team has competed at in the given 
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TBAAPIv3Kit
 
+let teamKey = "teamKey_example" // String | TBA Team Key, eg `frc254`
+let year = 987 // Int | Competition Year (or Season). Must be 4 digits.
+let ifModifiedSince = "ifModifiedSince_example" // String | Value of the `Last-Modified` header in the most recently cached response by the client. (optional)
 
-EventAPI.getTeamEventsByYearKeys() { (response, error) in
+EventAPI.getTeamEventsByYearKeys(teamKey: teamKey, year: year, ifModifiedSince: ifModifiedSince) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -1423,7 +1614,12 @@ EventAPI.getTeamEventsByYearKeys() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **teamKey** | **String** | TBA Team Key, eg &#x60;frc254&#x60; | 
+ **year** | **Int** | Competition Year (or Season). Must be 4 digits. | 
+ **ifModifiedSince** | **String** | Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. | [optional] 
 
 ### Return type
 
@@ -1442,7 +1638,7 @@ This endpoint does not need any parameter.
 
 # **getTeamEventsByYearSimple**
 ```swift
-    open class func getTeamEventsByYearSimple(completion: @escaping (_ data: [EventSimple]?, _ error: Error?) -> Void)
+    open class func getTeamEventsByYearSimple(teamKey: String, year: Int, ifModifiedSince: String? = nil, completion: @escaping (_ data: [EventSimple]?, _ error: Error?) -> Void)
 ```
 
 
@@ -1454,8 +1650,11 @@ Gets a short-form list of events this team has competed at in the given year.
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TBAAPIv3Kit
 
+let teamKey = "teamKey_example" // String | TBA Team Key, eg `frc254`
+let year = 987 // Int | Competition Year (or Season). Must be 4 digits.
+let ifModifiedSince = "ifModifiedSince_example" // String | Value of the `Last-Modified` header in the most recently cached response by the client. (optional)
 
-EventAPI.getTeamEventsByYearSimple() { (response, error) in
+EventAPI.getTeamEventsByYearSimple(teamKey: teamKey, year: year, ifModifiedSince: ifModifiedSince) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -1468,7 +1667,12 @@ EventAPI.getTeamEventsByYearSimple() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **teamKey** | **String** | TBA Team Key, eg &#x60;frc254&#x60; | 
+ **year** | **Int** | Competition Year (or Season). Must be 4 digits. | 
+ **ifModifiedSince** | **String** | Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. | [optional] 
 
 ### Return type
 
@@ -1487,7 +1691,7 @@ This endpoint does not need any parameter.
 
 # **getTeamEventsKeys**
 ```swift
-    open class func getTeamEventsKeys(completion: @escaping (_ data: [String]?, _ error: Error?) -> Void)
+    open class func getTeamEventsKeys(teamKey: String, ifModifiedSince: String? = nil, completion: @escaping (_ data: [String]?, _ error: Error?) -> Void)
 ```
 
 
@@ -1499,8 +1703,10 @@ Gets a list of the event keys for all events this team has competed at.
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TBAAPIv3Kit
 
+let teamKey = "teamKey_example" // String | TBA Team Key, eg `frc254`
+let ifModifiedSince = "ifModifiedSince_example" // String | Value of the `Last-Modified` header in the most recently cached response by the client. (optional)
 
-EventAPI.getTeamEventsKeys() { (response, error) in
+EventAPI.getTeamEventsKeys(teamKey: teamKey, ifModifiedSince: ifModifiedSince) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -1513,7 +1719,11 @@ EventAPI.getTeamEventsKeys() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **teamKey** | **String** | TBA Team Key, eg &#x60;frc254&#x60; | 
+ **ifModifiedSince** | **String** | Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. | [optional] 
 
 ### Return type
 
@@ -1532,7 +1742,7 @@ This endpoint does not need any parameter.
 
 # **getTeamEventsSimple**
 ```swift
-    open class func getTeamEventsSimple(completion: @escaping (_ data: [EventSimple]?, _ error: Error?) -> Void)
+    open class func getTeamEventsSimple(teamKey: String, ifModifiedSince: String? = nil, completion: @escaping (_ data: [EventSimple]?, _ error: Error?) -> Void)
 ```
 
 
@@ -1544,8 +1754,10 @@ Gets a short-form list of all events this team has competed at.
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TBAAPIv3Kit
 
+let teamKey = "teamKey_example" // String | TBA Team Key, eg `frc254`
+let ifModifiedSince = "ifModifiedSince_example" // String | Value of the `Last-Modified` header in the most recently cached response by the client. (optional)
 
-EventAPI.getTeamEventsSimple() { (response, error) in
+EventAPI.getTeamEventsSimple(teamKey: teamKey, ifModifiedSince: ifModifiedSince) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -1558,7 +1770,11 @@ EventAPI.getTeamEventsSimple() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **teamKey** | **String** | TBA Team Key, eg &#x60;frc254&#x60; | 
+ **ifModifiedSince** | **String** | Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. | [optional] 
 
 ### Return type
 
@@ -1577,7 +1793,7 @@ This endpoint does not need any parameter.
 
 # **getTeamEventsStatusesByYear**
 ```swift
-    open class func getTeamEventsStatusesByYear(completion: @escaping (_ data: [String:TeamEventStatus]?, _ error: Error?) -> Void)
+    open class func getTeamEventsStatusesByYear(teamKey: String, year: Int, ifModifiedSince: String? = nil, completion: @escaping (_ data: [String:TeamEventStatus]?, _ error: Error?) -> Void)
 ```
 
 
@@ -1589,8 +1805,11 @@ Gets a key-value list of the event statuses for events this team has competed at
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TBAAPIv3Kit
 
+let teamKey = "teamKey_example" // String | TBA Team Key, eg `frc254`
+let year = 987 // Int | Competition Year (or Season). Must be 4 digits.
+let ifModifiedSince = "ifModifiedSince_example" // String | Value of the `Last-Modified` header in the most recently cached response by the client. (optional)
 
-EventAPI.getTeamEventsStatusesByYear() { (response, error) in
+EventAPI.getTeamEventsStatusesByYear(teamKey: teamKey, year: year, ifModifiedSince: ifModifiedSince) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -1603,7 +1822,12 @@ EventAPI.getTeamEventsStatusesByYear() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **teamKey** | **String** | TBA Team Key, eg &#x60;frc254&#x60; | 
+ **year** | **Int** | Competition Year (or Season). Must be 4 digits. | 
+ **ifModifiedSince** | **String** | Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. | [optional] 
 
 ### Return type
 

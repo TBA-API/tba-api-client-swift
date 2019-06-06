@@ -9,7 +9,7 @@ Method | HTTP request | Description
 
 # **getStatus**
 ```swift
-    open class func getStatus(completion: @escaping (_ data: APIStatus?, _ error: Error?) -> Void)
+    open class func getStatus(ifModifiedSince: String? = nil, completion: @escaping (_ data: APIStatus?, _ error: Error?) -> Void)
 ```
 
 
@@ -21,8 +21,9 @@ Returns API status, and TBA status information.
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import TBAAPIv3Kit
 
+let ifModifiedSince = "ifModifiedSince_example" // String | Value of the `Last-Modified` header in the most recently cached response by the client. (optional)
 
-TBAAPI.getStatus() { (response, error) in
+TBAAPI.getStatus(ifModifiedSince: ifModifiedSince) { (response, error) in
     guard error == nil else {
         print(error)
         return
@@ -35,7 +36,10 @@ TBAAPI.getStatus() { (response, error) in
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **ifModifiedSince** | **String** | Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. | [optional] 
 
 ### Return type
 
