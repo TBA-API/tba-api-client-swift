@@ -20,6 +20,10 @@ public struct Webcast: Codable {
         case rtmp = "rtmp"
         case livestream = "livestream"
         case directLink = "direct_link"
+        case mms = "mms"
+        case justin = "justin"
+        case stemtv = "stemtv"
+        case dacast = "dacast"
     }
     /** Type of webcast, typically descriptive of the streaming provider. */
     public var type: ModelType?
