@@ -1,0 +1,15 @@
+name: TBAAPIv3Kit
+targets:
+  TBAAPIv3Kit:
+    type: framework
+    platform: iOS
+    deploymentTarget: "10.0"
+    sources: [TBAAPIv3Kit]
+    info:
+      path: ./Info.plist
+      version: 3.5
+    settings:
+      APPLICATION_EXTENSION_API_ONLY: true
+    scheme: {}
+    dependencies:
+    - carthage: Alamofire
