@@ -18,6 +18,11 @@ public struct Match: Codable {
         case sf = "sf"
         case f = "f"
     }
+    public enum WinningAlliance: String, Codable {
+        case red = "red"
+        case blue = "blue"
+        case empty = ""
+    }
     /** TBA match key with the format &#x60;yyyy[EVENT_CODE]_[COMP_LEVEL]m[MATCH_NUMBER]&#x60;, where &#x60;yyyy&#x60; is the year, and &#x60;EVENT_CODE&#x60; is the event code of the event, &#x60;COMP_LEVEL&#x60; is (qm, ef, qf, sf, f), and &#x60;MATCH_NUMBER&#x60; is the match number in the competition level. A set number may be appended to the competition level if more than one match in required per set. */
     public var key: String?
     /** The competition level the match was played at. */
@@ -28,7 +33,7 @@ public struct Match: Codable {
     public var matchNumber: Int?
     public var alliances: MatchSimpleAlliances?
     /** The color (red/blue) of the winning alliance. Will contain an empty string in the event of no winner, or a tie. */
-    public var winningAlliance: String?
+    public var winningAlliance: WinningAlliance?
     /** Event key of the event the match was played at. */
     public var eventKey: String?
     /** UNIX timestamp (seconds since 1-Jan-1970 00:00:00) of the scheduled match time, as taken from the published schedule. */
@@ -44,7 +49,7 @@ public struct Match: Codable {
     /** Array of video objects associated with this match. */
     public var videos: [MatchVideos]?
 
-    public init(key: String?, compLevel: CompLevel?, setNumber: Int?, matchNumber: Int?, alliances: MatchSimpleAlliances?, winningAlliance: String?, eventKey: String?, time: Int64?, actualTime: Int64?, predictedTime: Int64?, postResultTime: Int64?, scoreBreakdown: Any?, videos: [MatchVideos]?) {
+    public init(key: String?, compLevel: CompLevel?, setNumber: Int?, matchNumber: Int?, alliances: MatchSimpleAlliances?, winningAlliance: WinningAlliance?, eventKey: String?, time: Int64?, actualTime: Int64?, predictedTime: Int64?, postResultTime: Int64?, scoreBreakdown: Any?, videos: [MatchVideos]?) {
         self.key = key
         self.compLevel = compLevel
         self.setNumber = setNumber

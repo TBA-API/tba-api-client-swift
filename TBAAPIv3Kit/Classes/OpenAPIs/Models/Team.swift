@@ -19,6 +19,8 @@ public struct Team: Codable {
     public var nickname: String?
     /** Official long name registered with FIRST. */
     public var name: String?
+    /** Name of team school or affilited group registered with FIRST. */
+    public var schoolName: String?
     /** City of team derived from parsing the address registered with FIRST. */
     public var city: String?
     /** State of team derived from parsing the address registered with FIRST. */
@@ -48,11 +50,12 @@ public struct Team: Codable {
     /** Location of the team&#39;s home championship each year as a key-value pair. The year (as a string) is the key, and the city is the value. */
     public var homeChampionship: Any?
 
-    public init(key: String?, teamNumber: Int?, nickname: String?, name: String?, city: String?, stateProv: String?, country: String?, address: String?, postalCode: String?, gmapsPlaceId: String?, gmapsUrl: String?, lat: Double?, lng: Double?, locationName: String?, website: String?, rookieYear: Int?, motto: String?, homeChampionship: Any?) {
+    public init(key: String?, teamNumber: Int?, nickname: String?, name: String?, schoolName: String?, city: String?, stateProv: String?, country: String?, address: String?, postalCode: String?, gmapsPlaceId: String?, gmapsUrl: String?, lat: Double?, lng: Double?, locationName: String?, website: String?, rookieYear: Int?, motto: String?, homeChampionship: Any?) {
         self.key = key
         self.teamNumber = teamNumber
         self.nickname = nickname
         self.name = name
+        self.schoolName = schoolName
         self.city = city
         self.stateProv = stateProv
         self.country = country
@@ -74,6 +77,7 @@ public struct Team: Codable {
         case teamNumber = "team_number"
         case nickname
         case name
+        case schoolName = "school_name"
         case city
         case stateProv = "state_prov"
         case country

@@ -11,6 +11,7 @@ Method | HTTP request | Description
 [**getMatch**](MatchAPI.md#getmatch) | **GET** /match/{match_key} | 
 [**getMatchSimple**](MatchAPI.md#getmatchsimple) | **GET** /match/{match_key}/simple | 
 [**getMatchTimeseries**](MatchAPI.md#getmatchtimeseries) | **GET** /match/{match_key}/timeseries | 
+[**getMatchZebra**](MatchAPI.md#getmatchzebra) | **GET** /match/{match_key}/zebra_motionworks | 
 [**getTeamEventMatches**](MatchAPI.md#getteameventmatches) | **GET** /team/{team_key}/event/{event_key}/matches | 
 [**getTeamEventMatchesKeys**](MatchAPI.md#getteameventmatcheskeys) | **GET** /team/{team_key}/event/{event_key}/matches/keys | 
 [**getTeamEventMatchesSimple**](MatchAPI.md#getteameventmatchessimple) | **GET** /team/{team_key}/event/{event_key}/matches/simple | 
@@ -364,6 +365,57 @@ Name | Type | Description  | Notes
 ### Return type
 
 **[Any]**
+
+### Authorization
+
+[apiKey](../README.md#apiKey)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **getMatchZebra**
+```swift
+    open class func getMatchZebra(matchKey: String, ifModifiedSince: String? = nil, completion: @escaping (_ data: Zebra?, _ error: Error?) -> Void)
+```
+
+
+
+Gets Zebra MotionWorks data for a Match for the given match key.
+
+### Example 
+```swift
+// The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
+import TBAAPIv3Kit
+
+let matchKey = "matchKey_example" // String | TBA Match Key, eg `2016nytr_qm1`
+let ifModifiedSince = "ifModifiedSince_example" // String | Value of the `Last-Modified` header in the most recently cached response by the client. (optional)
+
+MatchAPI.getMatchZebra(matchKey: matchKey, ifModifiedSince: ifModifiedSince) { (response, error) in
+    guard error == nil else {
+        print(error)
+        return
+    }
+
+    if (response) {
+        dump(response)
+    }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **matchKey** | **String** | TBA Match Key, eg &#x60;2016nytr_qm1&#x60; | 
+ **ifModifiedSince** | **String** | Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. | [optional] 
+
+### Return type
+
+[**Zebra**](Zebra.md)
 
 ### Authorization
 

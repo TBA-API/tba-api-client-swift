@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Alamofire
 
 extension TBAAPIv3KitAPI {
 
@@ -45,7 +44,7 @@ open class MatchAPI {
         
         let url = URLComponents(string: URLString)
         let nillableHeaders: [String: Any?] = [
-            "If-Modified-Since": ifModifiedSince
+            "If-Modified-Since": ifModifiedSince?.encodeToJSON()
         ]
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
@@ -87,7 +86,7 @@ open class MatchAPI {
         
         let url = URLComponents(string: URLString)
         let nillableHeaders: [String: Any?] = [
-            "If-Modified-Since": ifModifiedSince
+            "If-Modified-Since": ifModifiedSince?.encodeToJSON()
         ]
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
@@ -129,7 +128,7 @@ open class MatchAPI {
         
         let url = URLComponents(string: URLString)
         let nillableHeaders: [String: Any?] = [
-            "If-Modified-Since": ifModifiedSince
+            "If-Modified-Since": ifModifiedSince?.encodeToJSON()
         ]
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
@@ -171,7 +170,7 @@ open class MatchAPI {
         
         let url = URLComponents(string: URLString)
         let nillableHeaders: [String: Any?] = [
-            "If-Modified-Since": ifModifiedSince
+            "If-Modified-Since": ifModifiedSince?.encodeToJSON()
         ]
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
@@ -213,7 +212,7 @@ open class MatchAPI {
         
         let url = URLComponents(string: URLString)
         let nillableHeaders: [String: Any?] = [
-            "If-Modified-Since": ifModifiedSince
+            "If-Modified-Since": ifModifiedSince?.encodeToJSON()
         ]
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
@@ -255,7 +254,7 @@ open class MatchAPI {
         
         let url = URLComponents(string: URLString)
         let nillableHeaders: [String: Any?] = [
-            "If-Modified-Since": ifModifiedSince
+            "If-Modified-Since": ifModifiedSince?.encodeToJSON()
         ]
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
@@ -297,11 +296,53 @@ open class MatchAPI {
         
         let url = URLComponents(string: URLString)
         let nillableHeaders: [String: Any?] = [
-            "If-Modified-Since": ifModifiedSince
+            "If-Modified-Since": ifModifiedSince?.encodeToJSON()
         ]
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
         let requestBuilder: RequestBuilder<[Any]>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
+
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
+    }
+
+    /**
+
+     - parameter matchKey: (path) TBA Match Key, eg &#x60;2016nytr_qm1&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
+     - parameter completion: completion handler to receive the data and the error objects
+     */
+    open class func getMatchZebra(matchKey: String, ifModifiedSince: String? = nil, completion: @escaping ((_ data: Zebra?,_ error: Error?) -> Void)) {
+        getMatchZebraWithRequestBuilder(matchKey: matchKey, ifModifiedSince: ifModifiedSince).execute { (response, error) -> Void in
+            completion(response?.body, error)
+        }
+    }
+
+    /**
+     - GET /match/{match_key}/zebra_motionworks
+     - Gets Zebra MotionWorks data for a Match for the given match key.
+     - API Key:
+       - type: apiKey X-TBA-Auth-Key 
+       - name: apiKey
+     - responseHeaders: [Cache-Control(String), Last-Modified(String)]
+     - parameter matchKey: (path) TBA Match Key, eg &#x60;2016nytr_qm1&#x60; 
+     - parameter ifModifiedSince: (header) Value of the &#x60;Last-Modified&#x60; header in the most recently cached response by the client. (optional)
+     - returns: RequestBuilder<Zebra> 
+     */
+    open class func getMatchZebraWithRequestBuilder(matchKey: String, ifModifiedSince: String? = nil) -> RequestBuilder<Zebra> {
+        var path = "/match/{match_key}/zebra_motionworks"
+        let matchKeyPreEscape = "\(APIHelper.mapValueToPathItem(matchKey))"
+        let matchKeyPostEscape = matchKeyPreEscape.addingPercentEncoding(withAllowedCharacters: .urlPathAllowed) ?? ""
+        path = path.replacingOccurrences(of: "{match_key}", with: matchKeyPostEscape, options: .literal, range: nil)
+        let URLString = TBAAPIv3KitAPI.basePath + path
+        let parameters: [String:Any]? = nil
+        
+        let url = URLComponents(string: URLString)
+        let nillableHeaders: [String: Any?] = [
+            "If-Modified-Since": ifModifiedSince?.encodeToJSON()
+        ]
+        let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
+
+        let requestBuilder: RequestBuilder<Zebra>.Type = TBAAPIv3KitAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false, headers: headerParameters)
     }
@@ -344,7 +385,7 @@ open class MatchAPI {
         
         let url = URLComponents(string: URLString)
         let nillableHeaders: [String: Any?] = [
-            "If-Modified-Since": ifModifiedSince
+            "If-Modified-Since": ifModifiedSince?.encodeToJSON()
         ]
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
@@ -391,7 +432,7 @@ open class MatchAPI {
         
         let url = URLComponents(string: URLString)
         let nillableHeaders: [String: Any?] = [
-            "If-Modified-Since": ifModifiedSince
+            "If-Modified-Since": ifModifiedSince?.encodeToJSON()
         ]
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
@@ -438,7 +479,7 @@ open class MatchAPI {
         
         let url = URLComponents(string: URLString)
         let nillableHeaders: [String: Any?] = [
-            "If-Modified-Since": ifModifiedSince
+            "If-Modified-Since": ifModifiedSince?.encodeToJSON()
         ]
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
@@ -485,7 +526,7 @@ open class MatchAPI {
         
         let url = URLComponents(string: URLString)
         let nillableHeaders: [String: Any?] = [
-            "If-Modified-Since": ifModifiedSince
+            "If-Modified-Since": ifModifiedSince?.encodeToJSON()
         ]
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
@@ -532,7 +573,7 @@ open class MatchAPI {
         
         let url = URLComponents(string: URLString)
         let nillableHeaders: [String: Any?] = [
-            "If-Modified-Since": ifModifiedSince
+            "If-Modified-Since": ifModifiedSince?.encodeToJSON()
         ]
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 
@@ -579,7 +620,7 @@ open class MatchAPI {
         
         let url = URLComponents(string: URLString)
         let nillableHeaders: [String: Any?] = [
-            "If-Modified-Since": ifModifiedSince
+            "If-Modified-Since": ifModifiedSince?.encodeToJSON()
         ]
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 

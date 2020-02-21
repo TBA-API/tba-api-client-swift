@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Alamofire
 
 extension TBAAPIv3KitAPI {
 
@@ -40,7 +39,7 @@ open class TBAAPI {
         
         let url = URLComponents(string: URLString)
         let nillableHeaders: [String: Any?] = [
-            "If-Modified-Since": ifModifiedSince
+            "If-Modified-Since": ifModifiedSince?.encodeToJSON()
         ]
         let headerParameters = APIHelper.rejectNilHeaders(nillableHeaders)
 

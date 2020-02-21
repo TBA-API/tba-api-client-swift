@@ -27,8 +27,6 @@ public struct Media: Codable {
         case externalLink = "external-link"
         case avatar = "avatar"
     }
-    /** TBA identifier for this media. */
-    public var key: String?
     /** String type of the media element. */
     public var type: ModelType?
     /** The key used to identify this media on the media site. */
@@ -42,8 +40,7 @@ public struct Media: Codable {
     /** The URL that leads to the full web page for the media, if one exists. */
     public var viewUrl: String?
 
-    public init(key: String?, type: ModelType?, foreignKey: String?, details: Any?, preferred: Bool?, directUrl: String?, viewUrl: String?) {
-        self.key = key
+    public init(type: ModelType?, foreignKey: String?, details: Any?, preferred: Bool?, directUrl: String?, viewUrl: String?) {
         self.type = type
         self.foreignKey = foreignKey
         self.details = details
@@ -53,7 +50,6 @@ public struct Media: Codable {
     }
 
     public enum CodingKeys: String, CodingKey { 
-        case key
         case type
         case foreignKey = "foreign_key"
         case details
