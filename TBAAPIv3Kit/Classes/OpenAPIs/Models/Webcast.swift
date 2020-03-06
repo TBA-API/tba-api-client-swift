@@ -29,12 +29,15 @@ public struct Webcast: Codable {
     public var type: ModelType?
     /** Type specific channel information. May be the YouTube stream, or Twitch channel name. In the case of iframe types, contains HTML to embed the stream in an HTML iframe. */
     public var channel: String?
+    /** The date for the webcast in &#x60;yyyy-mm-dd&#x60; format. May be null. */
+    public var date: String?
     /** File identification as may be required for some types. May be null. */
     public var file: String?
 
-    public init(type: ModelType?, channel: String?, file: String?) {
+    public init(type: ModelType?, channel: String?, date: String?, file: String?) {
         self.type = type
         self.channel = channel
+        self.date = date
         self.file = file
     }
 
