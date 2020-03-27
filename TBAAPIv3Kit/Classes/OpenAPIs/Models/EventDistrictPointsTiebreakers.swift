@@ -8,8 +8,8 @@
 import Foundation
 
 
+public struct EventDistrictPointsTiebreakers: Codable { 
 
-public struct EventDistrictPointsTiebreakers: Codable {
 
     public var highestQualScores: [Int]?
     public var qualWins: Int?
@@ -24,6 +24,4 @@ public struct EventDistrictPointsTiebreakers: Codable {
         case qualWins = "qual_wins"
     }
 
-
 }
-

@@ -7,10 +7,9 @@
 
 import Foundation
 
-
 /** OPR, DPR, and CCWM for teams at the event. */
+public struct EventOPRs: Codable { 
 
-public struct EventOPRs: Codable {
 
     /** A key-value pair with team key (eg &#x60;frc254&#x60;) as key and OPR as value. */
     public var oprs: [String:Float]?
@@ -25,6 +24,4 @@ public struct EventOPRs: Codable {
         self.ccwms = ccwms
     }
 
-
 }
-

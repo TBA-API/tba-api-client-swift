@@ -8,8 +8,8 @@
 import Foundation
 
 
+public struct ZebraAlliances: Codable { 
 
-public struct ZebraAlliances: Codable {
 
     /** Zebra MotionWorks data for teams on the red alliance */
     public var red: [ZebraTeam]?
@@ -21,6 +21,4 @@ public struct ZebraAlliances: Codable {
         self.blue = blue
     }
 
-
 }
-

@@ -8,8 +8,8 @@
 import Foundation
 
 
+public struct MatchScoreBreakdown2019Alliance: Codable { 
 
-public struct MatchScoreBreakdown2019Alliance: Codable {
 
     public var adjustPoints: Int?
     public var autoPoints: Int?
@@ -117,6 +117,4 @@ public struct MatchScoreBreakdown2019Alliance: Codable {
         self.totalPoints = totalPoints
     }
 
-
 }
-

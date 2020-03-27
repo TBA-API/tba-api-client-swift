@@ -8,8 +8,8 @@
 import Foundation
 
 
+public struct EliminationAlliance: Codable { 
 
-public struct EliminationAlliance: Codable {
 
     /** Alliance name, may be null. */
     public var name: String?
@@ -28,6 +28,4 @@ public struct EliminationAlliance: Codable {
         self.status = status
     }
 
-
 }
-

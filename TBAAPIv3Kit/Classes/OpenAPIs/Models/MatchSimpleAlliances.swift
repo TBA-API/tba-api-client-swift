@@ -7,10 +7,9 @@
 
 import Foundation
 
-
 /** A list of alliances, the teams on the alliances, and their score. */
+public struct MatchSimpleAlliances: Codable { 
 
-public struct MatchSimpleAlliances: Codable {
 
     public var red: MatchAlliance?
     public var blue: MatchAlliance?
@@ -20,6 +19,4 @@ public struct MatchSimpleAlliances: Codable {
         self.blue = blue
     }
 
-
 }
-

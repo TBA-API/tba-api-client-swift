@@ -8,8 +8,8 @@
 import Foundation
 
 
+public struct TeamEventStatus: Codable { 
 
-public struct TeamEventStatus: Codable {
 
     public var qual: TeamEventStatusRank?
     public var alliance: TeamEventStatusAlliance?
@@ -47,6 +47,4 @@ public struct TeamEventStatus: Codable {
         case lastMatchKey = "last_match_key"
     }
 
-
 }
-

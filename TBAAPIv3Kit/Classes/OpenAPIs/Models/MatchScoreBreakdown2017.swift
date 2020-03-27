@@ -7,10 +7,9 @@
 
 import Foundation
 
-
 /** See the 2017 FMS API documentation for a description of each value. */
+public struct MatchScoreBreakdown2017: Codable { 
 
-public struct MatchScoreBreakdown2017: Codable {
 
     public var blue: MatchScoreBreakdown2017Alliance?
     public var red: MatchScoreBreakdown2017Alliance?
@@ -20,6 +19,4 @@ public struct MatchScoreBreakdown2017: Codable {
         self.red = red
     }
 
-
 }
-

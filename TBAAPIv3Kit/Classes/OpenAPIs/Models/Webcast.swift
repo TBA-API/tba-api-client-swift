@@ -8,8 +8,8 @@
 import Foundation
 
 
+public struct Webcast: Codable { 
 
-public struct Webcast: Codable {
 
     public enum ModelType: String, Codable {
         case youtube = "youtube"
@@ -41,6 +41,4 @@ public struct Webcast: Codable {
         self.file = file
     }
 
-
 }
-

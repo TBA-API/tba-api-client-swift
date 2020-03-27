@@ -8,8 +8,8 @@
 import Foundation
 
 
+public struct DistrictList: Codable { 
 
-public struct DistrictList: Codable {
 
     /** The short identifier for the district. */
     public var abbreviation: String?
@@ -34,6 +34,4 @@ public struct DistrictList: Codable {
         case year
     }
 
-
 }
-

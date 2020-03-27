@@ -8,8 +8,8 @@
 import Foundation
 
 
+public struct Team: Codable { 
 
-public struct Team: Codable {
 
     /** TBA team key with the format &#x60;frcXXXX&#x60; with &#x60;XXXX&#x60; representing the team number. */
     public var key: String?
@@ -94,6 +94,4 @@ public struct Team: Codable {
         case homeChampionship = "home_championship"
     }
 
-
 }
-

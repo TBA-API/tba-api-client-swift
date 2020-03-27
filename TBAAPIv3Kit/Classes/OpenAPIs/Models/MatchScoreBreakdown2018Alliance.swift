@@ -8,8 +8,8 @@
 import Foundation
 
 
+public struct MatchScoreBreakdown2018Alliance: Codable { 
 
-public struct MatchScoreBreakdown2018Alliance: Codable {
 
     public var adjustPoints: Int?
     public var autoOwnershipPoints: Int?
@@ -130,6 +130,4 @@ public struct MatchScoreBreakdown2018Alliance: Codable {
         case tbaGameData = "tba_gameData"
     }
 
-
 }
-

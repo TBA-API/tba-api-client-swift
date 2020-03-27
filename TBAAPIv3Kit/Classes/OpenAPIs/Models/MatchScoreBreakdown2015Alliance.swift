@@ -8,8 +8,8 @@
 import Foundation
 
 
+public struct MatchScoreBreakdown2015Alliance: Codable { 
 
-public struct MatchScoreBreakdown2015Alliance: Codable {
 
     public var autoPoints: Int?
     public var teleopPoints: Int?
@@ -90,6 +90,4 @@ public struct MatchScoreBreakdown2015Alliance: Codable {
         case robotSet = "robot_set"
     }
 
-
 }
-

@@ -7,10 +7,9 @@
 
 import Foundation
 
-
 /** See the 2015 FMS API documentation for a description of each value */
+public struct MatchScoreBreakdown2015: Codable { 
 
-public struct MatchScoreBreakdown2015: Codable {
 
     public enum Coopertition: String, Codable {
         case _none = "None"
@@ -36,6 +35,4 @@ public struct MatchScoreBreakdown2015: Codable {
         case coopertitionPoints = "coopertition_points"
     }
 
-
 }
-

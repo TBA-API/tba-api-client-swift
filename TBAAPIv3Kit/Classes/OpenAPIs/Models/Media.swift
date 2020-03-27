@@ -7,10 +7,9 @@
 
 import Foundation
 
-
 /** The &#x60;Media&#x60; object contains a reference for most any media associated with a team or event on TBA. */
+public struct Media: Codable { 
 
-public struct Media: Codable {
 
     public enum ModelType: String, Codable {
         case youtube = "youtube"
@@ -58,6 +57,4 @@ public struct Media: Codable {
         case viewUrl = "view_url"
     }
 
-
 }
-

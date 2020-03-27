@@ -8,8 +8,8 @@
 import Foundation
 
 
+public struct MatchAlliance: Codable { 
 
-public struct MatchAlliance: Codable {
 
     /** Score for this alliance. Will be null or -1 for an unplayed match. */
     public var score: Int?
@@ -33,6 +33,4 @@ public struct MatchAlliance: Codable {
         case dqTeamKeys = "dq_team_keys"
     }
 
-
 }
-

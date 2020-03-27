@@ -8,8 +8,8 @@
 import Foundation
 
 
+public struct DistrictRankingEventPoints: Codable { 
 
-public struct DistrictRankingEventPoints: Codable {
 
     /** &#x60;true&#x60; if this event is a District Championship event. */
     public var districtCmp: Bool?
@@ -46,6 +46,4 @@ public struct DistrictRankingEventPoints: Codable {
         case qualPoints = "qual_points"
     }
 
-
 }
-

@@ -7,10 +7,9 @@
 
 import Foundation
 
-
 /** Insights for FIRST STEAMWORKS qualification and elimination matches. */
+public struct EventInsights2017: Codable { 
 
-public struct EventInsights2017: Codable {
 
     /** Average foul score. */
     public var averageFoulScore: Float?
@@ -147,6 +146,4 @@ public struct EventInsights2017: Codable {
         case unicornMatches = "unicorn_matches"
     }
 
-
 }
-

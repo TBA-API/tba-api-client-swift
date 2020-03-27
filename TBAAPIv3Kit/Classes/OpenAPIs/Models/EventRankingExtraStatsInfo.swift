@@ -8,8 +8,8 @@
 import Foundation
 
 
+public struct EventRankingExtraStatsInfo: Codable { 
 
-public struct EventRankingExtraStatsInfo: Codable {
 
     /** Integer expressing the number of digits of precision in the number provided in &#x60;sort_orders&#x60;. */
     public var precision: Double?
@@ -21,6 +21,4 @@ public struct EventRankingExtraStatsInfo: Codable {
         self.name = name
     }
 
-
 }
-

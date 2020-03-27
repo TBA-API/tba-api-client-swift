@@ -7,10 +7,9 @@
 
 import Foundation
 
-
 /** A Win-Loss-Tie record for a team, or an alliance. */
+public struct WLTRecord: Codable { 
 
-public struct WLTRecord: Codable {
 
     /** Number of losses. */
     public var losses: Int?
@@ -25,6 +24,4 @@ public struct WLTRecord: Codable {
         self.ties = ties
     }
 
-
 }
-

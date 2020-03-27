@@ -7,10 +7,9 @@
 
 import Foundation
 
-
 /** See the 2019 FMS API documentation for a description of each value. https://frcevents2.docs.apiary.io/#/reference/match-results/score-details */
+public struct MatchScoreBreakdown2019: Codable { 
 
-public struct MatchScoreBreakdown2019: Codable {
 
     public var blue: MatchScoreBreakdown2019Alliance?
     public var red: MatchScoreBreakdown2019Alliance?
@@ -20,6 +19,4 @@ public struct MatchScoreBreakdown2019: Codable {
         self.red = red
     }
 
-
 }
-

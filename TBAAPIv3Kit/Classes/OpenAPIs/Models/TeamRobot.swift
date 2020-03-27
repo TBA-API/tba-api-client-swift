@@ -8,8 +8,8 @@
 import Foundation
 
 
+public struct TeamRobot: Codable { 
 
-public struct TeamRobot: Codable {
 
     /** Year this robot competed in. */
     public var year: Int?
@@ -34,6 +34,4 @@ public struct TeamRobot: Codable {
         case teamKey = "team_key"
     }
 
-
 }
-

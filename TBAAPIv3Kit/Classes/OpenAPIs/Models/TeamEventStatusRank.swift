@@ -8,8 +8,8 @@
 import Foundation
 
 
+public struct TeamEventStatusRank: Codable { 
 
-public struct TeamEventStatusRank: Codable {
 
     /** Number of teams ranked. */
     public var numTeams: Int?
@@ -32,6 +32,4 @@ public struct TeamEventStatusRank: Codable {
         case status
     }
 
-
 }
-

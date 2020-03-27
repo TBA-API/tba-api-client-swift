@@ -8,8 +8,8 @@
 import Foundation
 
 
+public struct Event: Codable { 
 
-public struct Event: Codable {
 
     /** TBA event key with the format yyyy[EVENT_CODE], where yyyy is the year, and EVENT_CODE is the event code of the event. */
     public var key: String?
@@ -136,6 +136,4 @@ public struct Event: Codable {
         case playoffTypeString = "playoff_type_string"
     }
 
-
 }
-

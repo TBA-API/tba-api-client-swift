@@ -7,10 +7,9 @@
 
 import Foundation
 
-
 /** Backup status, may be null. */
+public struct TeamEventStatusAllianceBackup: Codable { 
 
-public struct TeamEventStatusAllianceBackup: Codable {
 
     /** TBA key for the team replaced by the backup. */
     public var out: String?
@@ -27,6 +26,4 @@ public struct TeamEventStatusAllianceBackup: Codable {
         case _in = "in"
     }
 
-
 }
-

@@ -8,8 +8,8 @@
 import Foundation
 
 
+public struct EventDistrictPointsPoints: Codable { 
 
-public struct EventDistrictPointsPoints: Codable {
 
     /** Total points awarded at this event. */
     public var total: Int?
@@ -38,6 +38,4 @@ public struct EventDistrictPointsPoints: Codable {
         case qualPoints = "qual_points"
     }
 
-
 }
-

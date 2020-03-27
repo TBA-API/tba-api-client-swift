@@ -7,10 +7,9 @@
 
 import Foundation
 
-
 /** Backup team called in, may be null. */
+public struct EliminationAllianceBackup: Codable { 
 
-public struct EliminationAllianceBackup: Codable {
 
     /** Team key that was called in as the backup. */
     public var _in: String?
@@ -27,6 +26,4 @@ public struct EliminationAllianceBackup: Codable {
         case out
     }
 
-
 }
-

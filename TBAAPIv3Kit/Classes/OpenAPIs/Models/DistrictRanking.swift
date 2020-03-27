@@ -7,10 +7,9 @@
 
 import Foundation
 
-
 /** Rank of a team in a district. */
+public struct DistrictRanking: Codable { 
 
-public struct DistrictRanking: Codable {
 
     /** TBA team key for the team. */
     public var teamKey: String?
@@ -39,6 +38,4 @@ public struct DistrictRanking: Codable {
         case eventPoints = "event_points"
     }
 
-
 }
-

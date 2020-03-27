@@ -8,8 +8,8 @@
 import Foundation
 
 
+public struct EventRanking: Codable { 
 
-public struct EventRanking: Codable {
 
     /** List of rankings at the event. */
     public var rankings: [EventRankingRankings]?
@@ -30,6 +30,4 @@ public struct EventRanking: Codable {
         case sortOrderInfo = "sort_order_info"
     }
 
-
 }
-

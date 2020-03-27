@@ -8,8 +8,8 @@
 import Foundation
 
 
+public struct APIStatusAppVersion: Codable { 
 
-public struct APIStatusAppVersion: Codable {
 
     /** Internal use - Minimum application version required to correctly connect and process data. */
     public var minAppVersion: Int?
@@ -26,6 +26,4 @@ public struct APIStatusAppVersion: Codable {
         case latestAppVersion = "latest_app_version"
     }
 
-
 }
-

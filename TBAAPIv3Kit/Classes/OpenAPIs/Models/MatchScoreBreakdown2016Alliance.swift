@@ -8,8 +8,8 @@
 import Foundation
 
 
+public struct MatchScoreBreakdown2016Alliance: Codable { 
 
-public struct MatchScoreBreakdown2016Alliance: Codable {
 
     public enum Robot1Auto: String, Codable {
         case crossed = "Crossed"
@@ -106,6 +106,4 @@ public struct MatchScoreBreakdown2016Alliance: Codable {
         self.position5crossings = position5crossings
     }
 
-
 }
-

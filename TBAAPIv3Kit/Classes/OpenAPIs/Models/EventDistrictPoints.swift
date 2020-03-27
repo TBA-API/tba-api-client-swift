@@ -8,8 +8,8 @@
 import Foundation
 
 
+public struct EventDistrictPoints: Codable { 
 
-public struct EventDistrictPoints: Codable {
 
     /** Points gained for each team at the event. Stored as a key-value pair with the team key as the key, and an object describing the points as its value. */
     public var points: [String:EventDistrictPointsPoints]?
@@ -21,6 +21,4 @@ public struct EventDistrictPoints: Codable {
         self.tiebreakers = tiebreakers
     }
 
-
 }
-

@@ -8,8 +8,8 @@
 import Foundation
 
 
+public struct Match: Codable { 
 
-public struct Match: Codable {
 
     public enum CompLevel: String, Codable {
         case qm = "qm"
@@ -81,6 +81,4 @@ public struct Match: Codable {
         case videos
     }
 
-
 }
-

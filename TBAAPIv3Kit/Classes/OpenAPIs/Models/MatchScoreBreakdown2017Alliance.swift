@@ -8,8 +8,8 @@
 import Foundation
 
 
+public struct MatchScoreBreakdown2017Alliance: Codable { 
 
-public struct MatchScoreBreakdown2017Alliance: Codable {
 
     public enum Robot1Auto: String, Codable {
         case unknown = "Unknown"
@@ -96,6 +96,4 @@ public struct MatchScoreBreakdown2017Alliance: Codable {
         self.touchpadFar = touchpadFar
     }
 
-
 }
-

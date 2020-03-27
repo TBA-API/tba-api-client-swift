@@ -7,10 +7,9 @@
 
 import Foundation
 
-
 /** Insights for FIRST Stronghold qualification and elimination matches. */
+public struct EventInsights2016: Codable { 
 
-public struct EventInsights2016: Codable {
 
     /** For the Low Bar - An array with three values, number of times damaged, number of opportunities to damage, and percentage. */
     public var lowBar: [Float]?
@@ -115,6 +114,4 @@ public struct EventInsights2016: Codable {
         case highScore = "high_score"
     }
 
-
 }
-

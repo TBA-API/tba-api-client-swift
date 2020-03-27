@@ -7,10 +7,9 @@
 
 import Foundation
 
-
 /** Insights for FIRST Power Up qualification and elimination matches. */
+public struct EventInsights2018: Codable { 
 
-public struct EventInsights2018: Codable {
 
     /** An array with three values, number of times auto quest was completed, number of opportunities to complete the auto quest, and percentage. */
     public var autoQuestAchieved: [Float]?
@@ -167,6 +166,4 @@ public struct EventInsights2018: Codable {
         case winningScaleOwnershipPercentageTeleop = "winning_scale_ownership_percentage_teleop"
     }
 
-
 }
-

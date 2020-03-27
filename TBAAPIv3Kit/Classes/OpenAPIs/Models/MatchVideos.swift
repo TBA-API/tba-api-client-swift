@@ -8,8 +8,8 @@
 import Foundation
 
 
+public struct MatchVideos: Codable { 
 
-public struct MatchVideos: Codable {
 
     /** Can be one of &#39;youtube&#39; or &#39;tba&#39; */
     public var type: String?
@@ -21,6 +21,4 @@ public struct MatchVideos: Codable {
         self.key = key
     }
 
-
 }
-

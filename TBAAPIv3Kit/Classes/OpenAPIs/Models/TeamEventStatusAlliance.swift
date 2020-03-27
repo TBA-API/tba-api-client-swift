@@ -8,8 +8,8 @@
 import Foundation
 
 
+public struct TeamEventStatusAlliance: Codable { 
 
-public struct TeamEventStatusAlliance: Codable {
 
     /** Alliance name, may be null. */
     public var name: String?
@@ -26,6 +26,4 @@ public struct TeamEventStatusAlliance: Codable {
         self.pick = pick
     }
 
-
 }
-

@@ -8,8 +8,8 @@
 import Foundation
 
 
+public struct MatchSimple: Codable { 
 
-public struct MatchSimple: Codable {
 
     public enum CompLevel: String, Codable {
         case qm = "qm"
@@ -69,6 +69,4 @@ public struct MatchSimple: Codable {
         case actualTime = "actual_time"
     }
 
-
 }
-

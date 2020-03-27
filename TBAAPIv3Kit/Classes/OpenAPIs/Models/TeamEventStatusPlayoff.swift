@@ -7,10 +7,9 @@
 
 import Foundation
 
-
 /** Playoff status for this team, may be null if the team did not make playoffs, or playoffs have not begun. */
+public struct TeamEventStatusPlayoff: Codable { 
 
-public struct TeamEventStatusPlayoff: Codable {
 
     public enum Level: String, Codable {
         case qm = "qm"
@@ -49,6 +48,4 @@ public struct TeamEventStatusPlayoff: Codable {
         case playoffAverage = "playoff_average"
     }
 
-
 }
-

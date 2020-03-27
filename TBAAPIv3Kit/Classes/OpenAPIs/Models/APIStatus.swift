@@ -8,8 +8,8 @@
 import Foundation
 
 
+public struct APIStatus: Codable { 
 
-public struct APIStatus: Codable {
 
     /** Year of the current FRC season. */
     public var currentSeason: Int?
@@ -40,6 +40,4 @@ public struct APIStatus: Codable {
         case android
     }
 
-
 }
-

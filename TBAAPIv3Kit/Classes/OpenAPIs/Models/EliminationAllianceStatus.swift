@@ -8,8 +8,8 @@
 import Foundation
 
 
+public struct EliminationAllianceStatus: Codable { 
 
-public struct EliminationAllianceStatus: Codable {
 
     public var playoffAverage: Double?
     public var level: String?
@@ -33,6 +33,4 @@ public struct EliminationAllianceStatus: Codable {
         case status
     }
 
-
 }
-

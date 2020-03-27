@@ -8,8 +8,8 @@
 import Foundation
 
 
+public struct Award: Codable { 
 
-public struct Award: Codable {
 
     /** The name of the award as provided by FIRST. May vary for the same award type. */
     public var name: String?
@@ -38,6 +38,4 @@ public struct Award: Codable {
         case year
     }
 
-
 }
-

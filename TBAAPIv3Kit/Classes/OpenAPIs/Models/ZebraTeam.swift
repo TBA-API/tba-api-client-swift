@@ -8,8 +8,8 @@
 import Foundation
 
 
+public struct ZebraTeam: Codable { 
 
-public struct ZebraTeam: Codable {
 
     /** The TBA team key for the Zebra MotionWorks data. */
     public var teamKey: String?
@@ -30,6 +30,4 @@ public struct ZebraTeam: Codable {
         case ys
     }
 
-
 }
-
